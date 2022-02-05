@@ -3,6 +3,8 @@ class Tableau1 extends Phaser.Scene {
         // le preload des images
         this.load.image('Idle','assets/Perso/Idle.png');
         this.load.image('platform','assets/square.png');
+        this.load.image('circle','assets/circle.png');
+        this.load.image('circleG','assets/circleG.png');
 
         for (let i = 0; i < 5; i++) {
             this.load.image('w'+i,'assets/Perso/w'+i+'.png');
@@ -12,16 +14,16 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
-        this.walk = this.physics.add.sprite(500, 0, 'w').setOrigin(0, 0);
+        this.perso = this.physics.add.sprite(500, 0, 'w').setOrigin(0, 0);
         this.anims.create({
             key: 'walk',
             frames: this.getFrames("w", 4),
             frameRate: 16,
             repeat: -1,
         });
-        this.walk.play('walk');
-        this.walk.scale=1;
-        this.walk.body.setAllowGravity(true);
+        this.perso.play('walk');
+        this.perso.scale=1;
+        this.perso.body.setAllowGravity(true);
 
 
         //Mur bas
@@ -32,9 +34,21 @@ class Tableau1 extends Phaser.Scene {
 
         let me = this;
 
-        //    Collision
-        this.physics.add.collider(this.walk,this.bas);
 
+        this.persoObject = this.physics.add.sprite(500, 0,'circle').setOrigin(0, 0);
+        this.persoObject.setDisplaySize(20,20);
+        this.persoObject.setVisible(false);
+
+        this.pile = this.physics.add.sprite(600, 0,'circleG').setOrigin(0, 0);
+        this.pile.setDisplaySize(20,20);
+        this.pile.setVisible(true);
+
+        //    Collision
+        this.physics.add.collider(this.perso,this.bas);
+        this.physics.add.collider(this.persoObject,this.bas);
+        this.physics.add.collider(this.pile,this.bas);
+
+        this.physics.add.overlap(this.perso, this.pile);
 
         this.initKeyboard();
     }
@@ -55,39 +69,60 @@ class Tableau1 extends Phaser.Scene {
         let me = this;
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
+                case Phaser.Input.Keyboard.KeyCodes.Z:
+
+
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.Q:
+                    me.persoObject.setVelocityX(0)
+                    me.perso.setVelocityX(0)
+                    break;
                 case Phaser.Input.Keyboard.KeyCodes.S:
 
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.J:
-
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.X:
-
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.N:
-
+                case Phaser.Input.Keyboard.KeyCodes.D:
+                    me.persoObject.setVelocityX(0)
+                    me.perso.setVelocityX(0)
                     break;
             }
         })
         this.input.keyboard.on('keydown', function (kevent) {
             switch (kevent.keyCode) {
+                case Phaser.Input.Keyboard.KeyCodes.Z:
+
+
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.Q:
+
+                    me.persoObject.setVelocityX(-300)
+                    me.perso.setVelocityX(-300)
+                    break;
                 case Phaser.Input.Keyboard.KeyCodes.S:
 
 
 
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.J:
+                case Phaser.Input.Keyboard.KeyCodes.D:
 
-
-
+                    me.persoObject.setVelocityX(300)
+                    me.perso.setVelocityX(300)
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.X:
 
+                case Phaser.Input.Keyboard.KeyCodes.E:
 
+                    if(me.perso.body.touching.none) {
+                        if (me.perso.visible == true) {
 
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.N:
+                            me.persoObject.setVisible(true)
+                            me.perso.setVisible(false)
 
+                        } else {
+
+                            me.persoObject.setVisible(false)
+                            me.perso.setVisible(true)
+
+                        }
+                    }
 
 
                     break;
@@ -96,5 +131,9 @@ class Tableau1 extends Phaser.Scene {
     }
     update() {
 
+        if (this.perso.visible == true) {
+            console.log("mort mdr")
+
+        }
     }
 }
