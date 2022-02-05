@@ -29,7 +29,7 @@ a:visited{
 
 }
 canvas{
-    outline: 1px solid #333;
+    outline: 1px solid #ff0000;
 }
 #scores{
     color: #ff0000;
@@ -46,8 +46,4 @@ canvas{
 }
 .name{
     font-size: 3vw;
-}
-
-#scores >* {
-    margin: 1vw;
 }
