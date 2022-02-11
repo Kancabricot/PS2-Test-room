@@ -14,6 +14,10 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
+        let me = this;
+
+        this.timerLife = 0
+
         this.perso = this.physics.add.sprite(500, 0, 'w').setOrigin(0, 0);
         this.anims.create({
             key: 'walk',
@@ -32,8 +36,6 @@ class Tableau1 extends Phaser.Scene {
         this.bas.body.setAllowGravity(false);
         this.bas.setImmovable(true);
 
-        let me = this;
-
 
         this.persoObject = this.physics.add.sprite(500, 0,'circle').setOrigin(0, 0);
         this.persoObject.setDisplaySize(20,20);
@@ -48,11 +50,10 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.persoObject,this.bas);
         this.physics.add.collider(this.pile,this.bas);
 
-        this.physics.add.overlap(this.perso, this.pile);
+        // this.physics.add.overlap(this.perso, this.pile);
 
         this.initKeyboard();
     }
-
 
     getFrames(prefix, length) {
         let frames = [];
@@ -109,21 +110,21 @@ class Tableau1 extends Phaser.Scene {
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.E:
+                    if(me.perso.visible == false) {
 
-                    if(me.perso.body.touching.none) {
-                        if (me.perso.visible == true) {
+                        me.persoObject.setVisible(false)
+                        me.perso.setVisible(true)
 
+                    }else {
+                        if (me.perso.x + 20 > me.pile.x && me.perso.x < me.pile.x + 20) {
+
+                            console.log("neuneu")
                             me.persoObject.setVisible(true)
                             me.perso.setVisible(false)
-
-                        } else {
-
-                            me.persoObject.setVisible(false)
-                            me.perso.setVisible(true)
+                            this.timerLife = 0
 
                         }
                     }
-
 
                     break;
             }
@@ -131,9 +132,17 @@ class Tableau1 extends Phaser.Scene {
     }
     update() {
 
-        if (this.perso.visible == true) {
+        if(this.timerLife == 300){
             console.log("mort mdr")
+            this.timerLife = 0
+        }
 
+        console.log(this.timerLife)
+
+        if (this.perso.visible == true) {
+            this.timerLife += 1
+        }else{
+            this.timerLife = 0
         }
     }
 }
