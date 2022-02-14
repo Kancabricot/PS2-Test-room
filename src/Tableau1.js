@@ -1,4 +1,5 @@
 class Tableau1 extends Phaser.Scene {
+
     preload() {
         // le preload des images
         this.load.image('Idle','assets/Perso/Idle.png');
@@ -15,6 +16,9 @@ class Tableau1 extends Phaser.Scene {
 
     create() {
         let me = this;
+        let keyD;
+        let keyQ;
+        let keyE;
 
         this.timerLife = 0
 
@@ -26,9 +30,9 @@ class Tableau1 extends Phaser.Scene {
             repeat: -1,
         });
         this.perso.play('walk');
-        this.perso.scale=1;
+        this.perso.setDisplaySize(20,30);
         this.perso.body.setAllowGravity(true);
-
+        this.perso.setVisible(false);
 
         //Mur bas
         this.bas = this.physics.add.sprite(0, 500-19,'platform').setOrigin(0, 0);
@@ -39,11 +43,11 @@ class Tableau1 extends Phaser.Scene {
 
         this.persoObject = this.physics.add.sprite(500, 0,'circle').setOrigin(0, 0);
         this.persoObject.setDisplaySize(20,20);
-        this.persoObject.setVisible(false);
+        this.persoObject.setVisible(true);
 
         this.pile = this.physics.add.sprite(600, 0,'circleG').setOrigin(0, 0);
         this.pile.setDisplaySize(20,20);
-        this.pile.setVisible(true);
+        this.pile.setVisible(false);
 
         //    Collision
         this.physics.add.collider(this.perso,this.bas);
@@ -64,10 +68,15 @@ class Tableau1 extends Phaser.Scene {
 
     }
 
-
+    checkCollider(Objet1x,Objet1y,Object1Tx,Object1Ty,Objet2x,Objet2y,Objet2Tx,Objet2Ty){
+        if (Objet1x + Object1Tx > Objet2x && Objet1x < Objet2x + Objet2Tx && Objet1y + Object1Ty > Objet2y && Objet1y < Objet2y + Objet2Ty) {
+            return true
+        }
+    }
 
     initKeyboard() {
         let me = this;
+
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.Z:
@@ -94,9 +103,11 @@ class Tableau1 extends Phaser.Scene {
 
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.Q:
-
-                    me.persoObject.setVelocityX(-300)
-                    me.perso.setVelocityX(-300)
+                    if(me.perso.visible === false) {
+                        me.persoObject.setVelocityX(-200)
+                    }else {
+                        me.perso.setVelocityX(-300)
+                    }
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.S:
 
@@ -104,23 +115,33 @@ class Tableau1 extends Phaser.Scene {
 
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.D:
-
-                    me.persoObject.setVelocityX(300)
-                    me.perso.setVelocityX(300)
+                    if(me.perso.visible === false) {
+                        me.persoObject.setVelocityX(200)
+                    }else {
+                        me.perso.setVelocityX(300)
+                    }
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.E:
-                    if(me.perso.visible == false) {
-
+                    if(me.perso.visible === false) {
+                        me.pile.setVisible(true)
+                        // me.pile.disableBody(true)
+                        me.pile.x = me.persoObject.x
+                        me.pile.y = me.persoObject.y
+                        me.perso.x = me.persoObject.x
+                        me.perso.y = me.persoObject.y -20
                         me.persoObject.setVisible(false)
                         me.perso.setVisible(true)
 
                     }else {
-                        if (me.perso.x + 20 > me.pile.x && me.perso.x < me.pile.x + 20) {
+                        if (me.checkCollider(me.perso.x,me.perso.y,20,30,me.pile.x,me.pile.y,20,20) === true) {
+                            me.persoObject.x = me.pile.x
+                            me.persoObject.y = me.pile.y
 
-                            console.log("neuneu")
                             me.persoObject.setVisible(true)
                             me.perso.setVisible(false)
+                            me.pile.setVisible(false)
+                            // me.pile.disableBody(false)
                             this.timerLife = 0
 
                         }
@@ -130,16 +151,15 @@ class Tableau1 extends Phaser.Scene {
             }
         })
     }
+
     update() {
 
-        if(this.timerLife == 300){
+        if(this.timerLife === 30){
             console.log("mort mdr")
             this.timerLife = 0
         }
 
-        console.log(this.timerLife)
-
-        if (this.perso.visible == true) {
+        if (this.perso.visible === true) {
             this.timerLife += 1
         }else{
             this.timerLife = 0

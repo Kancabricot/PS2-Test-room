@@ -7,7 +7,8 @@ let gameConfig = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200}
+            gravity: { y: 200},
+        fps : 60
         }
     },
     scene: new Tableau1()
