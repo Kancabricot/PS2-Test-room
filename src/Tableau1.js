@@ -83,11 +83,13 @@ class Tableau1 extends Phaser.Scene {
                 case Phaser.Input.Keyboard.KeyCodes.Q:
 
                     me.perso.setVelocityX(0)
+                    me.persoA.setVelocityX(0)
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
                     me.perso.setVelocityX(0)
+                    me.persoA.setVelocityX(0)
                     break;
             }
         })
@@ -98,12 +100,14 @@ class Tableau1 extends Phaser.Scene {
 
 
                         me.perso.setVelocityX(-300)
+                        me.persoA.setVelocityX(-300)
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
                         me.perso.setVelocityX(300)
+                        me.persoA.setVelocityX(300)
 
                     break;
 
