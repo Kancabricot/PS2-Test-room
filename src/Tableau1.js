@@ -118,6 +118,8 @@ class Tableau1 extends Phaser.Scene {
                             true) {
                            me.arme.setVisible(false);
                            me.perso.setVisible(false);
+
+                           // Pour être sur que le Personnage Armé soit au bonne endroit on lui met les bonne coordonné au cas où
                             me.persoA.x = me.perso.x
                             me.persoA.y = me.perso.y
                            me.persoA.setVisible(true)
