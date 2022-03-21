@@ -5,10 +5,9 @@ class Tableau1 extends Phaser.Scene {
         // Je preload les images autres que Tiled
         this.load.image('circle','assets/circle.png');
         this.load.image('circleG','assets/circleG.png');
-        this.load.image('circleB','assets/circleB.png');
 
-        this.load.image('Arme1','assets/square.png');
-        this.load.image('Arme2','assets/squareY.png');
+        this.load.image('pile','assets/square.png');
+        this.load.image('platfer','assets/squareY.png');
 
         // chargement tilemap
         this.load.image("tilemap", "assets/tiles_packed.png");
@@ -19,36 +18,33 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
+        this.Battery = 2500;
+        this.recharge = false;
 
         // Création du personnage de base
-        this.perso = this.physics.add.sprite(500, 0, 'circle').setOrigin(0, 0);
-        this.perso.setDisplaySize(30,30);
-        this.perso.body.setAllowGravity(true);
-        this.perso.setVisible(true);
+        this.persosanspile = this.physics.add.sprite(500, 0, 'circle').setOrigin(0, 0);
+        this.persosanspile.setDisplaySize(30,30);
+        this.persosanspile.body.setAllowGravity(true);
+        this.persosanspile.setVisible(true);
+        this.persosanspile.setVelocityY(0);
 
         // Création du personnage armé
-        this.persoA = this.physics.add.sprite(500, 0, 'circleG').setOrigin(0, 0);
-        this.persoA.setDisplaySize(30,30);
-        this.persoA.body.setAllowGravity(true);
-        this.persoA.setVisible(false);
-
-        // Création du personnage avec une deuxieme arme
-        this.persoA2 = this.physics.add.sprite(500, 0, 'circleB').setOrigin(0, 0);
-        this.persoA2.setDisplaySize(30,30);
-        this.persoA2.body.setAllowGravity(true);
-        this.persoA2.setVisible(false);
+        this.persoavecpile = this.physics.add.sprite(500, 0, 'circleG').setOrigin(0, 0);
+        this.persoavecpile.setDisplaySize(30,30);
+        this.persoavecpile.body.setAllowGravity(true);
+        this.persoavecpile.setVisible(false);
 
         // Création de l'arme qui sera au sol
-        this.arme = this.physics.add.sprite(150, 0,'Arme1').setOrigin(0, 0);
-        this.arme.setDisplaySize(15,15);
-        this.arme.body.setAllowGravity(true);
-        this.arme.setImmovable(true);
+        this.pile = this.physics.add.sprite(150, 0,'pile').setOrigin(0, 0);
+        this.pile.setDisplaySize(30,15);
+        this.pile.body.setAllowGravity(true);
+        this.pile.setImmovable(true);
 
         // Création de l'arme qui sera au sol
-        this.arme2 = this.physics.add.sprite(200, 0,'Arme2').setOrigin(0, 0);
-        this.arme2.setDisplaySize(15,15);
-        this.arme2.body.setAllowGravity(true);
-        this.arme2.setImmovable(true);
+        this.platfer = this.physics.add.sprite(200, 150,'platfer').setOrigin(0, 0);
+        this.platfer.setDisplaySize(200,10);
+        this.platfer.body.setAllowGravity(true);
+        this.platfer.setImmovable(true);
 
 
 
@@ -70,12 +66,10 @@ class Tableau1 extends Phaser.Scene {
 
         // Creation des collision
 
-        this.physics.add.collider(this.perso, platforms);
-        this.physics.add.collider(this.persoA, platforms);
-        this.physics.add.collider(this.persoA2, platforms);
-
-        this.physics.add.collider(this.arme, platforms);
-        this.physics.add.collider(this.arme2, platforms);
+        this.physics.add.collider(this.persosanspile, platforms);
+        this.physics.add.collider(this.persoavecpile, platforms);
+        this.physics.add.collider(this.platfer, platforms);
+        this.physics.add.collider(this.pile, platforms);
 
         this.initKeyboard();
     }
@@ -91,6 +85,7 @@ class Tableau1 extends Phaser.Scene {
         }
     }
 
+
     initKeyboard() {
         let me = this;
 
@@ -99,16 +94,14 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.Q:
 
-                    me.perso.setVelocityX(0);
-                    me.persoA.setVelocityX(0);
-                    me.persoA2.setVelocityX(0);
+                    me.persosanspile.setVelocityX(0);
+                    me.persoavecpile.setVelocityX(0);
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
-                    me.perso.setVelocityX(0);
-                    me.persoA.setVelocityX(0);
-                    me.persoA2.setVelocityX(0);
+                    me.persosanspile.setVelocityX(0);
+                    me.persoavecpile.setVelocityX(0);
                     break;
             }
         })
@@ -118,46 +111,37 @@ class Tableau1 extends Phaser.Scene {
                 case Phaser.Input.Keyboard.KeyCodes.Q:
 
 
-                        me.perso.setVelocityX(-300);
-                        me.persoA.setVelocityX(-300);
-                        me.persoA2.setVelocityX(-300);
+                        me.persosanspile.setVelocityX(-500);
+                        me.persoavecpile.setVelocityX(-300);
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
-                        me.perso.setVelocityX(300);
-                        me.persoA.setVelocityX(300);
-                        me.persoA2.setVelocityX(300);
+                        me.persosanspile.setVelocityX(500);
+                        me.persoavecpile.setVelocityX(300);
+
+                    break;
+
+                case Phaser.Input.Keyboard.KeyCodes.SPACE:
+
+                    me.persosanspile.setVelocityY(-350);
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.E:
 
-                        if (me.checkCollider(me.perso.x,me.perso.y,20,30,me.arme.x,me.arme.y,15,15)
+                        if (me.checkCollider(me.persosanspile.x,me.persosanspile.y,30,30,me.pile.x,me.pile.y,30,15)
                             ===
                             true) {
-                           me.arme.setVisible(false);
-                           me.perso.setVisible(false);
-                           me.persoA2.setVisible(false);
+                           me.pile.setVisible(false);
+
+                           me.persosanspile.setVisible(false);
 
                            // Pour être sur que le Personnage Armé soit au bonne endroit on lui met les bonne coordonné au cas où
-                            me.persoA.x = me.perso.x;
-                            me.persoA.y = me.perso.y;
-                           me.persoA.setVisible(true);
-                        }
-
-                        if (me.checkCollider(me.perso.x,me.perso.y,20,30,me.arme2.x,me.arme2.y,15,15)
-                            ===
-                            true) {
-                            me.arme2.setVisible(false);
-                            me.perso.setVisible(false);
-                            me.persoA.setVisible(false);
-
-                            // Pour être sur que le Personnage Armé soit au bonne endroit on lui met les bonne coordonné au cas où
-                            me.persoA2.x = me.perso.x;
-                            me.persoA2.y = me.perso.y;
-                            me.persoA2.setVisible(true);
+                            me.persoavecpile.x = me.persosanspile.x;
+                            me.persoavecpile.y = me.persosanspile.y;
+                            me.persoavecpile.setVisible(true);
                         }
                         break;
 
@@ -165,18 +149,17 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.A:
 
-                    if (me.persoA.visible === true) {
-                        me.persoA.setVisible(false);
+                    if (me.persoavecpile.visible === true) {
+                        me.persoavecpile.setVisible(false);
 
                         // Pour être sur que le Personnage et l'arme soit au bonne endroit on lui met les bonne coordonné au cas où
-                        me.perso.x = me.persoA.x
-                        me.perso.y = me.persoA.y
-                        me.perso.setVisible(true)
+                        me.persosanspile.x = me.persoavecpile.x;
+                        me.persosanspile.y = me.persoavecpile.y;
+                        me.persosanspile.setVisible(true)
 
-                        me.arme.x = me.persoA.x
-                        me.arme.y = me.persoA.y
-                        me.arme.setVisible(true)
-
+                        me.pile.x = me.persoavecpile.x + 7.50;
+                        me.pile.y = me.persoavecpile.y + 7.50;
+                        me.pile.setVisible(true)
 
                     }
                     break;
@@ -184,6 +167,29 @@ class Tableau1 extends Phaser.Scene {
         })
     }
 
+    update(){
+
+        console.log(this.Battery)
+
+        this.recharge = this.persoavecpile.visible !== false;
+
+        if(this.checkCollider(this.pile.x,this.pile.y,30,15,this.platfer.x,this.platfer.y,200,10)
+                                                                    &&
+            this.checkCollider(this.persosanspile.x,this.persosanspile.y,30,30,this.platfer.x,this.platfer.y,200,10)){
+            this.recharge = true;
+        }
+
+        if(this.recharge === true){
+            this.Battery = 2500;
+        }else{
+            this.Battery -= 1;
+        }
+
+        if(this.Battery  < 0){
+            this.persosanspile.destroy();
+            console.log("Je suis mort")
+        }
+    }
 
     // fin du programme
 }
