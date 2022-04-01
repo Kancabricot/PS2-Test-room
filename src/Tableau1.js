@@ -9,7 +9,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('pile','assets/square.png');
         this.load.image('platfer','assets/squareY.png');
 
-        this.load.image('bg','assets/circleB.png');
+        this.load.image('bg','assets/images/background.png');
 
         // chargement tilemap
         this.load.image("tilemap", "assets/tiles_packed.png");
@@ -25,8 +25,8 @@ class Tableau1 extends Phaser.Scene {
         this.turn = false;
         this.tailleListrik = 64;
 
-        this.Listrik = this.physics.add.sprite(-2500, -2500, 'bg').setOrigin(0, 0);
-        this.Listrik.setDisplaySize( 5000, 5000);
+        this.Listrik = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
+        this.Listrik.setDisplaySize( 800, 450);
         this.Listrik.body.setAllowGravity(false);
         this.Listrik.setVisible(true);
         this.Listrik.setVelocityY(0);
