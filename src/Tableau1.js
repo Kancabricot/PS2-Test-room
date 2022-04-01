@@ -2,12 +2,14 @@ class Tableau1 extends Phaser.Scene {
 
 
     preload() {
-        // Je preload les images autres que Tiled
-        this.load.image('circle','assets/circle.png');
-        this.load.image('circleG','assets/circleG.png');
+        // Je preload les images autres que Tiled!
+        this.load.image('listrik','assets/LISTRIK_PXL.png');
+        this.load.image('ListrikP','assets/LISTRIK_PXL_P.png');
 
         this.load.image('pile','assets/square.png');
         this.load.image('platfer','assets/squareY.png');
+
+        this.load.image('bg','assets/circleB.png');
 
         // chargement tilemap
         this.load.image("tilemap", "assets/tiles_packed.png");
@@ -20,19 +22,27 @@ class Tableau1 extends Phaser.Scene {
     create() {
         this.Battery = 2500;
         this.recharge = false;
+        this.turn = false;
+        this.tailleListrik = 64;
+
+        this.Listrik = this.physics.add.sprite(-2500, -2500, 'bg').setOrigin(0, 0);
+        this.Listrik.setDisplaySize( 5000, 5000);
+        this.Listrik.body.setAllowGravity(false);
+        this.Listrik.setVisible(true);
+        this.Listrik.setVelocityY(0);
 
         // Création du personnage de base
-        this.persosanspile = this.physics.add.sprite(500, 0, 'circle').setOrigin(0, 0);
-        this.persosanspile.setDisplaySize(30,30);
-        this.persosanspile.body.setAllowGravity(true);
-        this.persosanspile.setVisible(true);
-        this.persosanspile.setVelocityY(0);
+        this.Listrik = this.physics.add.sprite(500, 0, 'listrik').setOrigin(0, 0);
+        this.Listrik.setDisplaySize( this.tailleListrik, this.tailleListrik);
+        this.Listrik.body.setAllowGravity(true);
+        this.Listrik.setVisible(true);
+        this.Listrik.setVelocityY(0);
 
         // Création du personnage armé
-        this.persoavecpile = this.physics.add.sprite(500, 0, 'circleG').setOrigin(0, 0);
-        this.persoavecpile.setDisplaySize(30,30);
-        this.persoavecpile.body.setAllowGravity(true);
-        this.persoavecpile.setVisible(false);
+        this.ListrikP = this.physics.add.sprite(500, 0, 'ListrikP').setOrigin(0, 0);
+        this.ListrikP.setDisplaySize( this.tailleListrik, this.tailleListrik);
+        this.ListrikP.body.setAllowGravity(true);
+        this.ListrikP.setVisible(false);
 
         // Création de l'arme qui sera au sol
         this.pile = this.physics.add.sprite(150, 0,'pile').setOrigin(0, 0);
@@ -66,8 +76,8 @@ class Tableau1 extends Phaser.Scene {
 
         // Creation des collision
 
-        this.physics.add.collider(this.persosanspile, platforms);
-        this.physics.add.collider(this.persoavecpile, platforms);
+        this.physics.add.collider(this.Listrik, platforms);
+        this.physics.add.collider(this.ListrikP, platforms);
         this.physics.add.collider(this.platfer, platforms);
         this.physics.add.collider(this.pile, platforms);
 
@@ -94,14 +104,14 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.Q:
 
-                    me.persosanspile.setVelocityX(0);
-                    me.persoavecpile.setVelocityX(0);
+                    me.Listrik.setVelocityX(0);
+                    me.ListrikP.setVelocityX(0);
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
-                    me.persosanspile.setVelocityX(0);
-                    me.persoavecpile.setVelocityX(0);
+                    me.Listrik.setVelocityX(0);
+                    me.ListrikP.setVelocityX(0);
                     break;
             }
         })
@@ -111,37 +121,39 @@ class Tableau1 extends Phaser.Scene {
                 case Phaser.Input.Keyboard.KeyCodes.Q:
 
 
-                        me.persosanspile.setVelocityX(-500);
-                        me.persoavecpile.setVelocityX(-300);
+                        me.Listrik.setVelocityX(-500);
+                        me.ListrikP.setVelocityX(-300);
+                        me.turn = true;
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
-                        me.persosanspile.setVelocityX(500);
-                        me.persoavecpile.setVelocityX(300);
+                        me.Listrik.setVelocityX(500);
+                        me.ListrikP.setVelocityX(300);
+                        me.turn = false;
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
-                    me.persosanspile.setVelocityY(-350);
+                    me.Listrik.setVelocityY(-350);
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.E:
 
-                        if (me.checkCollider(me.persosanspile.x,me.persosanspile.y,30,30,me.pile.x,me.pile.y,30,15)
+                        if (me.checkCollider(me.Listrik.x,me.Listrik.y, me.tailleListrik, me.tailleListrik,me.pile.x,me.pile.y,30,15)
                             ===
                             true) {
                            me.pile.setVisible(false);
 
-                           me.persosanspile.setVisible(false);
+                           me.Listrik.setVisible(false);
 
                            // Pour être sur que le Personnage Armé soit au bonne endroit on lui met les bonne coordonné au cas où
-                            me.persoavecpile.x = me.persosanspile.x;
-                            me.persoavecpile.y = me.persosanspile.y;
-                            me.persoavecpile.setVisible(true);
+                            me.ListrikP.x = me.Listrik.x;
+                            me.ListrikP.y = me.Listrik.y;
+                            me.ListrikP.setVisible(true);
                         }
                         break;
 
@@ -149,16 +161,16 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.A:
 
-                    if (me.persoavecpile.visible === true) {
-                        me.persoavecpile.setVisible(false);
+                    if (me.ListrikP.visible === true) {
+                        me.ListrikP.setVisible(false);
 
                         // Pour être sur que le Personnage et l'arme soit au bonne endroit on lui met les bonne coordonné au cas où
-                        me.persosanspile.x = me.persoavecpile.x;
-                        me.persosanspile.y = me.persoavecpile.y;
-                        me.persosanspile.setVisible(true)
+                        me.Listrik.x = me.ListrikP.x;
+                        me.Listrik.y = me.ListrikP.y;
+                        me.Listrik.setVisible(true)
 
-                        me.pile.x = me.persoavecpile.x + 7.50;
-                        me.pile.y = me.persoavecpile.y + 7.50;
+                        me.pile.x = me.ListrikP.x + 7.50;
+                        me.pile.y = me.ListrikP.y + 7.50;
                         me.pile.setVisible(true)
 
                     }
@@ -169,13 +181,16 @@ class Tableau1 extends Phaser.Scene {
 
     update(){
 
+        this.Listrik.flipX = this.turn === true;
+        this.ListrikP.flipX = this.turn === true;
+
         console.log(this.Battery)
 
-        this.recharge = this.persoavecpile.visible !== false;
+        this.recharge = this.ListrikP.visible !== false;
 
         if(this.checkCollider(this.pile.x,this.pile.y,30,15,this.platfer.x,this.platfer.y,200,10)
                                                                     &&
-            this.checkCollider(this.persosanspile.x,this.persosanspile.y,30,30,this.platfer.x,this.platfer.y,200,10)){
+            this.checkCollider(this.Listrik.x,this.Listrik.y,this.tailleListrik,this.tailleListrik,this.platfer.x,this.platfer.y,200,10)){
             this.recharge = true;
         }
 
@@ -186,7 +201,7 @@ class Tableau1 extends Phaser.Scene {
         }
 
         if(this.Battery  < 0){
-            this.persosanspile.destroy();
+            this.Listrik.destroy();
             console.log("Je suis mort")
         }
     }
