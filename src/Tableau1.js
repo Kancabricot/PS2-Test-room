@@ -6,7 +6,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('listrik','assets/LISTRIK_PXL.png');
         this.load.image('ListrikP','assets/LISTRIK_PXL_P.png');
 
-        this.load.image('pile','assets/square.png');
+        this.load.image('pile','assets/Pile.png');
         this.load.image('platfer','assets/squareY.png');
 
         this.load.image('bg','assets/images/background.png');
@@ -24,6 +24,7 @@ class Tableau1 extends Phaser.Scene {
         this.recharge = false;
         this.turn = false;
         this.tailleListrik = 64;
+        this.taillePile = 32;
 
         this.Listrik = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
         this.Listrik.setDisplaySize( 800, 450);
@@ -46,7 +47,7 @@ class Tableau1 extends Phaser.Scene {
 
         // Création de l'arme qui sera au sol
         this.pile = this.physics.add.sprite(150, 0,'pile').setOrigin(0, 0);
-        this.pile.setDisplaySize(30,15);
+        this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
 
@@ -121,16 +122,16 @@ class Tableau1 extends Phaser.Scene {
                 case Phaser.Input.Keyboard.KeyCodes.Q:
 
 
-                        me.Listrik.setVelocityX(-500);
-                        me.ListrikP.setVelocityX(-300);
+                        me.Listrik.setVelocityX(-300);
+                        me.ListrikP.setVelocityX(-150);
                         me.turn = true;
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
 
-                        me.Listrik.setVelocityX(500);
-                        me.ListrikP.setVelocityX(300);
+                        me.Listrik.setVelocityX(300);
+                        me.ListrikP.setVelocityX(150);
                         me.turn = false;
 
                     break;
@@ -188,7 +189,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.recharge = this.ListrikP.visible !== false;
 
-        if(this.checkCollider(this.pile.x,this.pile.y,30,15,this.platfer.x,this.platfer.y,200,10)
+        if(this.checkCollider(this.pile.x,this.pile.y,this.taillePile,this.taillePile,this.platfer.x,this.platfer.y,200,10)
                                                                     &&
             this.checkCollider(this.Listrik.x,this.Listrik.y,this.tailleListrik,this.tailleListrik,this.platfer.x,this.platfer.y,200,10)){
             this.recharge = true;
