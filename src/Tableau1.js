@@ -33,7 +33,7 @@ class Tableau1 extends Phaser.Scene {
         this.Listrik.setVelocityY(0);
 
         // Création du personnage de base
-        this.Listrik = this.physics.add.sprite(500, 0, 'listrik').setOrigin(0, 0);
+        this.Listrik = this.physics.add.sprite(150, 200, 'listrik').setOrigin(0, 0);
         this.Listrik.setDisplaySize( this.tailleListrik, this.tailleListrik);
         this.Listrik.body.setAllowGravity(true);
         this.Listrik.setVisible(true);
@@ -52,10 +52,10 @@ class Tableau1 extends Phaser.Scene {
         this.pile.setImmovable(true);
 
         // Création de l'arme qui sera au sol
-        this.platfer = this.physics.add.sprite(200, 150,'platfer').setOrigin(0, 0);
+        /*this.platfer = this.physics.add.sprite(200, 150,'platfer').setOrigin(0, 0);
         this.platfer.setDisplaySize(200,10);
         this.platfer.body.setAllowGravity(true);
-        this.platfer.setImmovable(true);
+        this.platfer.setImmovable(true);*/
 
 
 
@@ -73,13 +73,28 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
+        // chargement du calque décors
+        const decors = map.createLayer(
+            "calque_objet_visible",
+            tileset
+        );
+
+        // chargement du calque plateformes
+        const platfer = map.createLayer(
+            "calque_platfer",
+            tileset
+        );
+
         platforms.setCollisionByExclusion(-1, true);
+        platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
 
+        this.physics.add.collider(this.Listrik, platfer);
+        this.physics.add.collider(this.ListrikP, platfer);
         this.physics.add.collider(this.Listrik, platforms);
         this.physics.add.collider(this.ListrikP, platforms);
-        this.physics.add.collider(this.platfer, platforms);
+        // this.physics.add.collider(this.platfer, platforms);
         this.physics.add.collider(this.pile, platforms);
 
         this.initKeyboard();
@@ -189,11 +204,11 @@ class Tableau1 extends Phaser.Scene {
 
         this.recharge = this.ListrikP.visible !== false;
 
-        if(this.checkCollider(this.pile.x,this.pile.y,this.taillePile,this.taillePile,this.platfer.x,this.platfer.y,200,10)
+        /*if(this.checkCollider(this.pile.x,this.pile.y,this.taillePile,this.taillePile,this.platfer.x,this.platfer.y,200,10)
                                                                     &&
             this.checkCollider(this.Listrik.x,this.Listrik.y,this.tailleListrik,this.tailleListrik,this.platfer.x,this.platfer.y,200,10)){
             this.recharge = true;
-        }
+        }*/
 
         if(this.recharge === true){
             this.Battery = 2500;
@@ -203,7 +218,7 @@ class Tableau1 extends Phaser.Scene {
 
         if(this.Battery  < 0){
             this.Listrik.destroy();
-            console.log("Je suis mort")
+            console.log("Je suis mort");
         }
     }
 
