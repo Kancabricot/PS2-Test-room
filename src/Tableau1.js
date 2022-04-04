@@ -85,6 +85,12 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
+        // chargement du calque plateformes
+        const hitbox_platfer = map.createObjectLayer(
+            "calque_platfer",
+            tileset
+        );
+
         platforms.setCollisionByExclusion(-1, true);
         platfer.setCollisionByExclusion(-1, true);
 
