@@ -20,17 +20,18 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
+
         this.Battery = 2500;
         this.recharge = false;
         this.turn = false;
         this.tailleListrik = 64;
         this.taillePile = 32;
 
-        this.Listrik = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
-        this.Listrik.setDisplaySize( 800, 450);
-        this.Listrik.body.setAllowGravity(false);
-        this.Listrik.setVisible(true);
-        this.Listrik.setVelocityY(0);
+        this.bg = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
+        this.bg.setDisplaySize( 80000, 450);
+        this.bg.body.setAllowGravity(false);
+        this.bg.setVisible(true);
+        this.bg.setVelocityY(0);
 
         // Création du personnage de base
         this.Listrik = this.physics.add.sprite(150, 200, 'listrik').setOrigin(0, 0);
@@ -56,8 +57,6 @@ class Tableau1 extends Phaser.Scene {
         this.platfer.setDisplaySize(200,10);
         this.platfer.body.setAllowGravity(true);
         this.platfer.setImmovable(true);*/
-
-
 
         // chargement de la map
         const map = this.add.tilemap("map");
@@ -85,12 +84,6 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
-        // chargement du calque plateformes
-        const hitbox_platfer = map.createObjectLayer(
-            "calque_platfer",
-            tileset
-        );
-
         platforms.setCollisionByExclusion(-1, true);
         platfer.setCollisionByExclusion(-1, true);
 
@@ -102,6 +95,12 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.ListrikP, platforms);
         // this.physics.add.collider(this.platfer, platforms);
         this.physics.add.collider(this.pile, platforms);
+
+        let largeurDuTableau=this.map.widthInPixels;
+        let hauteurDuTableau=this.map.heightInPixels;
+        this.physics.world.setBounds(0, 0, largeurDuTableau,  hauteurDuTableau);
+        this.cameras.main.setBounds(0, 0, largeurDuTableau, hauteurDuTableau);
+        this.cameras.main.startFollow(this.Listrik, true, 1, 1);
 
         this.initKeyboard();
     }
