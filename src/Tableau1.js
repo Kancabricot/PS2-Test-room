@@ -12,10 +12,10 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('bg','assets/images/background.png');
 
         // chargement tilemap
-        this.load.image("tilemap", "assets/tiles_packed.png");
+        this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
 
         // chargement de la map en json
-        this.load.tilemapTiledJSON("map", "assets/MapBasique.json");
+        this.load.tilemapTiledJSON("map", "assets/Map_TR/TestRoom.json");
     }
 
 
@@ -68,29 +68,29 @@ class Tableau1 extends Phaser.Scene {
 
         // chargement du calque plateformes
         const platforms = map.createLayer(
-            "calque_plateformes",
+            "Platforme",
             tileset
         );
 
         // chargement du calque décors
         const decors = map.createLayer(
-            "calque_objet_visible",
+            "Interactable",
             tileset
         );
 
-        // chargement du calque plateformes
-        const platfer = map.createLayer(
-            "calque_platfer",
-            tileset
-        );
+        // // chargement du calque plateformes
+        // const platfer = map.createLayer(
+        //     "calque_platfer",
+        //     tileset
+        // );
 
         platforms.setCollisionByExclusion(-1, true);
-        platfer.setCollisionByExclusion(-1, true);
+        //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
 
-        this.physics.add.collider(this.Listrik, platfer);
-        this.physics.add.collider(this.ListrikP, platfer);
+        // this.physics.add.collider(this.Listrik, platfer);
+        // this.physics.add.collider(this.ListrikP, platfer);
         this.physics.add.collider(this.Listrik, platforms);
         this.physics.add.collider(this.ListrikP, platforms);
         // this.physics.add.collider(this.platfer, platforms);
