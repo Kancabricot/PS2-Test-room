@@ -96,11 +96,7 @@ class Tableau1 extends Phaser.Scene {
         // this.physics.add.collider(this.platfer, platforms);
         this.physics.add.collider(this.pile, platforms);
 
-        let largeurDuTableau=this.map.widthInPixels;
-        let hauteurDuTableau=this.map.heightInPixels;
-        this.physics.world.setBounds(0, 0, largeurDuTableau,  hauteurDuTableau);
-        this.cameras.main.setBounds(0, 0, largeurDuTableau, hauteurDuTableau);
-        this.cameras.main.startFollow(this.Listrik, true, 1, 1);
+
 
         this.initKeyboard();
     }
@@ -214,6 +210,12 @@ class Tableau1 extends Phaser.Scene {
             this.checkCollider(this.Listrik.x,this.Listrik.y,this.tailleListrik,this.tailleListrik,this.platfer.x,this.platfer.y,200,10)){
             this.recharge = true;
         }*/
+        if (this.ListrikP.visible === true) {
+            this.cameras.main.startFollow(this.ListrikP, true, 1, 1);
+        }else{
+            this.cameras.main.startFollow(this.Listrik, true, 1, 1);
+        }
+
 
         if(this.recharge === true){
             this.Battery = 2500;
