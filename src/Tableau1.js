@@ -34,7 +34,7 @@ class Tableau1 extends Phaser.Scene {
         this.bg.setVelocityY(0);
 
         // Création du personnage de base
-        this.Listrik = this.physics.add.sprite(150, 200, 'listrik').setOrigin(0, 0);
+        this.Listrik = this.physics.add.sprite(0, 0, 'listrik').setOrigin(0, 0);
         this.Listrik.setDisplaySize( this.tailleListrik, this.tailleListrik);
         this.Listrik.body.setAllowGravity(true);
         this.Listrik.setVisible(true);
@@ -62,16 +62,14 @@ class Tableau1 extends Phaser.Scene {
         const map = this.add.tilemap("map");
         // chargement du tileset
         const tileset = map.addTilesetImage(
-            "game_tile",
+            "TestroomTiled",
             "tilemap"
         );
 
-        // chargement du calque plateformes
         const platforms = map.createLayer(
-            "Platforme",
+            "PLatforme",
             tileset
         );
-
         // chargement du calque décors
         const decors = map.createLayer(
             "Interactable",
