@@ -34,7 +34,7 @@ class Tableau1 extends Phaser.Scene {
         this.bg.setVelocityY(0);
 
         // Création du personnage de base
-        this.Listrik = this.physics.add.sprite(0, 0, 'listrik').setOrigin(0, 0);
+        this.Listrik = this.physics.add.sprite(100, 450, 'listrik').setOrigin(0, 0);
         this.Listrik.setDisplaySize( this.tailleListrik, this.tailleListrik);
         this.Listrik.body.setAllowGravity(true);
         this.Listrik.setVisible(true);
@@ -47,7 +47,7 @@ class Tableau1 extends Phaser.Scene {
         this.ListrikP.setVisible(false);
 
         // Création de l'arme qui sera au sol
-        this.pile = this.physics.add.sprite(150, 0,'pile').setOrigin(0, 0);
+        this.pile = this.physics.add.sprite(150, -0,'pile').setOrigin(0, 0);
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
@@ -76,11 +76,11 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
-        // // chargement du calque plateformes
-        // const platfer = map.createLayer(
-        //     "calque_platfer",
+        // const hitbox_fer = map.createLayer(
+        //     "Hitbox_Fer",
         //     tileset
         // );
+
 
         platforms.setCollisionByExclusion(-1, true);
         //platfer.setCollisionByExclusion(-1, true);
@@ -94,6 +94,10 @@ class Tableau1 extends Phaser.Scene {
         // this.physics.add.collider(this.platfer, platforms);
         this.physics.add.collider(this.pile, platforms);
 
+        // redimentionnement du monde avec les dimensions calculées via tiled
+                this.physics.world.setBounds(0, 0, 3200, 640);
+        //  ajout du champs de la caméra de taille identique à celle du monde
+                this.cameras.main.setBounds(0, 0, 3200, 640);
 
 
         this.initKeyboard();
