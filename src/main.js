@@ -5,9 +5,11 @@ let gameConfig = {
     backgroundColor: '#ffffff',
     parent: 'game',
     physics: {
+
         default: 'arcade',
         arcade: {
             gravity: { y: 600},
+            debug : true,
             fps : 60
         }
     },

@@ -27,6 +27,7 @@ class Tableau1 extends Phaser.Scene {
         this.tailleListrik = 64;
         this.taillePile = 32;
 
+
         this.bg = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
         this.bg.setDisplaySize( 80000, 450);
         this.bg.body.setAllowGravity(false);
@@ -76,6 +77,16 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
+        this.fer = this.physics.add.group({
+            immovable : false,
+            allowGravity: false,
+        })
+
+        map.getObjectLayer('Hitbox_Fer').objects.forEach((Fer)=>{
+            const collider = this.add.rectangle(Fer.x+(Fer.width*0.5),Fer.y,Fer.width,Fer.height)
+            this.fer.add(collider)
+        })
+
         // const hitbox_fer = map.createLayer(
         //     "Hitbox_Fer",
         //     tileset
@@ -87,12 +98,15 @@ class Tableau1 extends Phaser.Scene {
 
         // Creation des collision
 
+
         // this.physics.add.collider(this.Listrik, platfer);
         // this.physics.add.collider(this.ListrikP, platfer);
         this.physics.add.collider(this.Listrik, platforms);
         this.physics.add.collider(this.ListrikP, platforms);
         // this.physics.add.collider(this.platfer, platforms);
+
         this.physics.add.collider(this.pile, platforms);
+
 
         // redimentionnement du monde avec les dimensions calculées via tiled
                 this.physics.world.setBounds(0, 0, 3200, 640);
@@ -114,6 +128,9 @@ class Tableau1 extends Phaser.Scene {
         }
     }
 
+    test(){
+        this.recharge = true;
+    }
 
     initKeyboard() {
         let me = this;
@@ -205,19 +222,17 @@ class Tableau1 extends Phaser.Scene {
 
         console.log(this.Battery)
 
-        this.recharge = this.ListrikP.visible !== false;
-
-        /*if(this.checkCollider(this.pile.x,this.pile.y,this.taillePile,this.taillePile,this.platfer.x,this.platfer.y,200,10)
-                                                                    &&
-            this.checkCollider(this.Listrik.x,this.Listrik.y,this.tailleListrik,this.tailleListrik,this.platfer.x,this.platfer.y,200,10)){
+        if(this.physics.overlap(this.Listrik, this.fer)===true && this.physics.overlap(this.pile, this.fer)){
             this.recharge = true;
-        }*/
+        }else {
+            this.recharge = this.ListrikP.visible !== false;
+        }
+
         if (this.ListrikP.visible === true) {
             this.cameras.main.startFollow(this.ListrikP, true, 1, 1);
         }else{
             this.cameras.main.startFollow(this.Listrik, true, 1, 1);
         }
-
 
         if(this.recharge === true){
             this.Battery = 2500;
