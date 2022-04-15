@@ -85,7 +85,27 @@ class Tableau1 extends Phaser.Scene {
         map.getObjectLayer('Hitbox_Fer').objects.forEach((Fer)=>{
             const collider = this.add.rectangle(Fer.x+(Fer.width*0.5),Fer.y,Fer.width,Fer.height)
             this.fer.add(collider)
+
         })
+
+        this.platmove = this.physics.add.group({
+            immovable : false,
+            allowGravity: false,
+        })
+
+
+        map.getObjectLayer('Platforme_move').objects.forEach((move)=>{
+            const platmove = this.platmove.create(move.x,move.y    - move.height, 'listrik').setOrigin(0);
+            this.platmove.add(platmove)
+        })
+
+        this.tweens.add({
+            targets: this.platmove,
+            y: 200,
+            duration: 4000,
+            repeat: -1,
+            yoyo: true
+        });
 
         // const hitbox_fer = map.createLayer(
         //     "Hitbox_Fer",
@@ -97,10 +117,9 @@ class Tableau1 extends Phaser.Scene {
         //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
-
-
         // this.physics.add.collider(this.Listrik, platfer);
         // this.physics.add.collider(this.ListrikP, platfer);
+        this.physics.add.collider(this.Listrik, this.platmove);
         this.physics.add.collider(this.Listrik, platforms);
         this.physics.add.collider(this.ListrikP, platforms);
         // this.physics.add.collider(this.platfer, platforms);
@@ -112,6 +131,7 @@ class Tableau1 extends Phaser.Scene {
                 this.physics.world.setBounds(0, 0, 3200, 640);
         //  ajout du champs de la caméra de taille identique à celle du monde
                 this.cameras.main.setBounds(0, 0, 3200, 640);
+
 
 
         this.initKeyboard();
