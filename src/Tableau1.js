@@ -11,7 +11,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.load.image('bg','assets/images/background.png');
 
-        this.load.atlas('player', 'assets/Listrikanimation.json', 'assets/Listrikanimation.json');
+        this.load.atlas('Listrik', 'assets/Listrikanimation.png', 'assets/Listrikanimation.json');
 
         // chargement tilemap
         this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
@@ -22,8 +22,8 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
-
-        this.Battery = 2500;
+        this.chargeMax = 2500;
+        this.Battery = this.chargeMax;
         this.recharge = false;
         this.turn = false;
         this.tailleListrik = 64;
@@ -54,6 +54,8 @@ class Tableau1 extends Phaser.Scene {
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
+
+        this.iconbat = this.add.rectangle(0,0,10,10,0x00ff00)
 
         this.player = new Player(this)
 
@@ -247,10 +249,19 @@ class Tableau1 extends Phaser.Scene {
 
     update(){
 
+        if(this.Battery < this.chargeMax / 3){
+            this.iconbat.fillColor = 0xff0000;
+        }else  if(this.Battery < (this.chargeMax / 3)*2){
+            this.iconbat.fillColor = 0xff9f00;
+        }else{
+            this.iconbat.fillColor = 0x00ff00;
+        }
+
+        this.iconbat.x = this.player.player.x -6;
+        this.iconbat.y = this.player.player.y +10;
+
         this.Listrik.flipX = this.turn === true;
         this.ListrikP.flipX = this.turn === true;
-
-        console.log(this.Battery)
 
         if(this.physics.overlap(this.Listrik, this.fer)===true && this.physics.overlap(this.pile, this.fer)){
             this.recharge = true;
@@ -265,7 +276,7 @@ class Tableau1 extends Phaser.Scene {
         }
 
         if(this.recharge === true){
-            this.Battery = 2500;
+            this.Battery = this.chargeMax;
         }else{
             this.Battery -= 1;
         }
