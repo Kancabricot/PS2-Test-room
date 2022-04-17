@@ -11,6 +11,8 @@ class Tableau1 extends Phaser.Scene {
 
         this.load.image('bg','assets/images/background.png');
 
+        this.load.atlas('player', 'assets/Listrikanimation.json', 'assets/Listrikanimation.json');
+
         // chargement tilemap
         this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
 
@@ -52,6 +54,8 @@ class Tableau1 extends Phaser.Scene {
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
+
+        this.player = new Player(this)
 
         // Création de l'arme qui sera au sol
         /*this.platfer = this.physics.add.sprite(200, 150,'platfer').setOrigin(0, 0);
@@ -113,6 +117,7 @@ class Tableau1 extends Phaser.Scene {
         // );
 
 
+
         platforms.setCollisionByExclusion(-1, true);
         //platfer.setCollisionByExclusion(-1, true);
 
@@ -121,6 +126,7 @@ class Tableau1 extends Phaser.Scene {
         // this.physics.add.collider(this.ListrikP, platfer);
         this.physics.add.collider(this.Listrik, this.platmove);
         this.physics.add.collider(this.Listrik, platforms);
+        this.physics.add.collider(this.player.player, platforms);
         this.physics.add.collider(this.ListrikP, platforms);
         // this.physics.add.collider(this.platfer, platforms);
 
@@ -180,6 +186,7 @@ class Tableau1 extends Phaser.Scene {
                         me.Listrik.setVelocityX(-300);
                         me.ListrikP.setVelocityX(-150);
                         me.turn = true;
+                        me.player.moveLeft()
 
                     break;
 
@@ -187,6 +194,7 @@ class Tableau1 extends Phaser.Scene {
 
                         me.Listrik.setVelocityX(300);
                         me.ListrikP.setVelocityX(150);
+                        me.player.moveRight();
                         me.turn = false;
 
                     break;
@@ -194,6 +202,8 @@ class Tableau1 extends Phaser.Scene {
                 case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
                     me.Listrik.setVelocityY(-350);
+
+                    me.player.jump()
 
                     break;
 
@@ -264,6 +274,9 @@ class Tableau1 extends Phaser.Scene {
             this.Listrik.destroy();
             console.log("Je suis mort");
         }
+
+        this.player.stop();
+
     }
 
     // fin du programme
