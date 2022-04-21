@@ -22,6 +22,7 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
+        this.takeBat = false;
         this.chargeMax = 2500;
         this.Battery = this.chargeMax;
         this.recharge = false;
@@ -55,7 +56,7 @@ class Tableau1 extends Phaser.Scene {
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
 
-        this.iconbat = this.add.rectangle(0,0,10,10,0x00ff00)
+        this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00)
 
         this.player = new Player(this)
 
@@ -140,7 +141,7 @@ class Tableau1 extends Phaser.Scene {
         //  ajout du champs de la caméra de taille identique à celle du monde
                 this.cameras.main.setBounds(0, 0, 3200, 640);
 
-
+        this.cameras.main.startFollow(this.Listrik, true, 1, 1);
 
         this.initKeyboard();
     }
@@ -154,10 +155,6 @@ class Tableau1 extends Phaser.Scene {
             // Si toutes les conditons sont vrais alors il y a bien un overlaps, on renvoie donc true/vrai a notre foncion sinon on ne renvoie rien
             return true
         }
-    }
-
-    test(){
-        this.recharge = true;
     }
 
     initKeyboard() {
@@ -211,17 +208,9 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.E:
 
-                        if (me.checkCollider(me.Listrik.x,me.Listrik.y, me.tailleListrik, me.tailleListrik,me.pile.x,me.pile.y,30,15)
-                            ===
-                            true) {
+                        if (me.physics.overlap(me.Listrik, me.pile)===true){
                            me.pile.setVisible(false);
-
-                           me.Listrik.setVisible(false);
-
-                           // Pour être sur que le Personnage Armé soit au bonne endroit on lui met les bonne coordonné au cas où
-                            me.ListrikP.x = me.Listrik.x;
-                            me.ListrikP.y = me.Listrik.y;
-                            me.ListrikP.setVisible(true);
+                            me.takeBat = true;
                         }
                         break;
 
@@ -229,17 +218,13 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.A:
 
-                    if (me.ListrikP.visible === true) {
-                        me.ListrikP.setVisible(false);
+                    if (me.takeBat === true) {
 
-                        // Pour être sur que le Personnage et l'arme soit au bonne endroit on lui met les bonne coordonné au cas où
-                        me.Listrik.x = me.ListrikP.x;
-                        me.Listrik.y = me.ListrikP.y;
-                        me.Listrik.setVisible(true)
-
-                        me.pile.x = me.ListrikP.x + 7.50;
-                        me.pile.y = me.ListrikP.y + 7.50;
+                        me.pile.x = me.Listrik.x + 7.50;
+                        me.pile.y = me.Listrik.y + 7.50;
                         me.pile.setVisible(true)
+
+                        me.takeBat = false;
 
                     }
                     break;
@@ -257,22 +242,20 @@ class Tableau1 extends Phaser.Scene {
             this.iconbat.fillColor = 0x00ff00;
         }
 
-        this.iconbat.x = this.player.player.x -6;
-        this.iconbat.y = this.player.player.y +10;
+        if(this.turn === true){
+            this.iconbat.x = this.player.player.x +7;
+            this.iconbat.y = this.player.player.y +10;
+        }else{
+            this.iconbat.x = this.player.player.x -7;
+            this.iconbat.y = this.player.player.y +10;
+        }
 
         this.Listrik.flipX = this.turn === true;
-        this.ListrikP.flipX = this.turn === true;
 
         if(this.physics.overlap(this.Listrik, this.fer)===true && this.physics.overlap(this.pile, this.fer)){
             this.recharge = true;
         }else {
-            this.recharge = this.ListrikP.visible !== false;
-        }
-
-        if (this.ListrikP.visible === true) {
-            this.cameras.main.startFollow(this.ListrikP, true, 1, 1);
-        }else{
-            this.cameras.main.startFollow(this.Listrik, true, 1, 1);
+            this.recharge = this.takeBat !== false;
         }
 
         if(this.recharge === true){

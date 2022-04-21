@@ -15,7 +15,7 @@ class Player {
                 start: 38,
                 end: 47,
             }),
-            frameRate: 10,
+            frameRate: 100,
             repeat: -1
         });
 
@@ -36,26 +36,46 @@ class Player {
     }
 
     jump(){
-        this.player.setVelocityY(-420);
-        this.player.play('jump', true);
+        if(this.scene.takeBat === true){
+
+        }else{
+            this.player.setVelocityY(-420);
+            this.player.play('jump', true);
+        }
+
     }
     moveRight(){
-        this.player.setVelocityX(300);
-        this.player.setFlipX(false);
-        if (this.player.body.onFloor()) {
-            this.player.play('walk', true)}
+        if(this.scene.takeBat === true){
+
+        }else{
+            this.player.setVelocityX(300);
+            this.player.setFlipX(false);
+            //if (this.player.body.onFloor()) {
+            //this.player.play('walk', true)}
+        }
+
     }
     moveLeft(){
-        this.player.setVelocityX(-300);
-        if (this.player.body.onFloor()) {
-            this.player.play('walk', true)}
-        this.player.setFlipX(true);
+        if(this.scene.takeBat === true){
+
+        }else{
+            this.player.setVelocityX(-300);
+            //if (this.player.body.onFloor()) {
+            //this.player.play('walk', true)}
+            this.player.setFlipX(true);
+        }
+
     }
     stop(){
-        this.player.setVelocityX(0);
-        if (this.player.body.onFloor()) {
-            this.player.play('idle',true)
+        if(this.scene.takeBat === true){
+
+        }else{
+            this.player.setVelocityX(0);
+            if (this.player.body.onFloor()) {
+                this.player.play('idle',true)
+            }
         }
+
     }
 
 }
