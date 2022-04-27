@@ -185,7 +185,7 @@ class Tableau1 extends Phaser.Scene {
                         me.Listrik.setVelocityX(-300);
                         me.ListrikP.setVelocityX(-150);
                         me.turn = true;
-                        me.player.moveLeft()
+                        me.player.player.setVelocityX(-300);
 
                     break;
 
@@ -193,7 +193,7 @@ class Tableau1 extends Phaser.Scene {
 
                         me.Listrik.setVelocityX(300);
                         me.ListrikP.setVelocityX(150);
-                        me.player.moveRight();
+                        me.player.player.setVelocityX(300);
                         me.turn = false;
 
                     break;

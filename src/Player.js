@@ -40,7 +40,7 @@ class Player {
 
         }else{
             this.player.setVelocityY(-420);
-            this.player.play('jump', true);
+            //this.player.play('jump', true);
         }
 
     }
@@ -72,7 +72,7 @@ class Player {
         }else{
             this.player.setVelocityX(0);
             if (this.player.body.onFloor()) {
-                this.player.play('idle',true)
+                //this.player.play('idle',true)
             }
         }
 
