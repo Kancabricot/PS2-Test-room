@@ -38,6 +38,7 @@ class Player {
 
     jump(){
         if(this.scene.takeBat === true){
+            this.player.setVelocityY(-100);
 
         }else{
             this.player.setVelocityY(-420);
@@ -47,6 +48,8 @@ class Player {
     }
     moveRight(){
         if(this.scene.takeBat === true){
+            this.player.setVelocityX(150);
+            this.player.setFlipX(false);
 
         }else{
             this.player.setVelocityX(300);
@@ -58,6 +61,8 @@ class Player {
     }
     moveLeft(){
         if(this.scene.takeBat === true){
+            this.player.setVelocityX(-150);
+            this.player.setFlipX(true);
 
         }else{
             this.player.setVelocityX(-300);
@@ -69,6 +74,7 @@ class Player {
     }
     stop(){
         if(this.scene.takeBat === true){
+            this.player.setVelocityX(0);
 
         }else{
             this.player.setVelocityX(0);
