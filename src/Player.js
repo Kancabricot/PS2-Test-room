@@ -41,34 +41,37 @@ class Player {
             this.player.setVelocityY(-100);
 
         }else{
-            this.player.setVelocityY(-420);
+            this.player.setVelocityY(-320);
             this.player.play('jump', true);
         }
 
     }
-    moveRight(){
-        if(this.scene.takeBat === true){
-            this.player.setVelocityX(150);
+    moveRight() {
+        if (this.scene.takeBat === true) {
+            this.player.setVelocityX(200);
             this.player.setFlipX(false);
 
-        }else{
+        } else {
             this.player.setVelocityX(300);
             this.player.setFlipX(false);
-            if (this.player.body.onFloor()) {
-            this.player.play('walk', true)}
-        }
+            //     if (this.player.body.onFloor()) {
+            //     this.player.play('walk', true)}
+            // }
 
+        }
     }
     moveLeft(){
         if(this.scene.takeBat === true){
-            this.player.setVelocityX(-150);
+            this.player.setVelocityX(-200);
             this.player.setFlipX(true);
+
 
         }else{
             this.player.setVelocityX(-300);
-            if (this.player.body.onFloor()) {
-            this.player.play('walk', true)}
             this.player.setFlipX(true);
+            // if (this.player.body.onFloor()) {
+            //     this.player.play('walk',true)
+            // }
         }
 
     }
@@ -78,9 +81,7 @@ class Player {
 
         }else{
             this.player.setVelocityX(0);
-            if (this.player.body.onFloor()) {
-                this.player.play('idle',true)
-            }
+
         }
 
     }
