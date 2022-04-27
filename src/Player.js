@@ -6,6 +6,7 @@ class Player {
         this.player = this.scene.physics.add.sprite(50, 300, 'Listrik');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(false);
+
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
 
         this.scene.anims.create({
@@ -40,7 +41,7 @@ class Player {
 
         }else{
             this.player.setVelocityY(-420);
-            //this.player.play('jump', true);
+            this.player.play('jump', true);
         }
 
     }
@@ -50,8 +51,8 @@ class Player {
         }else{
             this.player.setVelocityX(300);
             this.player.setFlipX(false);
-            //if (this.player.body.onFloor()) {
-            //this.player.play('walk', true)}
+            if (this.player.body.onFloor()) {
+            this.player.play('walk', true)}
         }
 
     }
@@ -60,8 +61,8 @@ class Player {
 
         }else{
             this.player.setVelocityX(-300);
-            //if (this.player.body.onFloor()) {
-            //this.player.play('walk', true)}
+            if (this.player.body.onFloor()) {
+            this.player.play('walk', true)}
             this.player.setFlipX(true);
         }
 
@@ -72,7 +73,7 @@ class Player {
         }else{
             this.player.setVelocityX(0);
             if (this.player.body.onFloor()) {
-                //this.player.play('idle',true)
+                this.player.play('idle',true)
             }
         }
 

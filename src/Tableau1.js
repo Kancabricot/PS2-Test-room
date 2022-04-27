@@ -164,13 +164,13 @@ class Tableau1 extends Phaser.Scene {
             switch (kevent.keyCode) {
 
                 case Phaser.Input.Keyboard.KeyCodes.Q:
-
+                    me.player.stop();
                     me.Listrik.setVelocityX(0);
                     me.ListrikP.setVelocityX(0);
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.D:
-
+                    me.player.stop();
                     me.Listrik.setVelocityX(0);
                     me.ListrikP.setVelocityX(0);
                     break;
@@ -186,6 +186,7 @@ class Tableau1 extends Phaser.Scene {
                         me.ListrikP.setVelocityX(-150);
                         me.turn = true;
                         me.player.player.setVelocityX(-300);
+                        //me.player.moveLeft();
 
                     break;
 
@@ -195,6 +196,7 @@ class Tableau1 extends Phaser.Scene {
                         me.ListrikP.setVelocityX(150);
                         me.player.player.setVelocityX(300);
                         me.turn = false;
+                        //me.player.moveRight();
 
                     break;
 
@@ -269,7 +271,7 @@ class Tableau1 extends Phaser.Scene {
             console.log("Je suis mort");
         }
 
-        this.player.stop();
+
 
     }
 
