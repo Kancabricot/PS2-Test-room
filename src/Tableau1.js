@@ -26,7 +26,11 @@ class Tableau1 extends Phaser.Scene {
         this.recharge = false;
         this.turn = false;
         this.taillePile = 32;
+        this.open = false;
+        this.coorDoorx = 0;
 
+        // a voir si faire un container serai pas mieux pour l'icone baterry
+        //this.Listrik = this.add.container(0, 0);
 
         this.bg = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
         this.bg.setDisplaySize( 80000, 450);
@@ -40,9 +44,9 @@ class Tableau1 extends Phaser.Scene {
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
 
-        this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00)
+        this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
-        this.player = new Player(this)
+        this.player = new Player(this);
 
         // Création de l'arme qui sera au sol
         /*this.platfer = this.physics.add.sprite(200, 150,'platfer').setOrigin(0, 0);
@@ -58,31 +62,50 @@ class Tableau1 extends Phaser.Scene {
             "tilemap"
         );
 
-        const platforms = map.createLayer(
+        this.platforms = map.createLayer(
             "PLatforme",
             tileset
         );
+
         // chargement du calque décors
-        const decors = map.createLayer(
+        this.decors = map.createLayer(
             "Interactable",
             tileset
         );
 
+        // chargement du calque décors
+        this.door = map.createLayer(
+            "Porte",
+            tileset
+        );
+
+        this.coorDoorx = this.door.x;
+
         this.fer = this.physics.add.group({
             immovable : false,
             allowGravity: false,
-        })
+        });
 
         map.getObjectLayer('Hitbox_Fer').objects.forEach((Fer)=>{
             const collider = this.add.rectangle(Fer.x+(Fer.width*0.5),Fer.y,Fer.width,Fer.height)
             this.fer.add(collider)
 
-        })
+        });
+
+        this.levier = this.physics.add.group({
+            immovable : false,
+            allowGravity: false,
+        });
+
+        map.getObjectLayer('Levier').objects.forEach((Levier)=>{
+            const collider = this.add.rectangle(Levier.x+(Levier.width*0.5),Levier.y,Levier.width,Levier.height)
+            this.levier.add(collider)
+        });
 
         this.platmove = this.physics.add.group({
             immovable : false,
             allowGravity: false,
-        })
+        });
 
 
         // map.getObjectLayer('Platforme_move').objects.forEach((move)=>{
@@ -105,14 +128,15 @@ class Tableau1 extends Phaser.Scene {
 
 
 
-        platforms.setCollisionByExclusion(-1, true);
+        this.platforms.setCollisionByExclusion(-1, true);
+        this.door.setCollisionByExclusion(-1, true);
+
         //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
-        this.physics.add.collider(this.player.player, platforms);
-        // this.physics.add.collider(this.platfer, platforms);
-
-        this.physics.add.collider(this.pile, platforms);
+        this.physics.add.collider(this.player.player, this.platforms);
+        this.physics.add.collider(this.player.player, this.door);
+        this.physics.add.collider(this.pile, this.platforms);
 
 
         // redimentionnement du monde avec les dimensions calculées via tiled
@@ -123,17 +147,6 @@ class Tableau1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player.player, true, 1, 1);
 
 
-    }
-
-    // fonction pour faire regarder s'il y a un overlaps donc deux objets qui se touche pour l'utilisé plus facilement.
-
-    checkCollider(Objet1x,Objet1y,Object1TailleLargeur,Object1TailleHauteur,Objet2x,Objet2y,Objet2TaileLargeur,Objet2TailleHauteur){
-        if (Objet1x + Object1TailleLargeur > Objet2x && Objet1x < Objet2x + Objet2TaileLargeur
-                                            &&
-            Objet1y + Object1TailleHauteur > Objet2y && Objet1y < Objet2y + Objet2TailleHauteur) {
-            // Si toutes les conditons sont vrais alors il y a bien un overlaps, on renvoie donc true/vrai a notre foncion sinon on ne renvoie rien
-            return true
-        }
     }
 
     initKeyboard() {
@@ -168,15 +181,19 @@ class Tableau1 extends Phaser.Scene {
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.SPACE:
-                    me.player.jump()
+                    me.player.jump();
 
                     break;
 
                 case Phaser.Input.Keyboard.KeyCodes.E:
 
-                        if (me.physics.overlap(me.player.player, me.pile)===true){
+                        if (me.physics.overlap(me.player.player, me.pile)){
                            me.pile.setVisible(false);
                             me.takeBat = true;
+                            me.pile.x = 7.50;
+                            me.pile.y = 7.50;
+                        }else if(me.physics.overlap(me.player.player, me.levier)===true){
+                            me.open = me.open === false;
                         }
                         break;
 
@@ -184,12 +201,14 @@ class Tableau1 extends Phaser.Scene {
 
                 case Phaser.Input.Keyboard.KeyCodes.A:
 
+
+
                     if (me.takeBat === true) {
 
                         me.pile.x = me.player.player.x + 7.50;
                         me.pile.y = me.player.player.y + 7.50;
 
-                        me.pile.setVisible(true)
+                        me.pile.setVisible(true);
                         me.takeBat = false;
 
                     }
@@ -198,7 +217,19 @@ class Tableau1 extends Phaser.Scene {
         })
     }
 
+    FunctionDoor(door){
+        if(this.open === false){
+            door.x = this.coorDoorx;
+            door.setVisible(true);
+        }else{
+            door.x = 10000;
+            door.setVisible(false);
+        }
+    }
+
     update(){
+
+        this.FunctionDoor(this.door);
 
         if(this.Battery < this.chargeMax / 3){
             this.iconbat.fillColor = 0xff0000;
