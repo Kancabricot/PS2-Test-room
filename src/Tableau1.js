@@ -28,6 +28,7 @@ class Tableau1 extends Phaser.Scene {
         this.taillePile = 32;
         this.open = false;
         this.coorDoorx = 0;
+        this.genup = false;
 
         // a voir si faire un container serai pas mieux pour l'icone baterry
         //this.Listrik = this.add.container(0, 0);
@@ -79,6 +80,7 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
+
         this.coorDoorx = this.door.x;
 
         this.fer = this.physics.add.group({
@@ -102,10 +104,20 @@ class Tableau1 extends Phaser.Scene {
             this.levier.add(collider)
         });
 
-        this.platmove = this.physics.add.group({
+        this.gen = this.physics.add.group({
             immovable : false,
             allowGravity: false,
         });
+
+        map.getObjectLayer('Generateur').objects.forEach((gen)=>{
+            const collider = this.add.rectangle(gen.x+(gen.width*0.5),gen.y,gen.width,gen.height)
+            this.gen.add(collider)
+        });
+
+        // this.platmove = this.physics.add.group({
+        //     immovable : false,
+        //     allowGravity: false,
+        // });
 
 
         // map.getObjectLayer('Platforme_move').objects.forEach((move)=>{
@@ -146,6 +158,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.cameras.main.startFollow(this.player.player, true, 1, 1);
 
+        this.initKeyboard();
 
     }
 
@@ -192,8 +205,12 @@ class Tableau1 extends Phaser.Scene {
                             me.takeBat = true;
                             me.pile.x = 7.50;
                             me.pile.y = 7.50;
-                        }else if(me.physics.overlap(me.player.player, me.levier)===true){
+                        }else if(me.physics.overlap(me.player.player, me.levier)===true ){
                             me.open = me.open === false;
+                        }else if (me.physics.overlap(me.player.player, me.gen)===true){
+                            me.genup = me.genup !== true;
+
+                            console.log("change de mode")
                         }
                         break;
 
@@ -249,7 +266,9 @@ class Tableau1 extends Phaser.Scene {
 
         if(this.physics.overlap(this.player.player, this.fer)===true && this.physics.overlap(this.pile, this.fer)){
             this.recharge = true;
-        }else {
+        }else if(this.genup === true && this.pile.visible === false){
+            this.recharge = false;
+        }else{
             this.recharge = this.takeBat !== false;
         }
 
@@ -257,6 +276,7 @@ class Tableau1 extends Phaser.Scene {
             this.Battery = this.chargeMax;
         }else{
             this.Battery -= 1;
+            console.log("perd de la battery")
         }
 
         if(this.Battery  < 0){
@@ -264,7 +284,6 @@ class Tableau1 extends Phaser.Scene {
             console.log("Je suis mort");
         }
 
-        this.initKeyboard();
 
     }
 
