@@ -86,4 +86,42 @@ class Player {
 
     }
 
+    updateListrik(){
+        if(this.scene.Battery < this.scene.chargeMax / 3){
+            this.scene.iconbat.fillColor = 0xff0000;
+        }else  if(this.scene.Battery < (this.scene.chargeMax / 3)*2){
+            this.scene.iconbat.fillColor = 0xff9f00;
+        }else{
+            this.scene.iconbat.fillColor = 0x00ff00;
+        }
+
+        if(this.scene.turn === true){
+            this.scene.iconbat.x = this.player.x +7;
+            this.scene.iconbat.y = this.player.y +10;
+        }else{
+            this.scene.iconbat.x = this.player.x -7;
+            this.scene.iconbat.y = this.player.y +10;
+        }
+
+        if(this.scene.physics.overlap(this.player, this.scene.fer)===true && this.scene.physics.overlap(this.scene.pile, this.scene.fer)){
+            this.scene.recharge = true;
+        }else if(this.scene.genup === true && this.scene.pile.visible === false){
+            this.scene.recharge = false;
+        }else{
+            this.scene.recharge = this.scene.takeBat !== false;
+        }
+
+        if(this.scene.recharge === true){
+            this.scene.Battery = this.scene.chargeMax;
+        }else{
+            this.scene.Battery -= 1;
+            console.log("perd de la battery")
+        }
+
+        if(this.scene.Battery  < 0){
+            this.player.player.destroy();
+            console.log("Je suis mort");
+        }
+    }
+
 }

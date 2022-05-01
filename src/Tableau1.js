@@ -248,43 +248,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.FunctionDoor(this.door);
 
-        if(this.Battery < this.chargeMax / 3){
-            this.iconbat.fillColor = 0xff0000;
-        }else  if(this.Battery < (this.chargeMax / 3)*2){
-            this.iconbat.fillColor = 0xff9f00;
-        }else{
-            this.iconbat.fillColor = 0x00ff00;
-        }
-
-        if(this.turn === true){
-            this.iconbat.x = this.player.player.x +7;
-            this.iconbat.y = this.player.player.y +10;
-        }else{
-            this.iconbat.x = this.player.player.x -7;
-            this.iconbat.y = this.player.player.y +10;
-        }
-
-        if(this.physics.overlap(this.player.player, this.fer)===true && this.physics.overlap(this.pile, this.fer)){
-            this.recharge = true;
-        }else if(this.genup === true && this.pile.visible === false){
-            this.recharge = false;
-        }else{
-            this.recharge = this.takeBat !== false;
-        }
-
-        if(this.recharge === true){
-            this.Battery = this.chargeMax;
-        }else{
-            this.Battery -= 1;
-            console.log("perd de la battery")
-        }
-
-        if(this.Battery  < 0){
-            this.player.player.destroy();
-            console.log("Je suis mort");
-        }
-
-
+        this.player.updateListrik();
     }
 
     // fin du programme
