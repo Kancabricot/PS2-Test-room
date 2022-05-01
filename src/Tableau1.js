@@ -211,6 +211,14 @@ class Tableau1 extends Phaser.Scene {
                             me.genup = me.genup !== true;
 
                             console.log("change de mode")
+                        }else if (me.takeBat === true) {
+
+                            me.pile.x = me.player.player.x + 7.50;
+                            me.pile.y = me.player.player.y + 7.50;
+
+                            me.pile.setVisible(true);
+                            me.takeBat = false;
+
                         }
                         break;
 
@@ -220,15 +228,7 @@ class Tableau1 extends Phaser.Scene {
 
 
 
-                    if (me.takeBat === true) {
 
-                        me.pile.x = me.player.player.x + 7.50;
-                        me.pile.y = me.player.player.y + 7.50;
-
-                        me.pile.setVisible(true);
-                        me.takeBat = false;
-
-                    }
                     break;
             }
         })
