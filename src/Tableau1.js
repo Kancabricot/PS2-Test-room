@@ -108,7 +108,7 @@ class Tableau1 extends Phaser.Scene {
         });
 
         map.getObjectLayer('Levier').objects.forEach((Levier)=>{
-            const collider = this.add.rectangle(Levier.x+(Levier.width*0.5),Levier.y,Levier.width,Levier.height)
+            const collider = this.add.rectangle(Levier.x+(Levier.width*0.5),Levier.y-(Levier.height*0.5),Levier.width,Levier.height)
             this.levier.add(collider)
         });
 
@@ -133,13 +133,13 @@ class Tableau1 extends Phaser.Scene {
         //     this.platmove.add(platmove)
         // })
 
-        this.tweens.add({
-            targets: this.platmove,
-            y: 200,
-            duration: 4000,
-            repeat: -1,
-            yoyo: true
-        });
+        // this.tweens.add({
+        //     targets: this.platmove,
+        //     y: 200,
+        //     duration: 4000,
+        //     repeat: -1,
+        //     yoyo: true
+        // });
 
         // const hitbox_fer = map.createLayer(
         //     "Hitbox_Fer",
@@ -149,13 +149,13 @@ class Tableau1 extends Phaser.Scene {
 
 
         this.platforms.setCollisionByExclusion(-1, true);
-        this.door.setCollisionByExclusion(-1, true);
+        // this.doorthis.door.setCollisionByExclusion(-1, true);
 
         //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
         this.physics.add.collider(this.player.player, this.platforms);
-        this.physics.add.collider(this.player.player, this.door);
+        //this.physics.add.collider(this.player.player, this.door);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -255,21 +255,21 @@ class Tableau1 extends Phaser.Scene {
         }
     }
 
-    FunctionDoor(door){
-        if(this.open === false){
-            door.x = this.coorDoorx;
-            door.setVisible(true);
-        }else{
-            door.x = 10000;
-            door.setVisible(false);
-        }
-    }
+    // FunctionDoor(door){
+    //     if(this.open === false){
+    //         door.x = this.coorDoorx;
+    //         door.setVisible(true);
+    //     }else{
+    //         door.x = 10000;
+    //         door.setVisible(false);
+    //     }
+    // }
 
     update(){
 
         this.Gestioncam();
 
-        this.FunctionDoor(this.door);
+        //this.FunctionDoor(this.door);
 
         this.player.updateListrik();
     }
