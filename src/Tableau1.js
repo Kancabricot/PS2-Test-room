@@ -29,6 +29,7 @@ class Tableau1 extends Phaser.Scene {
         this.open = false;
         this.coorDoorx = 0;
         this.genup = false;
+        this.door1;
 
         // a voir si faire un container serai pas mieux pour l'icone baterry
         //this.Listrik = this.add.container(0, 0);
@@ -39,7 +40,13 @@ class Tableau1 extends Phaser.Scene {
         this.bg.setVisible(true);
         this.bg.setVelocityY(0);
 
-        // Création de l'arme qui sera au sol
+        // Création de la pile
+        this.cam = this.physics.add.sprite(0, 0,'pile').setOrigin(0, 0);
+        this.cam.setDisplaySize(1,1);
+        this.cam.body.setAllowGravity(false);
+        this.cam.setImmovable(false);
+
+        // Création de la target pour la camera
         this.pile = this.physics.add.sprite(150, -0,'pile').setOrigin(0, 0);
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
@@ -74,14 +81,8 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
-        // chargement du calque décors
-        this.door = map.createLayer(
-            "Porte",
-            tileset
-        );
 
-
-        this.coorDoorx = this.door.x;
+        // this.coorDoorx = this.door.x;
 
         this.fer = this.physics.add.group({
             immovable : false,
@@ -92,6 +93,13 @@ class Tableau1 extends Phaser.Scene {
             const collider = this.add.rectangle(Fer.x+(Fer.width*0.5),Fer.y,Fer.width,Fer.height)
             this.fer.add(collider)
 
+        });
+
+        map.getObjectLayer('Porte').objects.forEach((door)=>{
+            const collider = this.add.rectangle(door.x+(door.width*0.5),door.y,door.width,door.height)
+            if(collider.name === "porte1-1"){
+                this.door1 = collider
+            }
         });
 
         this.levier = this.physics.add.group({
@@ -152,11 +160,11 @@ class Tableau1 extends Phaser.Scene {
 
 
         // redimentionnement du monde avec les dimensions calculées via tiled
-                this.physics.world.setBounds(0, 0, 3200, 640);
+                this.physics.world.setBounds(0, 0, 3200, 10000);
         //  ajout du champs de la caméra de taille identique à celle du monde
-                this.cameras.main.setBounds(0, 0, 3200, 640);
+                this.cameras.main.setBounds(0, 0, 3200, 10000);
 
-        this.cameras.main.startFollow(this.player.player, true, 1, 1);
+        this.cameras.main.startFollow(this.cam, false, 1, 1);
 
         this.initKeyboard();
 
@@ -234,6 +242,19 @@ class Tableau1 extends Phaser.Scene {
         })
     }
 
+    Gestioncam(){
+        if(this.player.player.x < 1400 && this.player.player.y < 800){
+            this.cam.x = 700;
+            this.cam.y = 400;
+        }else if(this.player.player.x < 1400*2 && this.player.player.y < 800){
+            this.cam.x = (700*3)-22;
+            this.cam.y = 400;
+        }else if(this.player.player.x < 1400 && this.player.player.y < 800*2){
+            this.cam.x = 700;
+            this.cam.y = (400*3)-32;
+        }
+    }
+
     FunctionDoor(door){
         if(this.open === false){
             door.x = this.coorDoorx;
@@ -245,6 +266,8 @@ class Tableau1 extends Phaser.Scene {
     }
 
     update(){
+
+        this.Gestioncam();
 
         this.FunctionDoor(this.door);
 

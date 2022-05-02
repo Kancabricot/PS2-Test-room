@@ -38,10 +38,10 @@ class Player {
 
     jump(){
         if(this.scene.takeBat === true){
-            this.player.setVelocityY(-100);
+            this.player.setVelocityY(-220);
 
         }else{
-            this.player.setVelocityY(-320);
+            this.player.setVelocityY(-420);
             this.player.play('jump', true);
         }
 
