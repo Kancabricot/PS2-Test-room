@@ -32,7 +32,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.door1 = this.physics.add.group({
             allowGravity: false,
-            immovable: false
+            immovable: true
         });
 
         // a voir si faire un container serai pas mieux pour l'icone baterry
@@ -112,8 +112,7 @@ class Tableau1 extends Phaser.Scene {
 
             switch (name) {
                 case 'porte1': {
-                    let door = this.add.sprite(x,y,"pile").setOrigin(0,0)
-                    this.door1.add(door)
+                    this.door1 = this.add.sprite(x,y,"cube").setOrigin(0,0)
                     break;
                 }
             }
@@ -267,12 +266,9 @@ class Tableau1 extends Phaser.Scene {
     FunctionDoor(door){
         if(this.open === false){
             door.x = this.coorDoorx;
-            door.setVisible(true);
-            console.log(door.x);
         }else{
+            this.coorDoorx = door.x;
             door.x = 10000;
-            door.setVisible(false);
-            console.log(door.x)
         }
     }
 
