@@ -29,7 +29,11 @@ class Tableau1 extends Phaser.Scene {
         this.open = false;
         this.coorDoorx = 0;
         this.genup = false;
-        this.door1;
+
+        this.door1 = this.physics.add.group({
+            allowGravity: false,
+            immovable: false
+        });
 
         // a voir si faire un container serai pas mieux pour l'icone baterry
         //this.Listrik = this.add.container(0, 0);
@@ -95,12 +99,25 @@ class Tableau1 extends Phaser.Scene {
 
         });
 
-        map.getObjectLayer('Porte').objects.forEach((door)=>{
-            const collider = this.add.rectangle(door.x+(door.width*0.5),door.y,door.width,door.height)
-            if(collider.name === "porte1-1"){
-                this.door1 = collider
+        // map.getObjectLayer('Porte').objects.forEach((door)=>{
+        //     const collider = this.add.rectangle(door.x+(door.width*0.5),door.y,door.width,door.height)
+        //     if(collider.name === "porte1-1"){
+        //         this.door1 = collider
+        //     }
+        // });
+
+        const objectsLayer = map.getObjectLayer('Porte')
+        objectsLayer.objects.forEach(objData=> {
+            const {x = 0, y = 0, name} = objData
+
+            switch (name) {
+                case 'porte1': {
+                    let door = this.add.sprite(x,y,"pile").setOrigin(0,0)
+                    this.door1.add(door)
+                    break;
+                }
             }
-        });
+        })
 
         this.levier = this.physics.add.group({
             immovable : false,
@@ -149,13 +166,13 @@ class Tableau1 extends Phaser.Scene {
 
 
         this.platforms.setCollisionByExclusion(-1, true);
-        // this.doorthis.door.setCollisionByExclusion(-1, true);
+        // this.door1.setCollisionByExclusion(-1, true);
 
         //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
         this.physics.add.collider(this.player.player, this.platforms);
-        //this.physics.add.collider(this.player.player, this.door);
+        this.physics.add.collider(this.player.player, this.door1);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -215,6 +232,7 @@ class Tableau1 extends Phaser.Scene {
                             me.pile.y = 7.50;
                         }else if(me.physics.overlap(me.player.player, me.levier)===true ){
                             me.open = me.open === false;
+                            me.FunctionDoor(me.door1);
                         }else if (me.physics.overlap(me.player.player, me.gen)===true){
                             me.genup = me.genup !== true;
 
@@ -229,15 +247,6 @@ class Tableau1 extends Phaser.Scene {
 
                         }
                         break;
-
-                        // une action qui pose l'arme que on as en main.
-
-                case Phaser.Input.Keyboard.KeyCodes.A:
-
-
-
-
-                    break;
             }
         })
     }
@@ -255,21 +264,23 @@ class Tableau1 extends Phaser.Scene {
         }
     }
 
-    // FunctionDoor(door){
-    //     if(this.open === false){
-    //         door.x = this.coorDoorx;
-    //         door.setVisible(true);
-    //     }else{
-    //         door.x = 10000;
-    //         door.setVisible(false);
-    //     }
-    // }
+    FunctionDoor(door){
+        if(this.open === false){
+            door.x = this.coorDoorx;
+            door.setVisible(true);
+            console.log(door.x);
+        }else{
+            door.x = 10000;
+            door.setVisible(false);
+            console.log(door.x)
+        }
+    }
 
     update(){
 
         this.Gestioncam();
 
-        //this.FunctionDoor(this.door);
+
 
         this.player.updateListrik();
     }
