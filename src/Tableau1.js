@@ -222,13 +222,11 @@ class Tableau1 extends Phaser.Scene {
 
             console.log("change de mode")
         }else if (this.takeBat === true) {
-
             this.pile.x = player.x + 7.50;
             this.pile.y = player.y + 7.50;
 
             this.pile.setVisible(true);
             this.takeBat = false;
-
         }
     }
 
