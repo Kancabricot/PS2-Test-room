@@ -121,6 +121,36 @@ class Tableau1 extends Phaser.Scene {
             }
         })
 
+        const cam = map.getObjectLayer('cam')
+        cam.objects.forEach(objData=> {
+            const {x = 0, y = 0, name} = objData
+
+            switch (name) {
+                case '1-2': {
+                    this.cam1 = this.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.cam1.setDisplaySize(1344,704);
+                    this.cam1.setVisible(false)
+                    console.log("fesnog")
+                    break;
+                }
+                case '2-1': {
+                    this.door2 = this.add.sprite(x,y,"cube").setOrigin(0,0)
+
+                    break;
+                }
+                case '2-2': {
+                    this.levier1 = this.add.sprite(x,y-32,"cube").setOrigin(0,0)
+
+                    break;
+                }
+                case '3-1': {
+                    this.levier2 = this.add.sprite(x,y-32,"cube").setOrigin(0,0)
+
+                    break;
+                }
+            }
+        })
+
         // this.platmove = this.physics.add.group({
         //     immovable : false,
         //     allowGravity: false,
@@ -140,7 +170,7 @@ class Tableau1 extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
-        
+
         // tween.stop();
         // tween.play();
 
