@@ -26,9 +26,9 @@ class Tableau1 extends Phaser.Scene {
         this.recharge = false;
         this.turn = false;
         this.taillePile = 32;
-        this.open = false;
         this.coorDoorx = 0;
         this.genup = false;
+
 
         this.door1 = this.physics.add.group({
             allowGravity: false,
@@ -79,32 +79,37 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
-        // map.getObjectLayer('Porte').objects.forEach((door)=>{
-        //     const collider = this.add.rectangle(door.x+(door.width*0.5),door.y,door.width,door.height)
-        //     if(collider.name === "porte1-1"){
-        //         this.door1 = collider
-        //     }
-        // });
-
         const objectsLayer = map.getObjectLayer('Objet')
         objectsLayer.objects.forEach(objData=> {
             const {x = 0, y = 0, name} = objData
 
             switch (name) {
                 case 'porte1': {
-                    this.door1 = this.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door1.setDisplaySize(32,32*4);
+                    this.door1.body.setAllowGravity(false);
+                    this.door1.setImmovable(true);
                     break;
                 }
                 case 'porte2': {
-                    this.door2 = this.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door2.setDisplaySize(32,32*4);
+                    this.door2.body.setAllowGravity(false);
+                    this.door2.setImmovable(true);
                     break;
                 }
                 case 'levier1': {
-                    this.levier1 = this.add.sprite(x,y-64,"pile").setOrigin(0,0)
+                    this.levier1 = this.physics.add.sprite(x,y-32,"cube").setOrigin(0,0)
+                    this.levier1.setDisplaySize(32,32);
+                    this.levier1.body.setAllowGravity(false);
+                    this.levier1.setImmovable(true);
                     break;
                 }
                 case 'levier2': {
-                    this.levier2 = this.add.sprite(x,y-64,"pile").setOrigin(0,0)
+                    this.levier2 = this.physics.add.sprite(x,y-32,"cube").setOrigin(0,0)
+                    this.levier2.setDisplaySize(32,32);
+                    this.levier2.body.setAllowGravity(false);
+                    this.levier2.setImmovable(true);
                     break;
                 }
             }
@@ -137,13 +142,13 @@ class Tableau1 extends Phaser.Scene {
 
 
         this.platforms.setCollisionByExclusion(-1, true);
-        // this.door1.setCollisionByExclusion(-1, true);
 
         //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
         this.physics.add.collider(this.player.player, this.platforms);
         this.physics.add.collider(this.player.player, this.door1);
+        this.physics.add.collider(this.player.player, this.door2);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -210,13 +215,13 @@ class Tableau1 extends Phaser.Scene {
             this.pile.x = 7.50;
             this.pile.y = 7.50;
         }else if(this.physics.overlap(player, this.levier1)===true ){
-            this.open = this.open === false;
-            console.log("yesman")
-            this.FunctionDoor(this.door1);
+            this.open1 = this.open1 === false;
+            this.FunctionDoor(this.door1,this.open1);
+            console.log(this.open1)
         }else if(this.physics.overlap(player, this.levier2)===true ){
-            this.open = this.open === false;
-            console.log("yesman")
-            this.FunctionDoor(this.door2);
+            this.open2 = this.open2 === false;
+            this.FunctionDoor(this.door2,this.open2);
+            console.log(this.open2)
         }else if (this.physics.overlap(player, this.gen)===true){
             this.genup = this.genup !== true;
 
@@ -262,8 +267,8 @@ class Tableau1 extends Phaser.Scene {
         //console.log("checkmap")
     }
 
-    FunctionDoor(door){
-        if(this.open === false){
+    FunctionDoor(door,open){
+        if(open === true){
             door.x = this.coorDoorx;
         }else{
             this.coorDoorx = door.x;
@@ -275,8 +280,8 @@ class Tableau1 extends Phaser.Scene {
 
         this.Gestioncam();
 
-        // console.log(this.player.player.x)
-        // console.log(this.player.player.y)
+        console.log(this.player.player.x)
+        console.log(this.player.player.y)
 
         this.player.updateListrik();
     }
