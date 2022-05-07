@@ -140,6 +140,9 @@ class Tableau1 extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
+        
+        // tween.stop();
+        // tween.play();
 
         // const hitbox_fer = map.createLayer(
         //     "Hitbox_Fer",
