@@ -21,7 +21,7 @@ class Tableau1 extends Phaser.Scene {
 
     create() {
         this.takeBat = false;
-        this.chargeMax = 2500;
+        this.chargeMax = 999999999999999;
         this.Battery = this.chargeMax;
         this.recharge = false;
         this.turn = false;
@@ -55,6 +55,12 @@ class Tableau1 extends Phaser.Scene {
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
+
+       // platforme mouvante de base
+        this.platmove = this.physics.add.sprite(1984, 1504,'pile').setOrigin(0, 0);
+        this.platmove.setDisplaySize(32*6,32);
+        this.platmove.body.setAllowGravity(false);
+        this.platmove.setImmovable(true);
 
         this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
@@ -126,13 +132,14 @@ class Tableau1 extends Phaser.Scene {
         //     this.platmove.add(platmove)
         // })
 
-        // this.tweens.add({
-        //     targets: this.platmove,
-        //     y: 200,
-        //     duration: 4000,
-        //     repeat: -1,
-        //     yoyo: true
-        // });
+        this.tweens.add({
+            targets: this.platmove,
+            y: 600,
+            duration: 8000,
+            ease: 'Sine.easeInOut',
+            repeat: -1,
+            yoyo: true
+        });
 
         // const hitbox_fer = map.createLayer(
         //     "Hitbox_Fer",
@@ -149,6 +156,7 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.player.player, this.platforms);
         this.physics.add.collider(this.player.player, this.door1);
         this.physics.add.collider(this.player.player, this.door2);
+        this.physics.add.collider(this.player.player, this.platmove);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -164,7 +172,7 @@ class Tableau1 extends Phaser.Scene {
     }
 
     initKeyboard() {
-        let me = this;
+        let me = this;-
 
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
@@ -280,8 +288,8 @@ class Tableau1 extends Phaser.Scene {
 
         this.Gestioncam();
 
-        console.log(this.player.player.x)
-        console.log(this.player.player.y)
+        // console.log(this.player.player.x)
+        // console.log(this.player.player.y)
 
         this.player.updateListrik();
     }
