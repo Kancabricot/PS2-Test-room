@@ -272,7 +272,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -404,7 +404,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -1236,12 +1236,12 @@
                  "x":256,
                  "y":96
                 }],
-         "height":144,
+         "height":112,
          "id":1,
          "name":"PLatforme",
          "opacity":1,
          "startx":0,
-         "starty":-32,
+         "starty":0,
          "type":"tilelayer",
          "visible":true,
          "width":272,
@@ -1249,10 +1249,10 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":90,
+ "nextobjectid":94,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.2",
+ "tiledversion":"1.8.1",
  "tileheight":32,
  "tilesets":[
         {
