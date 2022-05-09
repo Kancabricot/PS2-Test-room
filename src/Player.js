@@ -103,13 +103,13 @@ class Player {
             this.scene.iconbat.y = this.player.y +10;
         }
 
-        if(this.scene.physics.overlap(this.player, this.scene.fer)===true && this.scene.physics.overlap(this.scene.pile, this.scene.fer)){
-            this.scene.recharge = true;
-        }else if(this.scene.genup === true && this.scene.pile.visible === false){
-            this.scene.recharge = false;
-        }else{
-            this.scene.recharge = this.scene.takeBat !== false;
-        }
+        // if(this.scene.physics.overlap(this.player, this.scene.fer)===true && this.scene.physics.overlap(this.scene.pile, this.scene.fer)){
+        //     this.scene.recharge = true;
+        // }else if(this.scene.genup === true && this.scene.pile.visible === false){
+        //     this.scene.recharge = false;
+        // }else{
+        //     this.scene.recharge = this.scene.takeBat !== false;
+        // }
 
         if(this.scene.recharge === true){
             this.scene.Battery = this.scene.chargeMax;
