@@ -225,11 +225,22 @@
                  "width":96,
                  "x":3008,
                  "y":1376
-                }, 
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":12,
+         "name":"grab",
+         "objects":[
                 {
                  "gid":51,
                  "height":32,
-                 "id":105,
+                 "id":123,
                  "name":"grab",
                  "rotation":0,
                  "type":"",
@@ -241,7 +252,7 @@
                 {
                  "gid":51,
                  "height":32,
-                 "id":106,
+                 "id":124,
                  "name":"grab",
                  "rotation":0,
                  "type":"",
@@ -253,7 +264,7 @@
                 {
                  "gid":51,
                  "height":32,
-                 "id":107,
+                 "id":125,
                  "name":"grab",
                  "rotation":0,
                  "type":"",
@@ -265,7 +276,7 @@
                 {
                  "gid":51,
                  "height":32,
-                 "id":108,
+                 "id":126,
                  "name":"grab",
                  "rotation":0,
                  "type":"",
@@ -277,7 +288,7 @@
                 {
                  "gid":51,
                  "height":32,
-                 "id":109,
+                 "id":127,
                  "name":"grab",
                  "rotation":0,
                  "type":"",
@@ -285,6 +296,54 @@
                  "width":32,
                  "x":3968,
                  "y":864
+                }, 
+                {
+                 "gid":51,
+                 "height":32,
+                 "id":128,
+                 "name":"grab",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":768,
+                 "y":1344
+                }, 
+                {
+                 "gid":51,
+                 "height":32,
+                 "id":129,
+                 "name":"grab",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":928,
+                 "y":1248
+                }, 
+                {
+                 "gid":51,
+                 "height":32,
+                 "id":130,
+                 "name":"grab",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":288,
+                 "y":1440
+                }, 
+                {
+                 "gid":51,
+                 "height":32,
+                 "id":131,
+                 "name":"grab",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":416,
+                 "y":1248
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1397,8 +1456,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":12,
- "nextobjectid":110,
+ "nextlayerid":13,
+ "nextobjectid":132,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.1",
@@ -1413,7 +1472,7 @@
          "margin":1,
          "name":"TestroomTiled",
          "spacing":1,
-         "tilecount":162,
+         "tilecount":81,
          "tileheight":32,
          "tilewidth":32
         }],

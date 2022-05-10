@@ -267,6 +267,7 @@ class Tableau1 extends Phaser.Scene {
             }
         })
 
+
         // this.platmove = this.physics.add.group({
         //     immovable : false,
         //     allowGravity: false,
