@@ -293,7 +293,7 @@ class Tableau1 extends Phaser.Scene {
         //platfer.setCollisionByExclusion(-1, true);
 
         // Creation des collision
-        //this.physics.add.collider(this.player.player, this.platforms);
+        this.physics.add.collider(this.player.player, this.platforms);
         this.physics.add.collider(this.player.player, this.door1);
         this.physics.add.collider(this.player.player, this.door2);
         this.physics.add.collider(this.player.player, this.platmove1);
@@ -437,7 +437,7 @@ class Tableau1 extends Phaser.Scene {
             yoyo: true
         });
 
-        this.tweens.add({
+        this.allo = this.tweens.add({
             name: "platmove2",
             targets: this.platmove2,
             y: 730,
@@ -446,6 +446,8 @@ class Tableau1 extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
+        this.allo.pause()
+        this.allo.resume()
 
         this.tweens.add({
             name: "platmove3",
