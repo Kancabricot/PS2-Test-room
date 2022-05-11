@@ -21,8 +21,6 @@ class Tableau1 extends Phaser.Scene {
 
     create() {
         this.takeBat = false;
-        this.chargeMax = 9999999999;
-        this.Battery = this.chargeMax;
         this.recharge = false;
         this.turn = false;
         this.taillePile = 32;
@@ -38,17 +36,17 @@ class Tableau1 extends Phaser.Scene {
         // a voir si faire un container serai pas mieux pour l'icone baterry
         //this.Listrik = this.add.container(0, 0);
 
-        this.bg = this.physics.add.sprite(0, 0, 'bg').setOrigin(0, 0);
-        this.bg.setDisplaySize( 80000, 450);
-        this.bg.body.setAllowGravity(false);
-        this.bg.setVisible(true);
-        this.bg.setVelocityY(0);
-
         // Création de la target pour la camera
         this.pile = this.physics.add.sprite(150, 900,'pile').setOrigin(0, 0);
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
+
+        // Création de la target pour la camera
+        this.grappin = this.physics.add.sprite(150, 900,'cube').setOrigin(0, 0);
+        this.grappin.setDisplaySize(32,32);
+        this.grappin.body.setAllowGravity(false);
+        this.grappin.setImmovable(true);
 
         this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
@@ -267,6 +265,15 @@ class Tableau1 extends Phaser.Scene {
             }
         })
 
+        this.grab = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+
+        map.getObjectLayer('grab').objects.forEach((grab) => {
+            this.grab.create(grab.x, grab.y- grab.height, 'grab').setOrigin(0).setPipeline('Light2D');
+        });
+
 
         // this.platmove = this.physics.add.group({
         //     immovable : false,
@@ -307,6 +314,8 @@ class Tableau1 extends Phaser.Scene {
                 this.physics.world.setBounds(0, 0, 3200000, 1000000);
         //  ajout du champs de la caméra de taille identique à celle du monde
                 this.cameras.main.setBounds(0, 0, 3200000, 1000000);
+
+        this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
 
         this.initKeyboard();
         this.Gestioncam(this.player.player);
@@ -355,8 +364,25 @@ class Tableau1 extends Phaser.Scene {
                     me.GestionEvent(me.player.player);
 
                     break;
+
+                case Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE:
+
+                    me.grappin.y = game.input.mousePointer.worldY;
+                    me.grappin.x = game.input.mousePointer.worldX;
+
+                    break;
             }
         })
+    }
+
+    actiongrab(grappin,grab){
+        let me = this;
+        console.log("febs")
+        grappin.x = -10;
+        grappin.y = -10;
+
+        me.physics.moveToObject(me.player.player, grab, 800);
+
     }
 
     GestionEvent(player){

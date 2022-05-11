@@ -13,6 +13,6 @@ let gameConfig = {
             fps : 60
         }
     },
-    scene: new Tableau1()
+    scene: [Tableau1]
 };
 let game = new Phaser.Game(gameConfig);

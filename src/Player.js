@@ -6,7 +6,8 @@ class Player {
         this.player = this.scene.physics.add.sprite(150, 900, 'Listrik');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(false);
-
+        this.chargeMax = 9999999999;
+        this.Battery = this.chargeMax;
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
 
         this.scene.anims.create({
@@ -44,7 +45,6 @@ class Player {
             this.player.setVelocityY(-420);
             this.player.play('jump', true);
         }
-
     }
     moveRight() {
         if (this.scene.takeBat === true) {
@@ -87,9 +87,9 @@ class Player {
     }
 
     updateListrik(){
-        if(this.scene.Battery < this.scene.chargeMax / 3){
+        if(this.Battery < this.chargeMax / 3){
             this.scene.iconbat.fillColor = 0xff0000;
-        }else  if(this.scene.Battery < (this.scene.chargeMax / 3)*2){
+        }else  if(this.Battery < (this.chargeMax / 3)*2){
             this.scene.iconbat.fillColor = 0xff9f00;
         }else{
             this.scene.iconbat.fillColor = 0x00ff00;
@@ -103,22 +103,20 @@ class Player {
             this.scene.iconbat.y = this.player.y +10;
         }
 
-        // if(this.scene.physics.overlap(this.player, this.scene.fer)===true && this.scene.physics.overlap(this.scene.pile, this.scene.fer)){
-        //     this.scene.recharge = true;
-        // }else if(this.scene.genup === true && this.scene.pile.visible === false){
-        //     this.scene.recharge = false;
-        // }else{
-        //     this.scene.recharge = this.scene.takeBat !== false;
-        // }
+        if(this.scene.genup === true && this.scene.pile.visible === false){
+            this.scene.recharge = false;
+        }else{
+            this.scene.recharge = this.scene.takeBat !== false;
+        }
 
         if(this.scene.recharge === true){
-            this.scene.Battery = this.scene.chargeMax;
+            this.Battery = this.scene.chargeMax;
         }else{
-            this.scene.Battery -= 1;
+            this.Battery -= 1;
             console.log("perd de la battery")
         }
 
-        if(this.scene.Battery  < 0){
+        if(this.Battery  < 0){
             this.player.player.destroy();
             console.log("Je suis mort");
         }
