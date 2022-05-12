@@ -316,6 +316,7 @@ class Tableau1 extends Phaser.Scene {
                 this.cameras.main.setBounds(0, 0, 3200000, 1000000);
 
         this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
+        this.physics.add.overlap(this.grab, this.player.player, this.gravite,  null, this)
 
         this.initKeyboard();
         this.Gestioncam(this.player.player);
@@ -380,9 +381,18 @@ class Tableau1 extends Phaser.Scene {
         console.log("febs")
         grappin.x = -10;
         grappin.y = -10;
+        me.player.player.body.setAllowGravity(false)
+        me.physics.moveToObject(me.player.player, grab, 400);
 
-        me.physics.moveToObject(me.player.player, grab, 800);
 
+
+    }
+
+    gravite(){
+      let me = this;
+      
+      me.player.player.setVelocity(0);
+      me.player.player.body.setAllowGravity(true);
     }
 
     GestionEvent(player){
