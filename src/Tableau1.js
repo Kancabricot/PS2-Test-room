@@ -48,6 +48,13 @@ class Tableau1 extends Phaser.Scene {
         this.grappin.body.setAllowGravity(false);
         this.grappin.setImmovable(true);
 
+        // Création de la target pour la camera
+        this.target = this.physics.add.sprite(150, 900,'cube').setOrigin(0, 0);
+        this.target.setDisplaySize(1,1);
+        this.target.body.setAllowGravity(false);
+        this.target.setImmovable(true);
+        this.target.setVisible(false);
+
         this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
         this.player = new Player(this);
@@ -274,7 +281,6 @@ class Tableau1 extends Phaser.Scene {
             this.grab.create(grab.x, grab.y- grab.height, 'grab').setOrigin(0).setPipeline('Light2D');
         });
 
-
         // this.platmove = this.physics.add.group({
         //     immovable : false,
         //     allowGravity: false,
@@ -366,10 +372,13 @@ class Tableau1 extends Phaser.Scene {
 
                     break;
 
-                case Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE:
+                case Phaser.Input.Keyboard.KeyCodes.F:
 
-                    me.grappin.y = game.input.mousePointer.worldY;
-                    me.grappin.x = game.input.mousePointer.worldX;
+                    me.grappin.setVelocity(0);
+                    me.grappin.setVisible(true);
+                    me.grappin.x = me.player.player.x;
+                    me.grappin.y = me.player.player.y;
+                    me.physics.moveToObject(me.grappin, me.target, 400);
 
                     break;
             }
@@ -378,14 +387,12 @@ class Tableau1 extends Phaser.Scene {
 
     actiongrab(grappin,grab){
         let me = this;
-        console.log("febs")
-        grappin.x = -10;
-        grappin.y = -10;
+        this.grappin.setVelocity(0);
+        this.grappin.setVisible(false);
+        this.grappin.x = this.player.player.x;
+        this.grappin.y = this.player.player.y;
         me.player.player.body.setAllowGravity(false)
         me.physics.moveToObject(me.player.player, grab, 400);
-
-
-
     }
 
     gravite(){
@@ -507,6 +514,20 @@ class Tableau1 extends Phaser.Scene {
     }
 
     update(){
+        this.dist = Phaser.Math.Distance.BetweenPoints(this.player.player, this.grappin);
+
+
+        this.target.y = game.input.mousePointer.worldY;
+        this.target.x = game.input.mousePointer.worldX;
+
+        if(this.dist > 300){
+            this.grappin.setVelocity(0);
+            this.grappin.setVisible(false);
+            this.grappin.x = this.player.player.x;
+            this.grappin.y = this.player.player.y;
+        }
+
+
         // console.log(this.player.player.x)
         // console.log(this.player.player.y)
         this.player.updateListrik();
