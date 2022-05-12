@@ -26,6 +26,7 @@ class Tableau1 extends Phaser.Scene {
         this.taillePile = 32;
         this.coorDoorx = 0;
         this.genup = false;
+        this.isgrab = false;
 
 
         this.door1 = this.physics.add.group({
@@ -332,74 +333,62 @@ class Tableau1 extends Phaser.Scene {
     initKeyboard() {
         let me = this;
 
-        this.input.keyboard.on('keyup', function (kevent) {
-            switch (kevent.keyCode) {
+            this.input.keyboard.on('keyup', function (kevent) {
+                switch (kevent.keyCode) {
 
-                case Phaser.Input.Keyboard.KeyCodes.Q:
-                    me.player.stop();
-                    break;
+                    case Phaser.Input.Keyboard.KeyCodes.Q:
+                        me.player.stop();
+                        break;
 
-                case Phaser.Input.Keyboard.KeyCodes.D:
-                    me.player.stop();
+                    case Phaser.Input.Keyboard.KeyCodes.D:
+                        me.player.stop();
 
-                    break;
-            }
-        })
-        this.input.keyboard.on('keydown', function (kevent) {
-            switch (kevent.keyCode) {
+                        break;
+                }
+            })
+            this.input.keyboard.on('keydown', function (kevent) {
+                switch (kevent.keyCode) {
 
-                case Phaser.Input.Keyboard.KeyCodes.Q:
+                    case Phaser.Input.Keyboard.KeyCodes.Q:
                         me.turn = true;
                         me.player.moveLeft();
 
-                    break;
+                        break;
 
-                case Phaser.Input.Keyboard.KeyCodes.D:
+                    case Phaser.Input.Keyboard.KeyCodes.D:
                         me.turn = false;
                         me.player.moveRight();
 
-                    break;
+                        break;
 
-                case Phaser.Input.Keyboard.KeyCodes.SPACE:
+                    case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
-                    me.player.jump();
+                        me.player.jump();
 
-                    break;
+                        break;
 
-                case Phaser.Input.Keyboard.KeyCodes.E:
+                    case Phaser.Input.Keyboard.KeyCodes.E:
 
-                    me.GestionEvent(me.player.player);
+                        me.GestionEvent(me.player.player);
 
-                    break;
-
-                case Phaser.Input.Keyboard.KeyCodes.F:
-
-                    me.grappin.setVelocity(0);
-                    me.grappin.setVisible(true);
-                    me.grappin.x = me.player.player.x;
-                    me.grappin.y = me.player.player.y;
-                    me.physics.moveToObject(me.grappin, me.target, 400);
-
-                    break;
-            }
-        })
+                        break;
+                }
+            })
     }
 
     actiongrab(grappin,grab){
         let me = this;
-        this.grappin.setVelocity(0);
-        this.grappin.setVisible(false);
-        this.grappin.x = this.player.player.x;
-        this.grappin.y = this.player.player.y;
-        me.player.player.body.setAllowGravity(false)
+        grappin.body.setEnable(false);
+        grappin.setVelocity(0);
+        grappin.setVisible(false);
+        grappin.x = this.player.player.x;
+        grappin.y = this.player.player.y;
+        this.player.player.body.setAllowGravity(false);
         me.physics.moveToObject(me.player.player, grab, 400);
     }
 
     gravite(){
-      let me = this;
-      
-      me.player.player.setVelocity(0);
-      me.player.player.body.setAllowGravity(true);
+        this.player.player.body.setAllowGravity(true);
     }
 
     GestionEvent(player){
@@ -514,8 +503,19 @@ class Tableau1 extends Phaser.Scene {
     }
 
     update(){
+
         this.dist = Phaser.Math.Distance.BetweenPoints(this.player.player, this.grappin);
 
+        if(game.input.activePointer.leftButtonDown() === true){
+            this.grappin.setVelocity(0);
+            this.grappin.setVisible(true);
+            this.grappin.x = this.player.player.x;
+            this.grappin.y = this.player.player.y;
+            this.grappin.body.setEnable(true);
+            this.physics.moveToObject(this.grappin, this.target, 400);
+            this.isgrab = true;
+
+        }
 
         this.target.y = game.input.mousePointer.worldY;
         this.target.x = game.input.mousePointer.worldX;
@@ -525,6 +525,7 @@ class Tableau1 extends Phaser.Scene {
             this.grappin.setVisible(false);
             this.grappin.x = this.player.player.x;
             this.grappin.y = this.player.player.y;
+            this.grappin.body.setEnable(false);
         }
 
 
