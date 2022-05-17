@@ -113,7 +113,7 @@ class Player {
             this.Battery = this.scene.chargeMax;
         }else{
             this.Battery -= 1;
-            console.log("perd de la battery")
+            //console.log("perd de la battery")
         }
 
         if(this.Battery  < 0){
