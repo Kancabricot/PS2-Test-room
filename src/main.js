@@ -10,7 +10,7 @@ let gameConfig = {
         arcade: {
             gravity: { y: 600},
             debug : true,
-            fps : 60
+            fps : 144
         }
     },
     scene: [Tableau1]
