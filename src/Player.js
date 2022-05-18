@@ -10,30 +10,30 @@ class Player {
         this.Battery = this.chargeMax;
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
 
-        this.scene.anims.create({
-            key: 'walk',
-            frames: this.scene.anims.generateFrameNames('Listrik', {
-                prefix: 'Nobatdie_',
-                start: 38,
-                end: 47,
-            }),
-            frameRate: 100,
-            repeat: -1
-        });
-
-        this.scene.anims.create({
-            key: 'idle',
-            frames: [{key: 'Listrik', frame: 'Nobatdie_0'}],
-            frameRate: 10,
-
-        });
-        this.scene.anims.create({
-            key: 'jump',
-            frames: [{key: 'Listrik', frame: 'Nobatdie_0'}],
-            frameRate: 10,
-            repeat:-1,
-
-        });
+        // this.scene.anims.create({
+        //     key: 'walk',
+        //     frames: this.scene.anims.generateFrameNames('Listrik', {
+        //         prefix: 'Nobatdie_',
+        //         start: 38,
+        //         end: 47,
+        //     }),
+        //     frameRate: 100,
+        //     repeat: -1
+        // });
+        //
+        // this.scene.anims.create({
+        //     key: 'idle',
+        //     frames: [{key: 'Listrik', frame: 'Nobatdie_0'}],
+        //     frameRate: 10,
+        //
+        // });
+        // this.scene.anims.create({
+        //     key: 'jump',
+        //     frames: [{key: 'Listrik', frame: 'Nobatdie_0'}],
+        //     frameRate: 10,
+        //     repeat:-1,
+        //
+        // });
 
     }
 

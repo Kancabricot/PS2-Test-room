@@ -154,6 +154,14 @@ class Tableau1 extends Phaser.Scene {
                     this.platmove5.setImmovable(true);
                     break;
                 }
+                case 'sup': {
+                    this.supportPlatforme = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.supportPlatforme.setDisplaySize(32,32);
+                    this.supportPlatforme.body.setAllowGravity(false);
+                    this.supportPlatforme.setImmovable(true);
+                    this.supportPlatforme.setVisible(true);
+                    break;
+                }
                 case 'Act': {
                     this.act1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
                     this.act1.setDisplaySize(32,32);
@@ -370,6 +378,7 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.player.player, this.platmove3);
         this.physics.add.collider(this.player.player, this.platmove4);
         this.physics.add.collider(this.player.player, this.platmove5);
+        this.physics.add.collider(this.player.player, this.supportPlatforme);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -381,7 +390,6 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
         this.physics.add.overlap(this.grab, this.player.player, this.gravite,  null, this)
         this.physics.add.overlap(this.up, this.player.player,function (up) {
-            let me = this;
             this.upgradeL = true;
             up.setVisible(false);
         })
@@ -504,6 +512,12 @@ class Tableau1 extends Phaser.Scene {
                 this.genup = true;
                 this.takeBat = false;
                 this.genmove2.play();
+            }else if (this.physics.overlap(player, this.act5)===true){
+                this.platweens5.play();
+                this.genup = true;
+                this.takeBat = false;
+                this.genmove5.play();
+                this.sup.play()
             }else{
                 this.pile.x = player.x + 7.50;
                 this.pile.y = player.y + 7.50;
@@ -536,6 +550,12 @@ class Tableau1 extends Phaser.Scene {
         }else if (this.physics.overlap(player, this.act4)===true){
             this.platweens4.pause();
             this.genmove2.pause();
+            this.genup = false;
+            this.takeBat = true;
+        }else if (this.physics.overlap(player, this.act5)===true){
+            this.platweens5.pause();
+            this.genmove5.pause();
+            this.sup.pause()
             this.genup = false;
             this.takeBat = true;
         }
@@ -599,7 +619,7 @@ class Tableau1 extends Phaser.Scene {
 
         })
         this.physics.add.overlap(player, this.cam81, function () {
-            me.cameras.main.startFollow(me.player.player, false, 1, 0,0,47).setDeadzone(undefined,1000 );
+            me.cameras.main.startFollow(me.player.player, false, 1, 0,0,110).setDeadzone(undefined,1000 );
         })
     }
 
@@ -663,8 +683,8 @@ class Tableau1 extends Phaser.Scene {
 
         this.platweens5 = this.tweens.add({
             targets: this.platmove5,
-            y: 928,
-            duration: 8000,
+            x: 7000,
+            duration: 10000,
             ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
@@ -673,13 +693,23 @@ class Tableau1 extends Phaser.Scene {
 
         this.genmove5 = this.tweens.add({
             targets: this.act5,
-            y: 928-32,
-            duration: 8000,
+            x: 7000+32*6,
+            duration: 10000,
             ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
         });
         this.genmove5.pause()
+
+        this.sup = this.tweens.add({
+            targets: this.supportPlatforme,
+            x: 7000,
+            duration: 10000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+        });
+        this.sup.pause()
     }
 
     FunctionDoor(door,open){
@@ -692,8 +722,6 @@ class Tableau1 extends Phaser.Scene {
     }
 
     update(){
-        let me = this;
-
         this.dist = Phaser.Math.Distance.BetweenPoints(this.player.player, this.grappin);
 
         if(game.input.activePointer.leftButtonDown() === true){
