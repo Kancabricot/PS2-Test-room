@@ -8,6 +8,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('cube','assets/squareY.png');
 
         this.load.image('bg','assets/images/background.png');
+        this.load.image('ListrikP','assets/ListrikP.png');
 
         this.load.atlas('Listrik', 'assets/Listrikanimation.png', 'assets/Listrikanimation.json');
 
@@ -71,6 +72,15 @@ class Tableau1 extends Phaser.Scene {
             "PLatforme",
             tileset
         );
+
+        this.collide = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        map.getObjectLayer('Collide').objects.forEach((collide) => {
+            this.collideSprite = this.physics.add.sprite(collide.x + (collide.width * 0.5), collide.y + (collide.height * 0.5)).setSize(collide.width, collide.height).setDepth(1);
+            this.collide.add(this.collideSprite)
+        });
 
         const objectsLayer = map.getObjectLayer('Objet')
         objectsLayer.objects.forEach(objData=> {
@@ -388,7 +398,8 @@ class Tableau1 extends Phaser.Scene {
                 this.cameras.main.setBounds(0, 0, 3200000, 1000000);
 
         this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
-        this.physics.add.overlap(this.grab, this.player.player, this.gravite,  null, this)
+        this.physics.add.overlap(this.collide, this.grappin, this.miss,  null, this)
+        this.physics.add.overlap(this.grappin, this.player.player, this.gravite,  null, this)
         this.physics.add.overlap(this.up, this.player.player,function (up) {
             this.upgradeL = true;
             up.setVisible(false);
@@ -460,22 +471,32 @@ class Tableau1 extends Phaser.Scene {
     }
 
     actiongrab(grappin,grab){
-
+        const distance = Phaser.Math.Distance.BetweenPoints(this.player.player, grab);
         let me = this;
-        grappin.body.setEnable(false);
         grappin.setVelocity(0);
-        grappin.setVisible(false);
-        grappin.x = this.player.player.x;
-        grappin.y = this.player.player.y;
-        this.player.player.body.setAllowGravity(false);
-        me.physics.moveToObject(me.player.player, grab, 400);
+        grappin.x = grab.x
+        grappin.y = grab.y
 
+        this.player.player.body.setAllowGravity(false);
+        me.physics.moveToObject(me.player.player, grappin, 400);
+
+
+
+    }
+
+    miss(){
+        this.isgrab = false;
+        this.grappin.setVelocity(0);
+        this.grappin.setVisible(false);
+        this.grappin.body.setEnable(false);
     }
 
     gravite(){
         if(this.isgrab === true){
             this.player.player.setVelocity(0)
         }else{
+            this.player.player.setVelocity(0)
+            this.grappin.body.setEnable(false,false)
             this.player.player.body.setAllowGravity(true);
         }
     }
@@ -681,19 +702,26 @@ class Tableau1 extends Phaser.Scene {
         });
         this.genmove2.pause()
 
-        this.platweens5 = this.tweens.add({
-            targets: this.platmove5,
-            x: 7000,
-            duration: 10000,
+        this.platweens5 =  this.tweens.timeline({
+            targets:  this.platmove5,
+            y: 7000,
+            duration: 8000,
             ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
+            onUpdate: () => {
+                this.platmove5.vx = this.platmove5.body.position.x - this.platmove5.previousX;
+                this.platmove5.vy = this.platmove5.body.position.y - this.platmove5.previousY;
+                this.platmove5.previousX = this.platmove5.body.position.x;
+                this.platmove5.previousY = this.platmove5.body.position.y;
+                console.log("jgsrdlgks")
+            }
         });
         this.platweens5.pause()
 
         this.genmove5 = this.tweens.add({
             targets: this.act5,
-            x: 7000+32*6,
+            velocityX: 500,
             duration: 10000,
             ease: 'Sine.easeInOut',
             yoyo: true,
@@ -710,6 +738,31 @@ class Tableau1 extends Phaser.Scene {
             repeat: -1,
         });
         this.sup.pause()
+
+        // this.dash = this.scene.tweens.add({
+        //     targets: this.speed,
+        //     speedDash: 0,
+        //     ease: "Circ.easeInOut", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+        //     duration: 300,
+        //
+        //     onUpdate: function(){
+        //         me.player.setVelocityX(me.initSpeedX * me.speed.speedDash)
+        //         me.player.setVelocityY(me.initSpeedY * me.speed.speedDash)
+        //
+        //     },
+        //     onComplete: function(){
+        //         me.isDashing = false;
+        //
+        //         me.player.body.x = 50;
+        //         me.player.body.y = 300;
+        //         me.player.setMaxVelocity(300);
+        //         setTimeout(function() {
+        //             me.dashIsUp = true
+        //             me.flagDash = false;
+        //
+        //         }, 1000)
+        //     }
+        // });
     }
 
     FunctionDoor(door,open){

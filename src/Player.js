@@ -3,7 +3,7 @@ class Player {
     constructor(scene) {
         this.scene=scene
         this.cameras=scene
-        this.player = this.scene.physics.add.sprite(150, 900, 'Listrik');
+        this.player = this.scene.physics.add.sprite(150, 900, 'ListrikP');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(false);
         this.chargeMax = 9999999999;
@@ -43,7 +43,7 @@ class Player {
 
         }else{
             this.player.setVelocityY(-420);
-            this.player.play('jump', true);
+            //this.player.play('jump', true);
         }
     }
     moveRight() {
