@@ -6,7 +6,7 @@ class Player {
         this.player = this.scene.physics.add.sprite(150, 900, 'ListrikP');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(false);
-        this.chargeMax = 1800/2;
+        this.chargeMax = 180000000/2;
         this.Battery = this.chargeMax;
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
     }
@@ -84,16 +84,20 @@ class Player {
             this.scene.recharge = this.scene.takeBat !== false;
         }
 
-        if(this.scene.recharge === true){
-            this.Battery = this.scene.chargeMax;
+        if(this.scene.pile.visible === false && this.scene.genup === false){
+            this.Battery = this.chargeMax;
         }else{
             this.Battery -= 1;
-            //console.log("perd de la battery")
+            console.log("perd de la battery"+this.Battery)
         }
 
         if(this.Battery  < 0){
-            this.player.player.destroy();
-            console.log("Je suis mort");
+            this.player.x = this.scene.currentSaveX;
+            this.player.y = this.scene.currentSaveY;
+            this.scene.pile.X = this.scene.currentSaveX;
+            this.scene.pile.y = this.scene.currentSaveY;
+            this.Battery = this.chargeMax;
+            this.scene.pile.setVisible(true);
         }
     }
 

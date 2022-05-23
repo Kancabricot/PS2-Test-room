@@ -22,6 +22,8 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
+        this.currentSaveX = 150;
+        this.currentSaveY = 900;
         this.takeBat = false;
         this.recharge = false;
         this.turn = false;
@@ -224,150 +226,171 @@ class Tableau1 extends Phaser.Scene {
 
             switch (name) {
                 case '1-2': {
-                    this.cam1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam1.setDisplaySize(1344,704);
+                    this.cam1 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam1.setDisplaySize(1344, 704);
                     this.cam1.setVisible(false)
                     this.cam1.setImmovable(true);
                     this.cam1.body.setAllowGravity(false);
                     break;
                 }
                 case '2-1': {
-                    this.cam2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam2.setDisplaySize(1344,704);
+                    this.cam2 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam2.setDisplaySize(1344, 704);
                     this.cam2.setVisible(false)
                     this.cam2.setImmovable(true);
                     this.cam2.body.setAllowGravity(false);
                     break;
                 }
                 case '2-2': {
-                    this.cam3 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam3.setDisplaySize(1344,704);
+                    this.cam3 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam3.setDisplaySize(1344, 704);
                     this.cam3.setVisible(false)
                     this.cam3.setImmovable(true);
                     this.cam3.body.setAllowGravity(false);
                     break;
                 }
                 case '3-1': {
-                    this.cam4 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam4.setDisplaySize(1344,704);
+                    this.cam4 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam4.setDisplaySize(1344, 704);
                     this.cam4.setVisible(false)
                     this.cam4.setImmovable(true);
                     this.cam4.body.setAllowGravity(false);
                     break;
                 }
                 case '3-2': {
-                    this.cam7 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam7.setDisplaySize(1344,704);
+                    this.cam7 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam7.setDisplaySize(1344, 704);
                     this.cam7.setVisible(false)
                     this.cam7.setImmovable(true);
                     this.cam7.body.setAllowGravity(false);
                     break;
                 }
                 case '4-1': {
-                    this.cam5 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam5.setDisplaySize(1344,704);
+                    this.cam5 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam5.setDisplaySize(1344, 704);
                     this.cam5.setVisible(false)
                     this.cam5.setImmovable(true);
                     this.cam5.body.setAllowGravity(false);
                     break;
                 }
                 case '4-2': {
-                    this.cam6 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam6.setDisplaySize(1344,704);
+                    this.cam6 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam6.setDisplaySize(1344, 704);
                     this.cam6.setVisible(false)
                     this.cam6.setImmovable(true);
                     this.cam6.body.setAllowGravity(false);
                     break;
-                }case '5-2': {
-                    this.cam8 = this.physics.add.sprite(x,y,"pile").setOrigin(0,0)
-                    this.cam8.setDisplaySize(650,704);
+                }
+                case '5-2': {
+                    this.cam8 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam8.setDisplaySize(650, 704);
                     this.cam8.setVisible(false)
                     this.cam8.setImmovable(true);
                     this.cam8.body.setAllowGravity(false);
                     break;
-                }case '5-2-1': {
-                    this.cam81 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam81.setDisplaySize(1,704);
+                }
+                case '5-2-1': {
+                    this.cam81 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam81.setDisplaySize(1, 704);
                     this.cam81.setVisible(false)
                     this.cam81.setImmovable(true);
                     this.cam81.body.setAllowGravity(false);
                     break;
-                }case '5-2-2': {
-                    this.cam82 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cam82.setDisplaySize(1,704);
+                }
+                case '5-2-2': {
+                    this.cam82 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam82.setDisplaySize(1, 704);
                     this.cam82.setVisible(false)
                     this.cam82.setImmovable(true);
                     this.cam82.body.setAllowGravity(false);
                     break;
                 }
+                case '7-3': {
+                    this.cam9 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam9.setDisplaySize(1344, 704);
+                    this.cam9.setVisible(false)
+                    this.cam9.setImmovable(true);
+                    this.cam9.body.setAllowGravity(false);
+                    break;
+                }
                 case 'cam1-2': {
-                    this.cs1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs1.setDisplaySize(1,1);
+                    this.cs1 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs1.setDisplaySize(1, 1);
                     this.cs1.setVisible(false)
                     this.cs1.setImmovable(true);
                     this.cs1.body.setAllowGravity(false);
                     break;
                 }
                 case 'cam2-2': {
-                    this.cs3 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs3.setDisplaySize(1,1);
+                    this.cs3 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs3.setDisplaySize(1, 1);
                     this.cs3.setVisible(false)
                     this.cs3.setImmovable(true);
                     this.cs3.body.setAllowGravity(false);
                     break;
                 }
                 case 'cam3-2': {
-                    this.cs7 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs7.setDisplaySize(1,1);
+                    this.cs7 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs7.setDisplaySize(1, 1);
                     this.cs7.setVisible(false)
                     this.cs7.setImmovable(true);
                     this.cs7.body.setAllowGravity(false);
                     break;
                 }
                 case 'cam2-1': {
-                    this.cs2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs2.setDisplaySize(1,1);
+                    this.cs2 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs2.setDisplaySize(1, 1);
                     this.cs2.setVisible(false)
                     this.cs2.setImmovable(true);
                     this.cs2.body.setAllowGravity(false);
                     break;
                 }
                 case 'cam3-1': {
-                    this.cs4 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs4.setDisplaySize(1,1);
+                    this.cs4 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs4.setDisplaySize(1, 1);
                     this.cs4.setVisible(false)
                     this.cs4.setImmovable(true);
                     this.cs4.body.setAllowGravity(false);
                     break;
                 }
                 case 'cam4-1': {
-                    this.cs5 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs5.setDisplaySize(1,1);
+                    this.cs5 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs5.setDisplaySize(1, 1);
                     this.cs5.setVisible(false)
                     this.cs5.setImmovable(true);
                     this.cs5.body.setAllowGravity(false);
                     break;
                 }
                 case 'cam4-2': {
-                    this.cs6 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs6.setDisplaySize(1,1);
+                    this.cs6 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs6.setDisplaySize(1, 1);
                     this.cs6.setVisible(false)
                     this.cs6.setImmovable(true);
                     this.cs6.body.setAllowGravity(false);
                     break;
-                }case 'cam5-2': {
-                    this.cs8 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs8.setDisplaySize(1,1);
+                }
+                case 'cam5-2': {
+                    this.cs8 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs8.setDisplaySize(1, 1);
                     this.cs8.setVisible(false)
                     this.cs8.setImmovable(true);
                     this.cs8.body.setAllowGravity(false);
                     break;
-                }case 'cam5-2-1': {
-                    this.cs82 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.cs82.setDisplaySize(1,1);
+                }
+                case 'cam5-2-1': {
+                    this.cs82 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs82.setDisplaySize(1, 1);
                     this.cs82.setVisible(false)
                     this.cs82.setImmovable(true);
                     this.cs82.body.setAllowGravity(false);
+                    break;
+                }
+                case 'cam7-3': {
+                    this.cs9 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs9.setDisplaySize(1, 1);
+                    this.cs9.setVisible(false)
+                    this.cs9.setImmovable(true);
+                    this.cs9.body.setAllowGravity(false);
                     break;
                 }
             }
@@ -385,16 +408,24 @@ class Tableau1 extends Phaser.Scene {
             this.grab.create(grab.x, grab.y- grab.height, 'grab').setOrigin(0);
         });
 
-        // this.saves = this.physics.add.group({
-        //     allowGravity: false,
-        //     immovable: true
-        // });
-        //
-        // map.getObjectLayer('Save').objects.forEach((save) => {
-        //     const saveSprite = this.saves.create(save.x, save.y- save.height, 'save').setOrigin(0).setPipeline('Light2D');
-        // });
-        //
-        // this.physics.add.overlap(this.player.player, this.saves, this.sauvegarde, null, this)
+        this.deadzone = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+
+        map.getObjectLayer('DeathZone').objects.forEach((trigger) => {
+            this.deadzone.create(trigger.x + (trigger.width * 0.5), trigger.y + (trigger.height * 0.5)).setSize(trigger.width, trigger.height).setOrigin(0).setVisible(false);
+        });
+
+        this.saves = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+
+        map.getObjectLayer('Save').objects.forEach((save) => {
+            const saveSprite = this.saves.create(save.x, save.y- save.height, 'save').setOrigin(0).setPipeline('Light2D').setVisible(false);
+        });
+
 
         this.player = new Player(this);
 
@@ -431,6 +462,9 @@ class Tableau1 extends Phaser.Scene {
             this.upgradeL = true;
             up.setVisible(false);
         })
+        this.physics.add.overlap(this.player.player, this.saves, this.sauvegarde, null, this)
+        this.physics.add.overlap(this.player.player, this.deadzone, this.KillBox, null, this)
+
 
         this.initKeyboard();
         this.Gestioncam(this.player.player);
@@ -498,8 +532,21 @@ class Tableau1 extends Phaser.Scene {
             })
     }
 
+    sauvegarde(player, saves) {
+        console.log("current", this.currentSaveX, this.currentSaveY)
+        this.currentSaveX = saves.x
+        this.currentSaveY = saves.y-50
+        saves.body.enable = false;
+    }
+    KillBox(){
+        this.player.player.x = this.currentSaveX;
+        this.player.player.y = this.currentSaveY;
+        this.pile.X = this.currentSaveX;
+        this.pile.y = this.currentSaveY;
+        this.Battery = this.chargeMax;
+        this.pile.setVisible(true);
+    }
     actiongrab(grappin,grab){
-        const distance = Phaser.Math.Distance.BetweenPoints(this.player.player, grab);
         let me = this;
         grappin.setVelocity(0);
         grappin.x = grab.x +8;
@@ -525,16 +572,6 @@ class Tableau1 extends Phaser.Scene {
             this.player.player.body.setAllowGravity(true);
         }
     }
-
-    // grabFail(){
-    //     console.log("fail")
-    //     this.isgrab = false;
-    //     this.grappin.setVelocity(0);
-    //     this.grappin.setVisible(false);
-    //     this.grappin.x = this.player.player.x;
-    //     this.grappin.y = this.player.player.y;
-    //     this.grappin.body.setEnable(false);
-    // }
 
     GestionEvent(player){
         if(this.takeBat === true){
@@ -652,17 +689,21 @@ class Tableau1 extends Phaser.Scene {
             me.cameras.main.startFollow(me.cs7, true, 1, 1);
 
         })
-        // tableau 3-2
+        // tableau 5-2
         this.physics.add.overlap(player, this.cam8, function () {
             me.cameras.main.startFollow(me.cs8, true, 1, 1);
 
-        })// tableau 3-2
+        })// continuité du tableau 5-2
         this.physics.add.overlap(player, this.cam82, function () {
             me.cameras.main.startFollow(me.cs82, true, 1, 1);
 
-        })
+        })//fin du tableau 5-2
         this.physics.add.overlap(player, this.cam81, function () {
             me.cameras.main.startFollow(me.player.player, true, 1, 0,0,143).setDeadzone(undefined,1000 );
+        })// tableau 6-3
+        this.physics.add.overlap(player, this.cam9, function () {
+            console.log("jgldshgdkrflsgfs")
+            me.cameras.main.startFollow(me.cs9, true, 1, 1);
         })
     }
 
