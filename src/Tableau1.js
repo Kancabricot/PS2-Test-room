@@ -154,6 +154,13 @@ class Tableau1 extends Phaser.Scene {
                     this.platmove5.setImmovable(true);
                     break;
                 }
+                case 'platmove6': {
+                    this.platmove6 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove6.setDisplaySize(32*3,32);
+                    this.platmove6.body.setAllowGravity(false);
+                    this.platmove6.setImmovable(true);
+                    break;
+                }
                 case 'Act': {
                     this.act1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
                     this.act1.setDisplaySize(32,32);
@@ -378,6 +385,17 @@ class Tableau1 extends Phaser.Scene {
             this.grab.create(grab.x, grab.y- grab.height, 'grab').setOrigin(0);
         });
 
+        // this.saves = this.physics.add.group({
+        //     allowGravity: false,
+        //     immovable: true
+        // });
+        //
+        // map.getObjectLayer('Save').objects.forEach((save) => {
+        //     const saveSprite = this.saves.create(save.x, save.y- save.height, 'save').setOrigin(0).setPipeline('Light2D');
+        // });
+        //
+        // this.physics.add.overlap(this.player.player, this.saves, this.sauvegarde, null, this)
+
         this.player = new Player(this);
 
         this.platforms.setCollisionByExclusion(-1, true);
@@ -397,6 +415,7 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.player.player, this.platmove3);
         this.physics.add.collider(this.player.player, this.platmove4);
         this.physics.add.collider(this.player.player, this.platmove5);
+        this.physics.add.collider(this.player.player, this.platmove6);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -416,6 +435,7 @@ class Tableau1 extends Phaser.Scene {
         this.initKeyboard();
         this.Gestioncam(this.player.player);
         this.Tweengestion()
+
         this.cameras.main.setRoundPixels(true);
     }
 
@@ -526,6 +546,7 @@ class Tableau1 extends Phaser.Scene {
 
             }else if (this.physics.overlap(player, this.act2)===true){
                 this.platweens2.play();
+                this.platweens6.play()
                 this.genup = true;
                 this.takeBat = false;
 
@@ -546,7 +567,6 @@ class Tableau1 extends Phaser.Scene {
             }else{
                 this.pile.x = player.x + 7.50;
                 this.pile.y = player.y + 7.50;
-                this.pile.setVisible(true);
                 this.takeBat = false;
             }
         }
@@ -555,7 +575,6 @@ class Tableau1 extends Phaser.Scene {
 
 
         else if (this.physics.overlap(player, this.pile)){
-            this.pile.setVisible(false);
             this.takeBat = true;
             this.pile.x = 7.50;
             this.pile.y = 7.50;
@@ -685,6 +704,15 @@ class Tableau1 extends Phaser.Scene {
         });
         this.platweens3.pause()
 
+        this.platweens6 = this.tweens.add({
+            targets: this.platmove6,
+            y: 478,
+            duration: 8000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+        });
+
         this.platweens4 = this.tweens.add({
             targets: this.platmove4,
             y: 928,
@@ -746,10 +774,16 @@ class Tableau1 extends Phaser.Scene {
             this.grappin.body.setEnable(false);
         }
 
+        if(this.takeBat === false && this.genup === false){
+            this.pile.setVisible(true)
+        }else{
+            this.pile.setVisible(false)
+        }
 
         //console.log(this.player.player.x)
         // console.log(this.player.player.y)
         this.player.updateListrik();
+
     }
 
     // fin du programme

@@ -1,48 +1,23 @@
 class Player {
 
     constructor(scene) {
-        this.scene=scene
-        this.cameras=scene
+        this.scene = scene
+        this.cameras = scene
         this.player = this.scene.physics.add.sprite(150, 900, 'ListrikP');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(false);
-        this.chargeMax = 9999999999;
+        this.chargeMax = 1800/2;
         this.Battery = this.chargeMax;
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
-
-        // this.scene.anims.create({
-        //     key: 'walk',
-        //     frames: this.scene.anims.generateFrameNames('Listrik', {
-        //         prefix: 'Nobatdie_',
-        //         start: 38,
-        //         end: 47,
-        //     }),
-        //     frameRate: 100,
-        //     repeat: -1
-        // });
-        //
-        // this.scene.anims.create({
-        //     key: 'idle',
-        //     frames: [{key: 'Listrik', frame: 'Nobatdie_0'}],
-        //     frameRate: 10,
-        //
-        // });
-        // this.scene.anims.create({
-        //     key: 'jump',
-        //     frames: [{key: 'Listrik', frame: 'Nobatdie_0'}],
-        //     frameRate: 10,
-        //     repeat:-1,
-        //
-        // });
-
     }
 
     jump(){
         if(this.scene.takeBat === true){
-            this.player.setVelocityY(-220);
 
-        }else{
-            this.player.setVelocityY(-420);
+        }
+        else{
+            if(this.player)
+            this.player.setVelocityY(-520);
             //this.player.play('jump', true);
         }
     }
