@@ -10,6 +10,8 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('bg','assets/images/background.png');
         this.load.image('ListrikP','assets/ListrikP.png');
         this.load.image('grab','assets/grab.png');
+        this.load.image('levier','assets/levier.png');
+        this.load.image('door','assets/porte2.png');
 
         this.load.atlas('Listrik', 'assets/Listrikanimation.png', 'assets/Listrikanimation.json');
 
@@ -80,42 +82,42 @@ class Tableau1 extends Phaser.Scene {
 
             switch (name) {
                 case 'porte1': {
-                    this.door1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door1 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
                     this.door1.setDisplaySize(32,32*4);
                     this.door1.body.setAllowGravity(false);
                     this.door1.setImmovable(true);
                     break;
                 }
                 case 'porte2': {
-                    this.door2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door2 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
                     this.door2.setDisplaySize(32,32*4);
                     this.door2.body.setAllowGravity(false);
                     this.door2.setImmovable(true);
                     break;
                 }
                 case 'porte3': {
-                    this.door3 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.door3 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
                     this.door3.setDisplaySize(32,32*4);
                     this.door3.body.setAllowGravity(false);
                     this.door3.setImmovable(true);
                     break;
                 }
                 case 'levier1': {
-                    this.levier1 = this.physics.add.sprite(x,y-32,"cube").setOrigin(0,0)
+                    this.levier1 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
                     this.levier1.setDisplaySize(32,32);
                     this.levier1.body.setAllowGravity(false);
                     this.levier1.setImmovable(true);
                     break;
                 }
                 case 'levier2': {
-                    this.levier2 = this.physics.add.sprite(x,y-32,"cube").setOrigin(0,0)
+                    this.levier2 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
                     this.levier2.setDisplaySize(32,32);
                     this.levier2.body.setAllowGravity(false);
                     this.levier2.setImmovable(true);
                     break;
                 }
                 case 'levier3': {
-                    this.levier3 = this.physics.add.sprite(x,y-32,"cube").setOrigin(0,0)
+                    this.levier3 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
                     this.levier3.setDisplaySize(32,32);
                     this.levier3.body.setAllowGravity(false);
                     this.levier3.setImmovable(true);
@@ -163,6 +165,41 @@ class Tableau1 extends Phaser.Scene {
                     this.platmove6.setImmovable(true);
                     break;
                 }
+                case 'platmove7': {
+                    this.platmove7 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove7.setDisplaySize(32*3,32);
+                    this.platmove7.body.setAllowGravity(false);
+                    this.platmove7.setImmovable(true);
+                    break;
+                }
+                case 'platmove8': {
+                    this.platmove8 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove8.setDisplaySize(32*6,32);
+                    this.platmove8.body.setAllowGravity(false);
+                    this.platmove8.setImmovable(true);
+                    break;
+                }
+                case 'platmove9': {
+                    this.platmove9 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove9.setDisplaySize(32*6,32);
+                    this.platmove9.body.setAllowGravity(false);
+                    this.platmove9.setImmovable(true);
+                    break;
+                }
+                case 'platmove10': {
+                    this.platmove10 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove10.setDisplaySize(32*6,32);
+                    this.platmove10.body.setAllowGravity(false);
+                    this.platmove10.setImmovable(true);
+                    break;
+                }
+                case 'platmove11': {
+                    this.platmove11 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove11.setDisplaySize(32*6,32);
+                    this.platmove11.body.setAllowGravity(false);
+                    this.platmove11.setImmovable(true);
+                    break;
+                }
                 case 'Act': {
                     this.act1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
                     this.act1.setDisplaySize(32,32);
@@ -187,7 +224,36 @@ class Tableau1 extends Phaser.Scene {
                     this.act5.body.setAllowGravity(false);
                     this.act5.setImmovable(true);
                     break;
-                }case 'sologen': {
+                }
+                case 'Act8': {
+                    this.act8 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.act8.setDisplaySize(32,32);
+                    this.act8.body.setAllowGravity(false);
+                    this.act8.setImmovable(true);
+                    break;
+                }
+                case 'Act9': {
+                    this.act9 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.act9.setDisplaySize(32,32);
+                    this.act9.body.setAllowGravity(false);
+                    this.act9.setImmovable(true);
+                    break;
+                }
+                case 'Act10': {
+                    this.act10 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.act10.setDisplaySize(32,32);
+                    this.act10.body.setAllowGravity(false);
+                    this.act10.setImmovable(true);
+                    break;
+                }
+                case 'Act11': {
+                    this.act11 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.act11.setDisplaySize(32,32);
+                    this.act11.body.setAllowGravity(false);
+                    this.act11.setImmovable(true);
+                    break;
+                }
+                case 'sologen': {
                     this.act3 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
                     this.act3.setDisplaySize(32,32);
                     this.act3.body.setAllowGravity(false);
@@ -396,14 +462,21 @@ class Tableau1 extends Phaser.Scene {
             }
         })
 
-        this.grab = this.physics.add.group({
-            allowGravity: false,
-            immovable: true
-        });
         this.platforms = map.createLayer(
             "PLatforme",
             tileset
         );
+
+        this.porte = map.createLayer(
+            "door",
+            tileset
+        );
+
+        this.grab = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+
         map.getObjectLayer('grab').objects.forEach((grab) => {
             this.grab.create(grab.x, grab.y- grab.height, 'grab').setOrigin(0);
         });
@@ -447,6 +520,11 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.player.player, this.platmove4);
         this.physics.add.collider(this.player.player, this.platmove5);
         this.physics.add.collider(this.player.player, this.platmove6);
+        this.physics.add.collider(this.player.player, this.platmove7);
+        this.physics.add.collider(this.player.player, this.platmove8);
+        this.physics.add.collider(this.player.player, this.platmove9);
+        this.physics.add.collider(this.player.player, this.platmove10);
+        this.physics.add.collider(this.player.player, this.platmove11);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -485,7 +563,6 @@ class Tableau1 extends Phaser.Scene {
 
                     case Phaser.Input.Keyboard.KeyCodes.D:
                         me.player.stop();
-
                         break;
                 }
             })
@@ -510,12 +587,12 @@ class Tableau1 extends Phaser.Scene {
                         case Phaser.Input.Keyboard.KeyCodes.F:
                         me.pile.x = me.player.player.x
                         me.pile.y = me.player.player.y
-                            me.player.player.x = 6150
+                            me.player.player.x = 9550;
                         break;
 
                     case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
-                        if(me.isgrab === false){
+                        if(me.isgrab === false && me.player.player.body.onFloor()){
                             me.player.jump();
                         }else{
                             me.isgrab = false;
@@ -538,14 +615,20 @@ class Tableau1 extends Phaser.Scene {
         this.currentSaveY = saves.y-50
         saves.body.enable = false;
     }
+
     KillBox(){
-        this.player.player.x = this.currentSaveX;
+        this.player.player.x = this.currentSaveX + 40;
         this.player.player.y = this.currentSaveY;
-        this.pile.X = this.currentSaveX;
+        this.pile.X = this.currentSaveX + 40;
         this.pile.y = this.currentSaveY;
         this.Battery = this.chargeMax;
         this.pile.setVisible(true);
+        this.platmove5.setVelocity(0);
+        this.act5.setVelocity(0);
+        this.act5.x = 5600;
+        this.platmove5.x = 5600;
     }
+
     actiongrab(grappin,grab){
         let me = this;
         grappin.setVelocity(0);
@@ -578,24 +661,50 @@ class Tableau1 extends Phaser.Scene {
             if (this.physics.overlap(player, this.act1)===true){
                 this.platweens.play();
                 this.genmove.play();
+                this.platweens.resume();
+                this.genmove.resume();
                 this.genup = true;
                 this.takeBat = false;
 
             }else if (this.physics.overlap(player, this.act2)===true){
                 this.platweens2.play();
-                this.platweens6.play()
+                this.platweens2.resume();
+                this.platweens6.play();
+                this.platweens7.play();
                 this.genup = true;
                 this.takeBat = false;
 
             }else if (this.physics.overlap(player, this.act3)===true){
                 this.platweens3.play();
+                this.platweens3.resume();
                 this.genup = true;
                 this.takeBat = false;
             }else if (this.physics.overlap(player, this.act4)===true){
                 this.platweens4.play();
+                this.platweens4.resume();
                 this.genup = true;
                 this.takeBat = false;
                 this.genmove2.play();
+            }else if (this.physics.overlap(player, this.act8)===true){
+                this.platweens8.play();
+                this.platweens8.resume();
+                this.genup = true;
+                this.takeBat = false;
+            }else if (this.physics.overlap(player, this.act9)===true){
+                this.platweens9.play();
+                this.platweens9.resume();
+                this.genup = true;
+                this.takeBat = false;
+            }else if (this.physics.overlap(player, this.act10)===true){
+                this.platweens10.play();
+                this.platweens10.resume();
+                this.genup = true;
+                this.takeBat = false;
+            }else if (this.physics.overlap(player, this.act11)===true){
+                this.platweens11.play();
+                this.platweens11.resume();
+                this.genup = true;
+                this.takeBat = false;
             }else if (this.physics.overlap(player, this.act5)===true){
                 this.genup = true;
                 this.takeBat = false;
@@ -618,6 +727,7 @@ class Tableau1 extends Phaser.Scene {
 
         }else if (this.physics.overlap(player, this.act1)===true){
             this.platweens.pause();
+            this.genmove.pause();
             this.genup = false;
             this.takeBat = true;
         }else if (this.physics.overlap(player, this.act2)===true){
@@ -631,6 +741,22 @@ class Tableau1 extends Phaser.Scene {
         }else if (this.physics.overlap(player, this.act4)===true){
             this.platweens4.pause();
             this.genmove2.pause();
+            this.genup = false;
+            this.takeBat = true;
+        }else if (this.physics.overlap(player, this.act8)===true){
+            this.platweens8.pause();
+            this.genup = false;
+            this.takeBat = true;
+        }else if (this.physics.overlap(player, this.act9)===true){
+            this.platweens9.pause();
+            this.genup = false;
+            this.takeBat = true;
+        }else if (this.physics.overlap(player, this.act10)===true){
+            this.platweens10.pause();
+            this.genup = false;
+            this.takeBat = true;
+        }else if (this.physics.overlap(player, this.act11)===true){
+            this.platweens11.pause();
             this.genup = false;
             this.takeBat = true;
         }else if (this.physics.overlap(player, this.act5)===true){
@@ -702,7 +828,6 @@ class Tableau1 extends Phaser.Scene {
             me.cameras.main.startFollow(me.player.player, true, 1, 0,0,143).setDeadzone(undefined,1000 );
         })// tableau 6-3
         this.physics.add.overlap(player, this.cam9, function () {
-            console.log("jgldshgdkrflsgfs")
             me.cameras.main.startFollow(me.cs9, true, 1, 1);
         })
     }
@@ -713,7 +838,8 @@ class Tableau1 extends Phaser.Scene {
             y: 735,
             duration: 10000,
             ease: 'Sine.easeInOut',
-            repeat: 0,
+            yoyo: true,
+            repeat: -1,
         });
         this.platweens.pause();
 
@@ -722,7 +848,8 @@ class Tableau1 extends Phaser.Scene {
             y: 735-32,
             duration: 10000,
             ease: 'Sine.easeInOut',
-            repeat: 0,
+            yoyo: true,
+            repeat: -1,
         });
         this.genmove.pause();
 
@@ -741,7 +868,8 @@ class Tableau1 extends Phaser.Scene {
             y: 478,
             duration: 8000,
             ease: 'Sine.easeInOut',
-            repeat: 0,
+            yoyo: true,
+            repeat: -1,
         });
         this.platweens3.pause()
 
@@ -773,6 +901,55 @@ class Tableau1 extends Phaser.Scene {
             repeat: -1,
         });
         this.genmove2.pause()
+
+        this.platweens7 = this.tweens.add({
+            targets: this.platmove7,
+            y: 1696,
+            duration: 8000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+        });
+
+        this.platweens8 = this.tweens.add({
+            targets: this.platmove8,
+            y: 2180,
+            duration: 10000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+        });
+        this.platweens8.pause()
+
+        this.platweens9 = this.tweens.add({
+            targets: this.platmove9,
+            y: 1800,
+            duration: 10000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+        });
+        this.platweens9.pause()
+
+        this.platweens10 = this.tweens.add({
+            targets: this.platmove10,
+            y: 2280,
+            duration: 10000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+        });
+        this.platweens10.pause()
+
+        this.platweens11 = this.tweens.add({
+            targets: this.platmove11,
+            y: 2250,
+            duration: 10000,
+            ease: 'Sine.Stepped',
+            yoyo: true,
+            repeat: -1,
+        });
+        this.platweens11.pause()
 
     }
 
@@ -824,7 +1001,6 @@ class Tableau1 extends Phaser.Scene {
         //console.log(this.player.player.x)
         // console.log(this.player.player.y)
         this.player.updateListrik();
-
     }
 
     // fin du programme

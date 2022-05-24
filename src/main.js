@@ -4,6 +4,7 @@ let gameConfig = {
     height:  800,
     backgroundColor: '#ffffff',
     parent: 'game',
+    pixelArt: true,
     physics: {
 
         default: 'arcade',
@@ -16,3 +17,4 @@ let gameConfig = {
     scene: [Tableau1]
 };
 let game = new Phaser.Game(gameConfig);
+

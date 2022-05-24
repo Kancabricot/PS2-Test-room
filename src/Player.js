@@ -70,14 +70,6 @@ class Player {
             this.scene.iconbat.fillColor = 0x00ff00;
         }
 
-        if(this.scene.turn === true){
-            this.scene.iconbat.x = this.player.x +7;
-            this.scene.iconbat.y = this.player.y +10;
-        }else{
-            this.scene.iconbat.x = this.player.x -7;
-            this.scene.iconbat.y = this.player.y +10;
-        }
-
         if(this.scene.genup === true && this.scene.pile.visible === false){
             this.scene.recharge = false;
         }else{
@@ -88,7 +80,7 @@ class Player {
             this.Battery = this.chargeMax;
         }else{
             this.Battery -= 1;
-            console.log("perd de la battery"+this.Battery)
+            //console.log("perd de la battery  "+this.Battery)
         }
 
         if(this.Battery  < 0){
