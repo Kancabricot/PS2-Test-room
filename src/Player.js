@@ -40,7 +40,8 @@ class Player {
             this.player.setVelocityX(300);
             this.player.setFlipX(false);
                  if (this.player.body.onFloor()) {
-                 this.player.play('walk', true)
+                 this.player.play('walk', true);
+                 this.player.setOffset(16,0);
                  }
         }
     }
@@ -54,7 +55,8 @@ class Player {
             this.player.setVelocityX(-300);
             this.player.setFlipX(true);
             if (this.player.body.onFloor()) {
-                this.player.play('walk',true)
+                this.player.play('walk',true);
+                this.player.setOffset(16,0);
             }
         }
 
