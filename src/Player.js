@@ -9,6 +9,16 @@ class Player {
         this.chargeMax = 180000000/2;
         this.Battery = this.chargeMax;
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
+
+        this.scene.anims.create({
+            key: 'walk',
+            frames: this.scene.anims.generateFrameNames('ListrikWalk', {
+                start: 0,
+                end: 10,
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
     }
 
     jump(){
@@ -29,10 +39,9 @@ class Player {
         } else {
             this.player.setVelocityX(300);
             this.player.setFlipX(false);
-            //     if (this.player.body.onFloor()) {
-            //     this.player.play('walk', true)}
-            // }
-
+                 if (this.player.body.onFloor()) {
+                 this.player.play('walk', true)
+                 }
         }
     }
     moveLeft(){
@@ -44,9 +53,9 @@ class Player {
         }else{
             this.player.setVelocityX(-300);
             this.player.setFlipX(true);
-            // if (this.player.body.onFloor()) {
-            //     this.player.play('walk',true)
-            // }
+            if (this.player.body.onFloor()) {
+                this.player.play('walk',true)
+            }
         }
 
     }
