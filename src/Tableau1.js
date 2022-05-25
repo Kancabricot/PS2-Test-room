@@ -14,6 +14,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
+        this.load.image('icon','assets/icon.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
@@ -283,6 +284,12 @@ class Tableau1 extends Phaser.Scene {
                     this.movetarget2.body.setAllowGravity(false);
                     this.movetarget2.setImmovable(true);
                     this.movetarget2.setVisible(false);
+                    break;
+                }
+                case 'icon': {
+                    this.icon = this.physics.add.sprite(x,y,"icon").setOrigin(0,0)
+                    this.icon.body.setAllowGravity(false);
+                    this.icon.setImmovable(true);
                     break;
                 }
             }
