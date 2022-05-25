@@ -18,6 +18,10 @@ class Tableau1 extends Phaser.Scene {
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
+        for (let m=1;m<=40;m++){
+            this.load.image('icon-'+m,'assets/IconeBat/Icon-'+m+'.png')
+        }
+
         // chargement tilemap
         this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
 
@@ -53,10 +57,14 @@ class Tableau1 extends Phaser.Scene {
 
         // Création de la target pour la camera
         this.target = this.physics.add.sprite(150, 900,'cube').setOrigin(0, 0);
+        this.target.setVisible(false);
         this.target.setDisplaySize(1,1);
         this.target.body.setAllowGravity(false);
         this.target.setImmovable(true);
-        this.target.setVisible(false);
+
+        this.icon = this.physics.add.sprite(150,900,"icon-1").setOrigin(0,0)
+        this.icon.body.setAllowGravity(false);
+        this.icon.setImmovable(true);
 
         this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
@@ -284,12 +292,6 @@ class Tableau1 extends Phaser.Scene {
                     this.movetarget2.body.setAllowGravity(false);
                     this.movetarget2.setImmovable(true);
                     this.movetarget2.setVisible(false);
-                    break;
-                }
-                case 'icon': {
-                    this.icon = this.physics.add.sprite(x,y,"icon").setOrigin(0,0)
-                    this.icon.body.setAllowGravity(false);
-                    this.icon.setImmovable(true);
                     break;
                 }
             }
@@ -696,6 +698,7 @@ class Tableau1 extends Phaser.Scene {
                 this.genup = true;
                 this.takeBat = false;
                 this.genmove2.play();
+                this.genmove2.resume();
                 this.act4.setTexture('genU');
             }else if (this.physics.overlap(player, this.act8)===true){
                 this.platweens8.play();
@@ -726,7 +729,7 @@ class Tableau1 extends Phaser.Scene {
                 this.takeBat = false;
                 this.physics.moveToObject(this.act5, this.movetarget2, 100);
                 this.physics.moveToObject(this.platmove5, this.movetarget, 100);
-                this.act1.setTexture('genU');
+                this.act5.setTexture('genU');
             }else{
                 this.pile.x = player.x + 7.50;
                 this.pile.y = player.y + 7.50;
