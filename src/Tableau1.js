@@ -14,7 +14,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
-        this.load.image('icon','assets/icon.png');
+        this.load.image('tuto1','assets/TutoAnim/BGtuto1.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
@@ -44,15 +44,19 @@ class Tableau1 extends Phaser.Scene {
             immovable: true
         });
 
+        // Création du BG
+        this.bg = this.physics.add.sprite(32, 800,'tuto1').setOrigin(0, 0);
+        this.bg.body.setAllowGravity(false)
+        this.bg.setImmovable(true);
 
         // Création de la target pour la camera
-        this.pile = this.physics.add.sprite(150, 900,'pile').setOrigin(0, 0);
+        this.pile = this.physics.add.sprite(150, 1472,'pile').setOrigin(0, 0);
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
 
         // Création de la target pour la camera
-        this.target = this.physics.add.sprite(150, 900,'cube').setOrigin(0, 0);
+        this.target = this.physics.add.sprite(0, 0,'cube').setOrigin(0, 0);
         this.target.setVisible(false);
         this.target.setDisplaySize(1,1);
         this.target.body.setAllowGravity(false);
@@ -626,10 +630,12 @@ class Tableau1 extends Phaser.Scene {
         this.pile.y = this.currentSaveY;
         Battery = this.chargeMax;
         this.pile.setVisible(true);
-        this.platmove5.setVelocity(0);
+        this.player.player.body.setAllowGravity(true);
+
         this.act5.setVelocity(0);
         this.act5.x = 5600;
         this.platmove5.x = 5600;
+        this.platmove5.setVelocity(0);
     }
 
     actiongrab(grappin,grab){

@@ -22,7 +22,8 @@ class UI extends Phaser.Scene {
     }
 
     update(){
-     this.Pourcent = (Battery*100/1800)
+     this.Pourcent = Math.round(Battery*100/1800)
+
      this.logo();
      this.info.setText(this.Pourcent + '%');
     }

@@ -3,7 +3,7 @@ class Player {
     constructor(scene) {
         this.scene = scene
         this.cameras = scene
-        this.player = this.scene.physics.add.sprite(150, 900, 'ListrikP');
+        this.player = this.scene.physics.add.sprite(130, 1472, 'ListrikP');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(false);
         this.chargeMax = 1800;
@@ -93,8 +93,14 @@ class Player {
             this.player.y = this.scene.currentSaveY;
             this.scene.pile.X = this.scene.currentSaveX;
             this.scene.pile.y = this.scene.currentSaveY;
+            this.player.body.setAllowGravity(true);
             Battery = this.chargeMax;
             this.scene.pile.setVisible(true);
+
+            this.scene.act5.setVelocity(0);
+            this.scene.act5.x = 5600;
+            this.scene.platmove5.x = 5600;
+            this.scene.platmove5.setVelocity(0);
         }
     }
 
