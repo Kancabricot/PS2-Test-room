@@ -18,10 +18,6 @@ class Tableau1 extends Phaser.Scene {
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
-        for (let m=1;m<=40;m++){
-            this.load.image('icon-'+m,'assets/IconeBat/Icon-'+m+'.png')
-        }
-
         // chargement tilemap
         this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
 
@@ -61,10 +57,6 @@ class Tableau1 extends Phaser.Scene {
         this.target.setDisplaySize(1,1);
         this.target.body.setAllowGravity(false);
         this.target.setImmovable(true);
-
-        this.icon = this.physics.add.sprite(150,900,"icon-1").setOrigin(0,0)
-        this.icon.body.setAllowGravity(false);
-        this.icon.setImmovable(true);
 
         this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
@@ -632,7 +624,7 @@ class Tableau1 extends Phaser.Scene {
         this.player.player.y = this.currentSaveY;
         this.pile.X = this.currentSaveX + 40;
         this.pile.y = this.currentSaveY;
-        this.Battery = this.chargeMax;
+        Battery = this.chargeMax;
         this.pile.setVisible(true);
         this.platmove5.setVelocity(0);
         this.act5.setVelocity(0);
