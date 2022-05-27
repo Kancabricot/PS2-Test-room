@@ -14,7 +14,8 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
-        this.load.image('tuto1','assets/TutoAnim/BGtuto1.png');
+        this.load.image('tuto1','assets/TutoAnim/BG1tuto.png');
+        this.load.image('tuto2','assets/TutoAnim/BG2tuto1.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
@@ -27,8 +28,8 @@ class Tableau1 extends Phaser.Scene {
 
 
     create() {
-        this.currentSaveX = 150;
-        this.currentSaveY = 900;
+        this.currentSaveX = -1244;
+        this.currentSaveY = 1472;
         this.takeBat = false;
         this.recharge = false;
         this.turn = false;
@@ -45,12 +46,17 @@ class Tableau1 extends Phaser.Scene {
         });
 
         // Création du BG
-        this.bg = this.physics.add.sprite(32, 800,'tuto1').setOrigin(0, 0);
+        this.bg = this.physics.add.sprite(32, 800,'tuto2').setOrigin(0, 0);
+        this.bg.body.setAllowGravity(false)
+        this.bg.setImmovable(true);
+
+        // Création du BG
+        this.bg = this.physics.add.sprite(-1344, 800,'tuto1').setOrigin(0, 0);
         this.bg.body.setAllowGravity(false)
         this.bg.setImmovable(true);
 
         // Création de la target pour la camera
-        this.pile = this.physics.add.sprite(150, 1472,'pile').setOrigin(0, 0);
+        this.pile = this.physics.add.sprite(-1244, 1472,'pile').setOrigin(0, 0);
         this.pile.setDisplaySize(32,32);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
@@ -207,6 +213,13 @@ class Tableau1 extends Phaser.Scene {
                     this.platmove11.setImmovable(true);
                     break;
                 }
+                case 'platmove12': {
+                    this.platmove12 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.platmove12.setDisplaySize(32*6,32);
+                    this.platmove12.body.setAllowGravity(false);
+                    this.platmove12.setImmovable(true);
+                    break;
+                }
                 case 'Act': {
                     this.act1 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
                     this.act1.setDisplaySize(64,64);
@@ -258,6 +271,13 @@ class Tableau1 extends Phaser.Scene {
                     this.act11.setDisplaySize(64,64);
                     this.act11.body.setAllowGravity(false);
                     this.act11.setImmovable(true);
+                    break;
+                }
+                case 'Act12': {
+                    this.act12 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act12.setDisplaySize(64,64);
+                    this.act12.body.setAllowGravity(false);
+                    this.act12.setImmovable(true);
                     break;
                 }
                 case 'sologen': {
@@ -386,6 +406,22 @@ class Tableau1 extends Phaser.Scene {
                     this.cam9.body.setAllowGravity(false);
                     break;
                 }
+                case '8-3': {
+                    this.cam10 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam10.setDisplaySize(1344, 704);
+                    this.cam10.setVisible(false)
+                    this.cam10.setImmovable(true);
+                    this.cam10.body.setAllowGravity(false);
+                    break;
+                }
+                case '0-2': {
+                    this.cam0 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cam0.setDisplaySize(1344, 704);
+                    this.cam0.setVisible(false)
+                    this.cam0.setImmovable(true);
+                    this.cam0.body.setAllowGravity(false);
+                    break;
+                }
                 case 'cam1-2': {
                     this.cs1 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
                     this.cs1.setDisplaySize(1, 1);
@@ -466,6 +502,22 @@ class Tableau1 extends Phaser.Scene {
                     this.cs9.body.setAllowGravity(false);
                     break;
                 }
+                case 'cam8-3': {
+                    this.cs10 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs10.setDisplaySize(1, 1);
+                    this.cs10.setVisible(false)
+                    this.cs10.setImmovable(true);
+                    this.cs10.body.setAllowGravity(false);
+                    break;
+                }
+                case 'cam0-2': {
+                    this.cs0 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cs0.setDisplaySize(1, 1);
+                    this.cs0.setVisible(false)
+                    this.cs0.setImmovable(true);
+                    this.cs0.body.setAllowGravity(false);
+                    break;
+                }
             }
         })
 
@@ -538,7 +590,7 @@ class Tableau1 extends Phaser.Scene {
         // redimentionnement du monde avec les dimensions calculées via tiled
                 this.physics.world.setBounds(0, 0, 3200000, 1000000);
         //  ajout du champs de la caméra de taille identique à celle du monde
-                this.cameras.main.setBounds(0, 0, 3200000, 1000000);
+                this.cameras.main.setBounds(-100000, -100000, 3200000, 1000000);
 
         this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
         this.physics.add.overlap(this.collide, this.grappin, this.miss,  null, this)
@@ -722,6 +774,14 @@ class Tableau1 extends Phaser.Scene {
                 this.genup = true;
                 this.takeBat = false;
                 this.act11.setTexture('genU');
+            }else if (this.physics.overlap(player, this.act12)===true){
+                this.platweens12.play();
+                this.platweens12.resume();
+                this.genmove12.play()
+                this.genmove12.resume()
+                this.genup = true;
+                this.takeBat = false;
+                this.act12.setTexture('genU');
             }else if (this.physics.overlap(player, this.act5)===true){
                 this.genup = true;
                 this.takeBat = false;
@@ -785,6 +845,12 @@ class Tableau1 extends Phaser.Scene {
             this.genup = false;
             this.takeBat = true;
             this.act11.setTexture('genD');
+        }else if (this.physics.overlap(player, this.act12)===true){
+            this.platweens12.pause();
+            this.genmove12.pause();
+            this.genup = false;
+            this.takeBat = true;
+            this.act12.setTexture('genD');
         }else if (this.physics.overlap(player, this.act5)===true){
             this.platmove5.setVelocity(0);
             this.act5.setVelocity(0);
@@ -856,6 +922,15 @@ class Tableau1 extends Phaser.Scene {
         })// tableau 6-3
         this.physics.add.overlap(player, this.cam9, function () {
             me.cameras.main.startFollow(me.cs9, true, 1, 1);
+        })
+        // tableau 8-3
+        this.physics.add.overlap(player, this.cam10, function () {
+            me.cameras.main.startFollow(me.cs10, true, 1, 1);
+        })
+        // tableau 0-2
+        this.physics.add.overlap(player, this.cam0, function () {
+            me.cameras.main.startFollow(me.cs0, true, 1, 1);
+            Battery = me.player.chargeMax;
         })
     }
 
@@ -990,6 +1065,27 @@ class Tableau1 extends Phaser.Scene {
         });
         this.platweens11.pause()
 
+        this.platweens12 = this.tweens.add({
+            targets: this.platmove12,
+            x: 10688,
+            duration: 10000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+            hold: 2000,
+        });
+        this.platweens12.pause()
+
+        this.genmove12 = this.tweens.add({
+            targets: this.act12,
+            x: 10688,
+            duration: 10000,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1,
+            hold: 2000,
+        });
+        this.genmove12.pause()
     }
 
     FunctionDoor(door,open){
@@ -1006,6 +1102,7 @@ class Tableau1 extends Phaser.Scene {
 
         if(game.input.activePointer.leftButtonDown() === true){
             if(this.up.visible === false) {
+
                 this.isgrab = true
                 this.grappin.setVelocity(0);
                 this.grappin.setVisible(true);
@@ -1013,7 +1110,6 @@ class Tableau1 extends Phaser.Scene {
                 this.grappin.y = this.player.player.y;
                 this.grappin.body.setEnable(true);
                 this.physics.moveToObject(this.grappin, this.target, 400);
-
 
             }
 
