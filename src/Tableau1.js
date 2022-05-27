@@ -590,7 +590,7 @@ class Tableau1 extends Phaser.Scene {
         // redimentionnement du monde avec les dimensions calculées via tiled
                 this.physics.world.setBounds(0, 0, 3200000, 1000000);
         //  ajout du champs de la caméra de taille identique à celle du monde
-                this.cameras.main.setBounds(-100000, -100000, 3200000, 1000000);
+                this.cameras.main.setBounds(-100000, -0, 3200000, 1000000);
 
         this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
         this.physics.add.overlap(this.collide, this.grappin, this.miss,  null, this)
