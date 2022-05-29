@@ -51,7 +51,7 @@ class Tableau1 extends Phaser.Scene {
         this.bg.setImmovable(true);
 
         // Création du BG
-        this.bg = this.physics.add.sprite(-1344, 800,'tuto1').setOrigin(0, 0);
+        this.bg = this.physics.add.sprite(-1344, 64*2,'tuto1').setOrigin(0, 0);
         this.bg.body.setAllowGravity(false)
         this.bg.setImmovable(true);
 
@@ -422,6 +422,22 @@ class Tableau1 extends Phaser.Scene {
                     this.cam0.body.setAllowGravity(false);
                     break;
                 }
+                case '0-1': {
+                    this.menustart = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.menustart.setDisplaySize(1344, 704);
+                    this.menustart.setVisible(false)
+                    this.menustart.setImmovable(true);
+                    this.menustart.body.setAllowGravity(false);
+                    break;
+                }
+                case '8-4': {
+                    this.menuend = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.menuend.setDisplaySize(1344, 704);
+                    this.menuend.setVisible(false)
+                    this.menuend.setImmovable(true);
+                    this.menuend.body.setAllowGravity(false);
+                    break;
+                }
                 case 'cam1-2': {
                     this.cs1 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
                     this.cs1.setDisplaySize(1, 1);
@@ -516,6 +532,22 @@ class Tableau1 extends Phaser.Scene {
                     this.cs0.setVisible(false)
                     this.cs0.setImmovable(true);
                     this.cs0.body.setAllowGravity(false);
+                    break;
+                }
+                case 'cam0-1': {
+                    this.csmenustart = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.csmenustart.setDisplaySize(1, 1);
+                    this.csmenustart.setVisible(false)
+                    this.csmenustart.setImmovable(true);
+                    this.csmenustart.body.setAllowGravity(false);
+                    break;
+                }
+                case 'cam8-4': {
+                    this.csmenuend = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.csmenuend.setDisplaySize(1, 1);
+                    this.csmenuend.setVisible(false)
+                    this.csmenuend.setImmovable(true);
+                    this.csmenuend.body.setAllowGravity(false);
                     break;
                 }
             }
@@ -930,6 +962,16 @@ class Tableau1 extends Phaser.Scene {
         // tableau 0-2
         this.physics.add.overlap(player, this.cam0, function () {
             me.cameras.main.startFollow(me.cs0, true, 1, 1);
+            Battery = me.player.chargeMax;
+        })
+        // tableau menustart
+        this.physics.add.overlap(player, this.menustart, function () {
+            me.cameras.main.startFollow(me.csmenustart, true, 1, 1);
+            Battery = me.player.chargeMax;
+        })
+        // tableau menustart
+        this.physics.add.overlap(player, this.menuend, function () {
+            me.cameras.main.startFollow(me.csmenuend, true, 1, 1);
             Battery = me.player.chargeMax;
         })
     }
