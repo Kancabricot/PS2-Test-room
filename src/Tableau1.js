@@ -34,6 +34,10 @@ class Tableau1 extends Phaser.Scene {
         for (let m=1;m<=12;m++){
             this.load.image('tutoPile-'+m,'assets/TutoAnim/BGtuto'+m+'.png')
         }
+
+        for (let m=1;m<=14;m++){
+            this.load.image('TutoGen-'+m,'assets/TutoAnim/TutoGen'+m+'.png')
+        }
     }
 
     create() {
@@ -48,51 +52,7 @@ class Tableau1 extends Phaser.Scene {
         this.isgrab = false;
         this.upgradeL = false;
 
-        this.anims.create({
-            key: 'tutoMenuStart',
-            frames: [
-                {key:'tutoMenuStart-1'},
-                {key:'tutoMenuStart-2'},
-                {key:'tutoMenuStart-3'},
-                {key:'tutoMenuStart-4'},
-                {key:'tutoMenuStart-5'},
-                {key:'tutoMenuStart-6'},
-                {key:'tutoMenuStart-7'},
-                {key:'tutoMenuStart-8'},
-            ],
-            frameRate: 9,
-            repeat: -1});
-
-        this.anims.create({
-            key: 'tutoLevier',
-            frames: [
-                {key:'tutoLevier-1'},
-                {key:'tutoLevier-2'},
-                {key:'tutoLevier-3'},
-                {key:'tutoLevier-4'},
-                {key:'tutoLevier-5'},
-            ],
-            frameRate: 9,
-            repeat: -1});
-
-        this.anims.create({
-            key: 'tutoPile',
-            frames: [
-                {key:'tutoPile-1'},
-                {key:'tutoPile-2'},
-                {key:'tutoPile-3'},
-                {key:'tutoPile-4'},
-                {key:'tutoPile-5'},
-                {key:'tutoPile-6'},
-                {key:'tutoPile-7'},
-                {key:'tutoPile-8'},
-                {key:'tutoPile-9'},
-                {key:'tutoPile-10'},
-                {key:'tutoPile-11'},
-                {key:'tutoPile-12'},
-            ],
-            frameRate: 9,
-            repeat: -1});
+        this.FuntionAnim()
 
         // Création de la vitre
         this.vitre = this.physics.add.sprite(-1344, 0,'vitre').setOrigin(0, 0);
@@ -110,6 +70,12 @@ class Tableau1 extends Phaser.Scene {
         this.bgmenu.body.setAllowGravity(false)
         this.bgmenu.setImmovable(true);
         this.bgmenu.play('tutoMenuStart');
+
+        // Création du BG
+        this.bggen = this.physics.add.sprite(1408, 800,'cube').setOrigin(0, 0);
+        this.bggen.body.setAllowGravity(false)
+        this.bggen.setImmovable(true);
+        this.bggen.play('TutoGen');
 
         // Création du BG
         this.bgmenu = this.physics.add.sprite(32, 800,'cube').setOrigin(0, 0);
@@ -786,6 +752,75 @@ class Tableau1 extends Phaser.Scene {
         this.currentSaveX = saves.x
         this.currentSaveY = saves.y-50
         saves.body.enable = false;
+    }
+
+    FuntionAnim(){
+        this.anims.create({
+            key: 'tutoMenuStart',
+            frames: [
+                {key:'tutoMenuStart-1'},
+                {key:'tutoMenuStart-2'},
+                {key:'tutoMenuStart-3'},
+                {key:'tutoMenuStart-4'},
+                {key:'tutoMenuStart-5'},
+                {key:'tutoMenuStart-6'},
+                {key:'tutoMenuStart-7'},
+                {key:'tutoMenuStart-8'},
+            ],
+            frameRate: 10,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'TutoGen',
+            frames: [
+                {key:'TutoGen-1'},
+                {key:'TutoGen-2'},
+                {key:'TutoGen-3'},
+                {key:'TutoGen-4'},
+                {key:'TutoGen-5'},
+                {key:'TutoGen-6'},
+                {key:'TutoGen-7'},
+                {key:'TutoGen-8'},
+                {key:'TutoGen-9'},
+                {key:'TutoGen-10'},
+                {key:'TutoGen-11'},
+                {key:'TutoGen-12'},
+                {key:'TutoGen-13'},
+                {key:'TutoGen-14'},
+            ],
+            frameRate: 10,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'tutoLevier',
+            frames: [
+                {key:'tutoLevier-1'},
+                {key:'tutoLevier-2'},
+                {key:'tutoLevier-3'},
+                {key:'tutoLevier-4'},
+                {key:'tutoLevier-5'},
+            ],
+            frameRate: 10,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'tutoPile',
+            frames: [
+                {key:'tutoPile-1'},
+                {key:'tutoPile-2'},
+                {key:'tutoPile-3'},
+                {key:'tutoPile-4'},
+                {key:'tutoPile-5'},
+                {key:'tutoPile-6'},
+                {key:'tutoPile-7'},
+                {key:'tutoPile-8'},
+                {key:'tutoPile-9'},
+                {key:'tutoPile-10'},
+                {key:'tutoPile-11'},
+                {key:'tutoPile-12'},
+            ],
+            frameRate: 10,
+            repeat: -1});
     }
 
     KillBox(){

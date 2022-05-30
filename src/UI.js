@@ -3,8 +3,6 @@ class UI extends Phaser.Scene {
     constructor ()
     {
         super({ key: 'UIScene', active: true });
-
-        this.score = 0;
     }
     preload() {
         for (let m=1;m<=40;m++){
