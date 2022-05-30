@@ -1,21 +1,19 @@
 class Tableau1 extends Phaser.Scene {
 
-
     preload() {
         // Je preload les images autres que Tiled!
 
         this.load.image('pile','assets/Pile.png');
         this.load.image('cube','assets/squareY.png');
 
-        this.load.image('bg','assets/images/background.png');
         this.load.image('ListrikP','assets/ListrikP.png');
         this.load.image('grab','assets/grab.png');
         this.load.image('levier','assets/levier.png');
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
-        this.load.image('tuto1','assets/BG1tuto.png');
-        this.load.image('tuto2','assets/BG2tuto1.png');
+        this.load.image('tuto2','assets/TutoAnim/BG2tuto1.png');
+        this.load.image('vitre','assets/Vitre.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
@@ -24,8 +22,19 @@ class Tableau1 extends Phaser.Scene {
 
         // chargement de la map en json
         this.load.tilemapTiledJSON("map", "assets/Map_TR/TestRoom.json");
-    }
 
+        for (let m=1;m<=8;m++){
+            this.load.image('tutoMenuStart-'+m,'assets/TutoAnim/BG1tuto'+m+'.png')
+        }
+
+        for (let m=1;m<=5;m++){
+            this.load.image('tutoLevier-'+m,'assets/TutoAnim/BG2tuto'+m+'.png')
+        }
+
+        for (let m=1;m<=12;m++){
+            this.load.image('tutoPile-'+m,'assets/TutoAnim/BGtuto'+m+'.png')
+        }
+    }
 
     create() {
         this.currentSaveX = -1244;
@@ -39,25 +48,78 @@ class Tableau1 extends Phaser.Scene {
         this.isgrab = false;
         this.upgradeL = false;
 
+        this.anims.create({
+            key: 'tutoMenuStart',
+            frames: [
+                {key:'tutoMenuStart-1'},
+                {key:'tutoMenuStart-2'},
+                {key:'tutoMenuStart-3'},
+                {key:'tutoMenuStart-4'},
+                {key:'tutoMenuStart-5'},
+                {key:'tutoMenuStart-6'},
+                {key:'tutoMenuStart-7'},
+                {key:'tutoMenuStart-8'},
+            ],
+            frameRate: 9,
+            repeat: -1});
 
-        this.door1 = this.physics.add.group({
-            allowGravity: false,
-            immovable: true
-        });
+        this.anims.create({
+            key: 'tutoLevier',
+            frames: [
+                {key:'tutoLevier-1'},
+                {key:'tutoLevier-2'},
+                {key:'tutoLevier-3'},
+                {key:'tutoLevier-4'},
+                {key:'tutoLevier-5'},
+            ],
+            frameRate: 9,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'tutoPile',
+            frames: [
+                {key:'tutoPile-1'},
+                {key:'tutoPile-2'},
+                {key:'tutoPile-3'},
+                {key:'tutoPile-4'},
+                {key:'tutoPile-5'},
+                {key:'tutoPile-6'},
+                {key:'tutoPile-7'},
+                {key:'tutoPile-8'},
+                {key:'tutoPile-9'},
+                {key:'tutoPile-10'},
+                {key:'tutoPile-11'},
+                {key:'tutoPile-12'},
+            ],
+            frameRate: 9,
+            repeat: -1});
+
+        // Création de la vitre
+        this.vitre = this.physics.add.sprite(-1344, 0,'vitre').setOrigin(0, 0);
+        this.vitre.body.setAllowGravity(false)
+        this.vitre.setImmovable(true);
 
         // Création du BG
-        this.bg = this.physics.add.sprite(32, 800,'tuto2').setOrigin(0, 0);
-        this.bg.body.setAllowGravity(false)
-        this.bg.setImmovable(true);
+        this.bglevier = this.physics.add.sprite(-1344, 800,'tuto2').setOrigin(0, 0);
+        this.bglevier.body.setAllowGravity(false)
+        this.bglevier.setImmovable(true);
+        this.bglevier.play('tutoLevier');
 
         // Création du BG
-        this.bg = this.physics.add.sprite(-1344, 64*2,'tuto1').setOrigin(0, 0);
-        this.bg.body.setAllowGravity(false)
-        this.bg.setImmovable(true);
+        this.bgmenu = this.physics.add.sprite(-1344, 0,'cube').setOrigin(0, 0);
+        this.bgmenu.body.setAllowGravity(false)
+        this.bgmenu.setImmovable(true);
+        this.bgmenu.play('tutoMenuStart');
+
+        // Création du BG
+        this.bgmenu = this.physics.add.sprite(32, 800,'cube').setOrigin(0, 0);
+        this.bgmenu.body.setAllowGravity(false)
+        this.bgmenu.setImmovable(true);
+        this.bgmenu.play('tutoPile');
 
         // Création de la target pour la camera
-        this.pile = this.physics.add.sprite(-1244, 1472,'pile').setOrigin(0, 0);
-        this.pile.setDisplaySize(32,32);
+        this.pile = this.physics.add.sprite(800, 800,'pile').setOrigin(0, 0);
+        this.pile.setDisplaySize(21,52);
         this.pile.body.setAllowGravity(true);
         this.pile.setImmovable(true);
 
@@ -78,7 +140,10 @@ class Tableau1 extends Phaser.Scene {
             "tilemap"
         );
 
-
+        this.door1 = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
 
         this.collide = this.physics.add.group({
             allowGravity: false,
@@ -94,6 +159,13 @@ class Tableau1 extends Phaser.Scene {
             const {x = 0, y = 0, name} = objData
 
             switch (name) {
+                case 'porte0': {
+                    this.door0 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
+                    this.door0.setDisplaySize(32,32*4);
+                    this.door0.body.setAllowGravity(false);
+                    this.door0.setImmovable(true);
+                    break;
+                }
                 case 'porte1': {
                     this.door1 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
                     this.door1.setDisplaySize(32,32*4);
@@ -113,6 +185,13 @@ class Tableau1 extends Phaser.Scene {
                     this.door3.setDisplaySize(32,32*4);
                     this.door3.body.setAllowGravity(false);
                     this.door3.setImmovable(true);
+                    break;
+                }
+                case 'levier0': {
+                    this.levier0 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
+                    this.levier0.setDisplaySize(32,32);
+                    this.levier0.body.setAllowGravity(false);
+                    this.levier0.setImmovable(true);
                     break;
                 }
                 case 'levier1': {
@@ -314,7 +393,7 @@ class Tableau1 extends Phaser.Scene {
         })
 
         const cam = map.getObjectLayer('cam')
-        cam.objects.forEach(objData=> {
+            cam.objects.forEach(objData=> {
             const {x = 0, y = 0, name} = objData
 
             switch (name) {
@@ -603,8 +682,10 @@ class Tableau1 extends Phaser.Scene {
 
         // Creation des collision
         this.physics.add.collider(this.player.player, this.platforms);
+        this.physics.add.collider(this.player.player, this.door0);
         this.physics.add.collider(this.player.player, this.door1);
         this.physics.add.collider(this.player.player, this.door2);
+        this.physics.add.collider(this.player.player, this.door3);
         this.physics.add.collider(this.player.player, this.platmove1);
         this.physics.add.collider(this.player.player, this.platmove2);
         this.physics.add.collider(this.player.player, this.platmove3);
@@ -822,7 +903,7 @@ class Tableau1 extends Phaser.Scene {
                 this.act5.setTexture('genU');
             }else{
                 this.pile.x = player.x + 7.50;
-                this.pile.y = player.y + 7.50;
+                this.pile.y = player.y - 32;
                 this.takeBat = false;
             }
         }
@@ -892,7 +973,10 @@ class Tableau1 extends Phaser.Scene {
         }
 
 
-        else if(this.physics.overlap(player, this.levier1)===true ){
+        else if(this.physics.overlap(player, this.levier0)===true ){
+            this.open0 = this.open0 === false;
+            this.FunctionDoor(this.door0,this.open0);
+        }else if(this.physics.overlap(player, this.levier1)===true ){
             this.open1 = this.open1 === false;
             this.FunctionDoor(this.door1,this.open1);
         }else if(this.physics.overlap(player, this.levier2)===true ){

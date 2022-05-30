@@ -3,7 +3,7 @@ class Player {
     constructor(scene) {
         this.scene = scene
         this.cameras = scene
-        this.player = this.scene.physics.add.sprite(-672, 192, 'ListrikP');
+        this.player = this.scene.physics.add.sprite(-672+32, 192, 'ListrikP');
         this.player.setBounce(0);
         this.player.setCollideWorldBounds(false);
         this.chargeMax = 1800;
@@ -14,7 +14,7 @@ class Player {
             key: 'walk',
             frames: this.scene.anims.generateFrameNames('ListrikWalk', {
                 start: 0,
-                end: 10,
+                end: 9,
             }),
             frameRate: 10,
             repeat: -1
