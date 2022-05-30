@@ -7,7 +7,7 @@ class Player {
         this.player.setBounce(0);
         this.player.setCollideWorldBounds(false);
         this.chargeMax = 1800;
-        window.Battery = this.chargeMax;
+        Battery = this.chargeMax;
         // this.scene.physics.add.collider(this.player, this.scene.platforms);
 
         this.scene.anims.create({

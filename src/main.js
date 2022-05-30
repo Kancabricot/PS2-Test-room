@@ -17,4 +17,5 @@ let gameConfig = {
     scene: [Tableau1,UI]
 };
 let game = new Phaser.Game(gameConfig);
+window.Battery = 0;
 

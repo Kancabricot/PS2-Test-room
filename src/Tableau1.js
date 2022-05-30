@@ -38,6 +38,10 @@ class Tableau1 extends Phaser.Scene {
         for (let m=1;m<=14;m++){
             this.load.image('TutoGen-'+m,'assets/TutoAnim/TutoGen'+m+'.png')
         }
+
+        for (let m=1;m<=19;m++){
+            this.load.image('Tutograb-'+m,'assets/TutoAnim/TutoGrab'+m+'.png')
+        }
     }
 
     create() {
@@ -82,6 +86,12 @@ class Tableau1 extends Phaser.Scene {
         this.bgmenu.body.setAllowGravity(false)
         this.bgmenu.setImmovable(true);
         this.bgmenu.play('tutoPile');
+
+        // Création du BG
+        this.bggrab = this.physics.add.sprite(2784, 800,'cube').setOrigin(0, 0);
+        this.bggrab.body.setAllowGravity(false)
+        this.bggrab.setImmovable(true);
+        this.bggrab.play('Tutograb');
 
         // Création de la target pour la camera
         this.pile = this.physics.add.sprite(800, 800,'pile').setOrigin(0, 0);
@@ -766,6 +776,32 @@ class Tableau1 extends Phaser.Scene {
                 {key:'tutoMenuStart-6'},
                 {key:'tutoMenuStart-7'},
                 {key:'tutoMenuStart-8'},
+            ],
+            frameRate: 10,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'Tutograb',
+            frames: [
+                {key:'Tutograb-1'},
+                {key:'Tutograb-2'},
+                {key:'Tutograb-3'},
+                {key:'Tutograb-4'},
+                {key:'Tutograb-5'},
+                {key:'Tutograb-6'},
+                {key:'Tutograb-7'},
+                {key:'Tutograb-8'},
+                {key:'Tutograb-9'},
+                {key:'Tutograb-10'},
+                {key:'Tutograb-11'},
+                {key:'Tutograb-12'},
+                {key:'Tutograb-13'},
+                {key:'Tutograb-14'},
+                {key:'Tutograb-15'},
+                {key:'Tutograb-16'},
+                {key:'Tutograb-17'},
+                {key:'Tutograb-18'},
+                {key:'Tutograb-19'},
             ],
             frameRate: 10,
             repeat: -1});
