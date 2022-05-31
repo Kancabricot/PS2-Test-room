@@ -36,7 +36,7 @@ class Player {
             this.player.setVelocityX(200);
             this.player.setFlipX(false);
 
-        } else {
+        } else { // gros con :)
             this.player.setVelocityX(300);
             this.player.setFlipX(false);
                  if (this.player.body.onFloor()) {

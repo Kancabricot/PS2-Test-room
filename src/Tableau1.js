@@ -8,12 +8,17 @@ class Tableau1 extends Phaser.Scene {
 
         this.load.image('ListrikP','assets/ListrikP.png');
         this.load.image('grab','assets/grab.png');
-        this.load.image('levier','assets/levier.png');
+        this.load.image('hook','assets/hook.png');
+        this.load.image('levieroff','assets/levieroff.png');
+        this.load.image('levieron','assets/levieron.png');
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
         this.load.image('tuto2','assets/TutoAnim/BG2tuto1.png');
         this.load.image('vitre','assets/Vitre.png');
+        this.load.image('platmove','assets/Platmove.png');
+        this.load.image('platmove12','assets/Platmove-12.png');
+        this.load.image('platmove3','assets/Platmove-3.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
@@ -96,8 +101,6 @@ class Tableau1 extends Phaser.Scene {
         // Création de la target pour la camera
         this.pile = this.physics.add.sprite(800, 800,'pile').setOrigin(0, 0);
         this.pile.setDisplaySize(21,52);
-        this.pile.body.setAllowGravity(true);
-        this.pile.setImmovable(true);
 
         // Création de la target pour la camera
         this.target = this.physics.add.sprite(0, 0,'cube').setOrigin(0, 0);
@@ -105,8 +108,6 @@ class Tableau1 extends Phaser.Scene {
         this.target.setDisplaySize(1,1);
         this.target.body.setAllowGravity(false);
         this.target.setImmovable(true);
-
-        this.iconbat = this.add.rectangle(0,0,8,12,0x00ff00);
 
         // chargement de la map
         const map = this.add.tilemap("map");
@@ -130,243 +131,12 @@ class Tableau1 extends Phaser.Scene {
             this.collide.add(this.collideSprite)
         });
 
-        const objectsLayer = map.getObjectLayer('Objet')
-        objectsLayer.objects.forEach(objData=> {
-            const {x = 0, y = 0, name} = objData
+        this.porte = map.createLayer(
+            "door",
+            tileset
+        );
 
-            switch (name) {
-                case 'porte0': {
-                    this.door0 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
-                    this.door0.setDisplaySize(32,32*4);
-                    this.door0.body.setAllowGravity(false);
-                    this.door0.setImmovable(true);
-                    break;
-                }
-                case 'porte1': {
-                    this.door1 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
-                    this.door1.setDisplaySize(32,32*4);
-                    this.door1.body.setAllowGravity(false);
-                    this.door1.setImmovable(true);
-                    break;
-                }
-                case 'porte2': {
-                    this.door2 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
-                    this.door2.setDisplaySize(32,32*4);
-                    this.door2.body.setAllowGravity(false);
-                    this.door2.setImmovable(true);
-                    break;
-                }
-                case 'porte3': {
-                    this.door3 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
-                    this.door3.setDisplaySize(32,32*4);
-                    this.door3.body.setAllowGravity(false);
-                    this.door3.setImmovable(true);
-                    break;
-                }
-                case 'levier0': {
-                    this.levier0 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
-                    this.levier0.setDisplaySize(32,32);
-                    this.levier0.body.setAllowGravity(false);
-                    this.levier0.setImmovable(true);
-                    break;
-                }
-                case 'levier1': {
-                    this.levier1 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
-                    this.levier1.setDisplaySize(32,32);
-                    this.levier1.body.setAllowGravity(false);
-                    this.levier1.setImmovable(true);
-                    break;
-                }
-                case 'levier2': {
-                    this.levier2 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
-                    this.levier2.setDisplaySize(32,32);
-                    this.levier2.body.setAllowGravity(false);
-                    this.levier2.setImmovable(true);
-                    break;
-                }
-                case 'levier3': {
-                    this.levier3 = this.physics.add.sprite(x,y-32,"levier").setOrigin(0,0)
-                    this.levier3.setDisplaySize(32,32);
-                    this.levier3.body.setAllowGravity(false);
-                    this.levier3.setImmovable(true);
-                    break;
-                }
-                case 'platmove1': {
-                    this.platmove1 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove1.setDisplaySize(32*6,32);
-                    this.platmove1.body.setAllowGravity(false);
-                    this.platmove1.setImmovable(true);
-                    break;
-                }
-                case 'platmove2': {
-                    this.platmove2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove2.setDisplaySize(32*6,32);
-                    this.platmove2.body.setAllowGravity(false);
-                    this.platmove2.setImmovable(true);
-                    break;
-                }
-                case 'platmove3': {
-                    this.platmove3 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove3.setDisplaySize(32*12,32);
-                    this.platmove3.body.setAllowGravity(false);
-                    this.platmove3.setImmovable(true);
-                    break;
-                }
-                case 'platmove4': {
-                    this.platmove4 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove4.setDisplaySize(32*6,32);
-                    this.platmove4.body.setAllowGravity(false);
-                    this.platmove4.setImmovable(true);
-                    break;
-                }
-                case 'platmove5': {
-                    this.platmove5 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove5.setDisplaySize(32*6,32);
-                    this.platmove5.body.setAllowGravity(false);
-                    this.platmove5.setImmovable(true);
-                    break;
-                }
-                case 'platmove6': {
-                    this.platmove6 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove6.setDisplaySize(32*3,32);
-                    this.platmove6.body.setAllowGravity(false);
-                    this.platmove6.setImmovable(true);
-                    break;
-                }
-                case 'platmove7': {
-                    this.platmove7 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove7.setDisplaySize(32*3,32);
-                    this.platmove7.body.setAllowGravity(false);
-                    this.platmove7.setImmovable(true);
-                    break;
-                }
-                case 'platmove8': {
-                    this.platmove8 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove8.setDisplaySize(32*6,32);
-                    this.platmove8.body.setAllowGravity(false);
-                    this.platmove8.setImmovable(true);
-                    break;
-                }
-                case 'platmove9': {
-                    this.platmove9 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove9.setDisplaySize(32*6,32);
-                    this.platmove9.body.setAllowGravity(false);
-                    this.platmove9.setImmovable(true);
-                    break;
-                }
-                case 'platmove10': {
-                    this.platmove10 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove10.setDisplaySize(32*6,32);
-                    this.platmove10.body.setAllowGravity(false);
-                    this.platmove10.setImmovable(true);
-                    break;
-                }
-                case 'platmove11': {
-                    this.platmove11 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove11.setDisplaySize(32*6,32);
-                    this.platmove11.body.setAllowGravity(false);
-                    this.platmove11.setImmovable(true);
-                    break;
-                }
-                case 'platmove12': {
-                    this.platmove12 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.platmove12.setDisplaySize(32*6,32);
-                    this.platmove12.body.setAllowGravity(false);
-                    this.platmove12.setImmovable(true);
-                    break;
-                }
-                case 'Act': {
-                    this.act1 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act1.setDisplaySize(64,64);
-                    this.act1.body.setAllowGravity(false);
-                    this.act1.setImmovable(true);
-                    break;
-                }case 'Act2': {
-                    this.act2 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act2.setDisplaySize(64,64);
-                    this.act2.body.setAllowGravity(false);
-                    this.act2.setImmovable(true);
-                    break;
-                }case 'Act4': {
-                    this.act4 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act4.setDisplaySize(64,64);
-                    this.act4.body.setAllowGravity(false);
-                    this.act4.setImmovable(true);
-                    break;
-                }case 'Act5': {
-                    this.act5 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act5.setDisplaySize(64,64);
-                    this.act5.body.setAllowGravity(false);
-                    this.act5.setImmovable(true);
-                    break;
-                }
-                case 'Act8': {
-                    this.act8 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act8.setDisplaySize(64,64);
-                    this.act8.body.setAllowGravity(false);
-                    this.act8.setImmovable(true);
-                    break;
-                }
-                case 'Act9': {
-                    this.act9 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act9.setDisplaySize(64,64);
-                    this.act9.body.setAllowGravity(false);
-                    this.act9.setImmovable(true);
-                    break;
-                }
-                case 'Act10': {
-                    this.act10 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act10.setDisplaySize(64,64);
-                    this.act10.body.setAllowGravity(false);
-                    this.act10.setImmovable(true);
-                    break;
-                }
-                case 'Act11': {
-                    this.act11 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act11.setDisplaySize(64,64);
-                    this.act11.body.setAllowGravity(false);
-                    this.act11.setImmovable(true);
-                    break;
-                }
-                case 'Act12': {
-                    this.act12 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act12.setDisplaySize(64,64);
-                    this.act12.body.setAllowGravity(false);
-                    this.act12.setImmovable(true);
-                    break;
-                }
-                case 'sologen': {
-                    this.act3 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
-                    this.act3.setDisplaySize(64,64);
-                    this.act3.body.setAllowGravity(false);
-                    this.act3.setImmovable(true);
-                    break;
-                }
-                case 'upgrade': {
-                    this.up = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.up.setDisplaySize(64,64);
-                    this.up.body.setAllowGravity(false);
-                    this.up.setImmovable(true);
-                    break;
-                }
-                case 'moveto1': {
-                    this.movetarget = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.movetarget.setDisplaySize(64,64);
-                    this.movetarget.body.setAllowGravity(false);
-                    this.movetarget.setImmovable(true);
-                    this.movetarget.setVisible(false);
-                    break;
-                }
-                case 'moveto2': {
-                    this.movetarget2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
-                    this.movetarget2.setDisplaySize(64,64);
-                    this.movetarget2.body.setAllowGravity(false);
-                    this.movetarget2.setImmovable(true);
-                    this.movetarget2.setVisible(false);
-                    break;
-                }
-            }
-        })
+
 
         const cam = map.getObjectLayer('cam')
             cam.objects.forEach(objData=> {
@@ -613,8 +383,8 @@ class Tableau1 extends Phaser.Scene {
             tileset
         );
 
-        this.porte = map.createLayer(
-            "door",
+        this.Water = map.createLayer(
+            "Water",
             tileset
         );
 
@@ -633,7 +403,7 @@ class Tableau1 extends Phaser.Scene {
         });
 
         map.getObjectLayer('DeathZone').objects.forEach((trigger) => {
-            this.deadzone.create(trigger.x + (trigger.width * 0.5), trigger.y + (trigger.height * 0.5)).setSize(trigger.width, trigger.height).setOrigin(0).setVisible(false);
+            this.deadzone.create(trigger.x + (trigger.width * 0.5)-10, trigger.y + (trigger.height * 0.5)-10).setSize(trigger.width, trigger.height).setOrigin(0).setVisible(false);
         });
 
         this.saves = this.physics.add.group({
@@ -644,15 +414,240 @@ class Tableau1 extends Phaser.Scene {
         map.getObjectLayer('Save').objects.forEach((save) => {
             this.saves.create(save.x, save.y- save.height, 'save').setOrigin(0).setPipeline('Light2D').setVisible(false);
         });
+        const objectsLayer = map.getObjectLayer('Objet')
+        objectsLayer.objects.forEach(objData=> {
+            const {x = 0, y = 0, name} = objData
 
+            switch (name) {
+                case 'porte0': {
+                    this.door0 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
+                    this.door0.setDisplaySize(32,32*4);
+                    this.door0.body.setAllowGravity(false);
+                    this.door0.setImmovable(true);
+                    break;
+                }
+                case 'porte1': {
+                    this.door1 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
+                    this.door1.setDisplaySize(32,32*4);
+                    this.door1.body.setAllowGravity(false);
+                    this.door1.setImmovable(true);
+                    break;
+                }
+                case 'porte2': {
+                    this.door2 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
+                    this.door2.setDisplaySize(32,32*4);
+                    this.door2.body.setAllowGravity(false);
+                    this.door2.setImmovable(true);
+                    break;
+                }
+                case 'porte3': {
+                    this.door3 = this.physics.add.sprite(x,y,"door").setOrigin(0,0)
+                    this.door3.setDisplaySize(32,32*4);
+                    this.door3.body.setAllowGravity(false);
+                    this.door3.setImmovable(true);
+                    break;
+                }
+                case 'levier0': {
+                    this.levier0 = this.physics.add.sprite(x,y-32,"levieroff").setOrigin(0,0)
+                    this.levier0.setDisplaySize(32,32);
+                    this.levier0.body.setAllowGravity(false);
+                    this.levier0.setImmovable(true);
+                    break;
+                }
+                case 'levier1': {
+                    this.levier1 = this.physics.add.sprite(x,y-32,"levieroff").setOrigin(0,0)
+                    this.levier1.setDisplaySize(32,32);
+                    this.levier1.body.setAllowGravity(false);
+                    this.levier1.setImmovable(true);
+                    break;
+                }
+                case 'levier2': {
+                    this.levier2 = this.physics.add.sprite(x,y-32,"levieroff").setOrigin(0,0)
+                    this.levier2.setDisplaySize(32,32);
+                    this.levier2.body.setAllowGravity(false);
+                    this.levier2.setImmovable(true);
+                    break;
+                }
+                case 'levier3': {
+                    this.levier3 = this.physics.add.sprite(x,y-32,"levieroff").setOrigin(0,0)
+                    this.levier3.setDisplaySize(32,32);
+                    this.levier3.body.setAllowGravity(false);
+                    this.levier3.setImmovable(true);
+                    break;
+                }
+                case 'platmove1': {
+                    this.platmove1 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove1.body.setAllowGravity(false);
+                    this.platmove1.setImmovable(true);
+                    break;
+                }
+                case 'platmove2': {
+                    this.platmove2 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove2.body.setAllowGravity(false);
+                    this.platmove2.setImmovable(true);
+                    break;
+                }
+                case 'platmove3': {
+                    this.platmove3 = this.physics.add.sprite(x,y,"platmove12").setOrigin(0,0)
+                    this.platmove3.body.setAllowGravity(false);
+                    this.platmove3.setImmovable(true);
+                    break;
+                }
+                case 'platmove4': {
+                    this.platmove4 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove4.body.setAllowGravity(false);
+                    this.platmove4.setImmovable(true);
+                    break;
+                }
+                case 'platmove5': {
+                    this.platmove5 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove5.body.setAllowGravity(false);
+                    this.platmove5.setImmovable(true);
+                    break;
+                }
+                case 'platmove6': {
+                    this.platmove6 = this.physics.add.sprite(x,y,"platmove3").setOrigin(0,0)
+                    this.platmove6.body.setAllowGravity(false);
+                    this.platmove6.setImmovable(true);
+                    break;
+                }
+                case 'platmove7': {
+                    this.platmove7 = this.physics.add.sprite(x,y,"platmove3").setOrigin(0,0)
+                    this.platmove7.body.setAllowGravity(false);
+                    this.platmove7.setImmovable(true);
+                    break;
+                }
+                case 'platmove8': {
+                    this.platmove8 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove8.body.setAllowGravity(false);
+                    this.platmove8.setImmovable(true);
+                    break;
+                }
+                case 'platmove9': {
+                    this.platmove9 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove9.body.setAllowGravity(false);
+                    this.platmove9.setImmovable(true);
+                    break;
+                }
+                case 'platmove10': {
+                    this.platmove10 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+                    this.platmove10.body.setAllowGravity(false);
+                    this.platmove10.setImmovable(true);
+                    break;
+                }
+                case 'platmove11': {
+                    this.platmove11 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+
+                    this.platmove11.body.setAllowGravity(false);
+                    this.platmove11.setImmovable(true);
+                    break;
+                }
+                case 'platmove12': {
+                    this.platmove12 = this.physics.add.sprite(x,y,"platmove").setOrigin(0,0)
+
+                    this.platmove12.body.setAllowGravity(false);
+                    this.platmove12.setImmovable(true);
+                    break;
+                }
+                case 'Act': {
+                    this.act1 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act1.setDisplaySize(64,64);
+                    this.act1.body.setAllowGravity(false);
+                    this.act1.setImmovable(true);
+                    break;
+                }case 'Act2': {
+                    this.act2 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act2.setDisplaySize(64,64);
+                    this.act2.body.setAllowGravity(false);
+                    this.act2.setImmovable(true);
+                    break;
+                }case 'Act4': {
+                    this.act4 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act4.setDisplaySize(64,64);
+                    this.act4.body.setAllowGravity(false);
+                    this.act4.setImmovable(true);
+                    break;
+                }case 'Act5': {
+                    this.act5 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act5.setDisplaySize(64,64);
+                    this.act5.body.setAllowGravity(false);
+                    this.act5.setImmovable(true);
+                    break;
+                }
+                case 'Act8': {
+                    this.act8 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act8.setDisplaySize(64,64);
+                    this.act8.body.setAllowGravity(false);
+                    this.act8.setImmovable(true);
+                    break;
+                }
+                case 'Act9': {
+                    this.act9 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act9.setDisplaySize(64,64);
+                    this.act9.body.setAllowGravity(false);
+                    this.act9.setImmovable(true);
+                    break;
+                }
+                case 'Act10': {
+                    this.act10 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act10.setDisplaySize(64,64);
+                    this.act10.body.setAllowGravity(false);
+                    this.act10.setImmovable(true);
+                    break;
+                }
+                case 'Act11': {
+                    this.act11 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act11.setDisplaySize(64,64);
+                    this.act11.body.setAllowGravity(false);
+                    this.act11.setImmovable(true);
+                    break;
+                }
+                case 'Act12': {
+                    this.act12 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act12.setDisplaySize(64,64);
+                    this.act12.body.setAllowGravity(false);
+                    this.act12.setImmovable(true);
+                    break;
+                }
+                case 'sologen': {
+                    this.act3 = this.physics.add.sprite(x,y,"genD").setOrigin(0,0)
+                    this.act3.setDisplaySize(64,64);
+                    this.act3.body.setAllowGravity(false);
+                    this.act3.setImmovable(true);
+                    break;
+                }
+                case 'upgrade': {
+                    this.up = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.up.setDisplaySize(64,64);
+                    this.up.body.setAllowGravity(false);
+                    this.up.setImmovable(true);
+                    break;
+                }
+                case 'moveto1': {
+                    this.movetarget = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.movetarget.setDisplaySize(64,64);
+                    this.movetarget.body.setAllowGravity(false);
+                    this.movetarget.setImmovable(true);
+                    this.movetarget.setVisible(false);
+                    break;
+                }
+                case 'moveto2': {
+                    this.movetarget2 = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
+                    this.movetarget2.setDisplaySize(64,64);
+                    this.movetarget2.body.setAllowGravity(false);
+                    this.movetarget2.setImmovable(true);
+                    this.movetarget2.setVisible(false);
+                    break;
+                }
+            }
+        })
 
         this.player = new Player(this);
 
         this.platforms.setCollisionByExclusion(-1, true);
 
         // Création du grappin
-        this.grappin = this.physics.add.sprite(150, 900,'cube').setOrigin(0, 0);
-        this.grappin.setDisplaySize(16,16);
+        this.grappin = this.physics.add.sprite(0, 0,'hook').setOrigin(0, 0);
         this.grappin.body.setAllowGravity(false);
         this.grappin.setImmovable(true);
 
@@ -673,6 +668,18 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.player.player, this.platmove9);
         this.physics.add.collider(this.player.player, this.platmove10);
         this.physics.add.collider(this.player.player, this.platmove11);
+
+        this.physics.add.collider(this.pile, this.platmove1);
+        this.physics.add.collider(this.pile, this.platmove2);
+        this.physics.add.collider(this.pile, this.platmove3);
+        this.physics.add.collider(this.pile, this.platmove4);
+        this.physics.add.collider(this.pile, this.platmove5);
+        this.physics.add.collider(this.pile, this.platmove6);
+        this.physics.add.collider(this.pile, this.platmove7);
+        this.physics.add.collider(this.pile, this.platmove8);
+        this.physics.add.collider(this.pile, this.platmove9);
+        this.physics.add.collider(this.pile, this.platmove10);
+        this.physics.add.collider(this.pile, this.platmove11);
         this.physics.add.collider(this.pile, this.platforms);
 
 
@@ -733,9 +740,10 @@ class Tableau1 extends Phaser.Scene {
                         break;
 
                         case Phaser.Input.Keyboard.KeyCodes.F:
-                        me.pile.x = me.player.player.x
-                        me.pile.y = me.player.player.y
-                            me.player.player.x = 9550;
+                            me.player.player.x = 3072;
+                            me.player.player.y = 1216;
+                            me.pile.x = me.player.player.x
+                            me.pile.y = me.player.player.y
                         break;
 
                     case Phaser.Input.Keyboard.KeyCodes.SPACE:
@@ -1046,18 +1054,18 @@ class Tableau1 extends Phaser.Scene {
 
         else if(this.physics.overlap(player, this.levier0)===true ){
             this.open0 = this.open0 === false;
-            this.FunctionDoor(this.door0,this.open0);
+            this.FunctionDoor(this.door0,this.open0,this.levier0);
         }else if(this.physics.overlap(player, this.levier1)===true ){
             this.open1 = this.open1 === false;
-            this.FunctionDoor(this.door1,this.open1);
+            this.FunctionDoor(this.door1,this.open1,this.levier1);
         }else if(this.physics.overlap(player, this.levier2)===true ){
             this.open2 = this.open2 === false;
-            this.FunctionDoor(this.door2,this.open2);
+            this.FunctionDoor(this.door2,this.open2,this.levier2);
 
 
         }else if(this.physics.overlap(player, this.levier3)===true ){
             this.open3 = this.open3 === false;
-            this.FunctionDoor(this.door3,this.open3);
+            this.FunctionDoor(this.door3,this.open3,this.levier3);
 
         }
 
@@ -1135,7 +1143,7 @@ class Tableau1 extends Phaser.Scene {
         this.platweens = this.tweens.add({
             targets: this.platmove1,
             y: 735,
-            duration: 10000,
+            duration: 6000,
             ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
@@ -1146,7 +1154,7 @@ class Tableau1 extends Phaser.Scene {
         this.genmove = this.tweens.add({
             targets: this.act1,
             y: 735-64,
-            duration: 10000,
+            duration: 6000,
             ease: 'Sine.easeInOut',
             yoyo: true,
             repeat: -1,
@@ -1285,18 +1293,18 @@ class Tableau1 extends Phaser.Scene {
         this.genmove12.pause()
     }
 
-    FunctionDoor(door,open){
+    FunctionDoor(door,open,levier){
         if(open === true){
             door.x = this.coorDoorx;
+            levier.setTexture('levieroff');
         }else{
             this.coorDoorx = door.x;
             door.x = 10000;
+            levier.setTexture('levieron');
         }
     }
 
     update(){
-        this.dist = Phaser.Math.Distance.BetweenPoints(this.player.player, this.grappin);
-
         if(game.input.activePointer.leftButtonDown() === true){
             if(this.up.visible === false) {
 
@@ -1307,7 +1315,6 @@ class Tableau1 extends Phaser.Scene {
                 this.grappin.y = this.player.player.y;
                 this.grappin.body.setEnable(true);
                 this.physics.moveToObject(this.grappin, this.target, 400);
-
             }
 
 
@@ -1315,22 +1322,13 @@ class Tableau1 extends Phaser.Scene {
         this.target.y = game.input.mousePointer.worldY;
         this.target.x = game.input.mousePointer.worldX;
 
-        if(this.dist > 300){
-            this.isgrab = false;
-            this.grappin.setVelocity(0);
-            this.grappin.setVisible(false);
-            this.grappin.x = this.player.player.x;
-            this.grappin.y = this.player.player.y;
-            this.grappin.body.setEnable(false);
-        }
-
         if(this.takeBat === false && this.genup === false){
             this.pile.setVisible(true)
         }else{
             this.pile.setVisible(false)
         }
 
-        //console.log(this.player.player.x)
+        // console.log(this.player.player.x)
         // console.log(this.player.player.y)
         this.player.updateListrik();
     }
