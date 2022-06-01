@@ -60,6 +60,7 @@ class Tableau1 extends Phaser.Scene {
         this.genup = false;
         this.isgrab = false;
         this.upgradeL = false;
+        //debug
 
         this.FuntionAnim()
 
