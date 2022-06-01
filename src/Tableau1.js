@@ -4,8 +4,6 @@ class Tableau1 extends Phaser.Scene {
         // Je preload les images autres que Tiled!
 
         this.load.image('pile','assets/Pile.png');
-        this.load.image('cube','assets/squareY.png');
-
         this.load.image('ListrikP','assets/ListrikP.png');
         this.load.image('grab','assets/grab.png');
         this.load.image('hook','assets/hook.png');
