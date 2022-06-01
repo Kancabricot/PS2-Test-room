@@ -29,11 +29,11 @@ class Tableau1 extends Phaser.Scene {
         this.load.tilemapTiledJSON("map", "assets/Map_TR/TestRoom.json");
 
         for (let m=1;m<=8;m++){
-            this.load.image('tutoMenuStart-'+m,'assets/TutoAnim/BG1tuto'+m+'.png')
+            this.load.image('tutoMenuStart-'+m,'assets/TutoAnim/tutomenu'+m+'.png')
         }
 
         for (let m=1;m<=5;m++){
-            this.load.image('tutoLevier-'+m,'assets/TutoAnim/BG2tuto'+m+'.png')
+            this.load.image('tutoLevier-'+m,'assets/TutoAnim/tutolevier'+m+'.png')
         }
 
         for (let m=1;m<=12;m++){
