@@ -14,7 +14,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
-        this.load.image('tuto2','assets/TutoAnim/BG2tuto1.png');
+        this.load.image('tuto2','assets/TutoAnim/tutolevier.png');
         this.load.image('vitre','assets/Vitre.png');
         this.load.image('platmove','assets/Platmove.png');
         this.load.image('platmove12','assets/Platmove-12.png');
