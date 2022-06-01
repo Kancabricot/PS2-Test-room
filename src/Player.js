@@ -19,6 +19,14 @@ class Player {
             frameRate: 10,
             repeat: -1
         });
+
+        this.scene.anims.create({
+            key: 'Idle',
+            frames: [
+                {key:'ListrikP'},
+            ],
+            frameRate: 10,
+            repeat: -1});
     }
 
     jump(){
@@ -40,8 +48,8 @@ class Player {
             this.player.setVelocityX(300);
             this.player.setFlipX(false);
                  if (this.player.body.onFloor()) {
-                 this.player.play('walk', true);
-                 this.player.setOffset(16,0);
+                     this.player.play('walk', true);
+                     this.player.setOffset(16,0);
                  }
         }
     }
@@ -64,10 +72,11 @@ class Player {
     stop(){
         if(this.scene.takeBat === true){
             this.player.setVelocityX(0);
+            this.player.play('Idle', true);
 
         }else{
             this.player.setVelocityX(0);
-
+            this.player.play('Idle', true);
         }
 
     }

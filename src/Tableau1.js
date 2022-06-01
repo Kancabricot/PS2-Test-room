@@ -15,13 +15,13 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
         this.load.image('tuto2','assets/TutoAnim/tutomenu.png');
-        this.load.image('vitre','assets/Vitre.png');
         this.load.image('platmove','assets/Platmove.png');
         this.load.image('platmove12','assets/Platmove-12.png');
         this.load.image('platmove3','assets/Platmove-3.png');
         this.load.image('tv','assets/TVbg.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('ListrikDieBat','assets/DieBat.png',{frameWidth: 64, frameHeight: 64});
 
         // chargement tilemap
         this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
@@ -63,12 +63,20 @@ class Tableau1 extends Phaser.Scene {
         this.upgradeL = false;
         //debug
 
-        this.FuntionAnim()
+        // chargement de la map
+        const map = this.add.tilemap("map");
+        // chargement du tileset
+        const tileset = map.addTilesetImage(
+            "TestroomTiled",
+            "tilemap"
+        );
 
-        // Création de la vitre
-        this.vitre = this.physics.add.sprite(-1344, 0,'vitre').setOrigin(0, 0);
-        this.vitre.body.setAllowGravity(false)
-        this.vitre.setImmovable(true);
+        this.porte = map.createLayer(
+            "Wall",
+            tileset
+        );
+
+        this.FuntionAnim()
 
         // Création du BG
         this.bglevier = this.physics.add.sprite(-1344, 800,'tuto2').setOrigin(0, 0);
@@ -116,13 +124,7 @@ class Tableau1 extends Phaser.Scene {
         this.target.body.setAllowGravity(false);
         this.target.setImmovable(true);
 
-        // chargement de la map
-        const map = this.add.tilemap("map");
-        // chargement du tileset
-        const tileset = map.addTilesetImage(
-            "TestroomTiled",
-            "tilemap"
-        );
+
 
         this.door1 = this.physics.add.group({
             allowGravity: false,
@@ -142,8 +144,6 @@ class Tableau1 extends Phaser.Scene {
             "door",
             tileset
         );
-
-
 
         const cam = map.getObjectLayer('cam')
             cam.objects.forEach(objData=> {
@@ -654,7 +654,7 @@ class Tableau1 extends Phaser.Scene {
         this.platforms.setCollisionByExclusion(-1, true);
 
         // Création du grappin
-        this.grappin = this.physics.add.sprite(0, 0,'hook').setOrigin(0, 0);
+        this.grappin = this.physics.add.sprite(-100, -100,'hook').setOrigin(0, 0);
         this.grappin.body.setAllowGravity(false);
         this.grappin.setImmovable(true);
 
