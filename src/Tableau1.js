@@ -19,6 +19,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('platmove','assets/Platmove.png');
         this.load.image('platmove12','assets/Platmove-12.png');
         this.load.image('platmove3','assets/Platmove-3.png');
+        this.load.image('tv','assets/TVbg.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
 
@@ -74,6 +75,10 @@ class Tableau1 extends Phaser.Scene {
         this.bglevier.body.setAllowGravity(false)
         this.bglevier.setImmovable(true);
         this.bglevier.play('tutoLevier');
+
+        this.bgtv = this.physics.add.sprite(-1344, 800,'tv').setOrigin(0, 0);
+        this.bgtv.body.setAllowGravity(false)
+        this.bgtv.setImmovable(true);
 
         // Création du BG
         this.bgmenu = this.physics.add.sprite(-1344, 0,'cube').setOrigin(0, 0);
