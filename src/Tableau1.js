@@ -29,23 +29,23 @@ class Tableau1 extends Phaser.Scene {
         this.load.tilemapTiledJSON("map", "assets/Map_TR/TestRoom.json");
 
         for (let m=1;m<=8;m++){
-            this.load.image('tutoMenuStart-'+m,'assets/tutoAnim/BG1tuto'+m+'.png')
+            this.load.image('tutoMenuStart-'+m,'assets/TutoAnim/BG1tuto'+m+'.png')
         }
 
         for (let m=1;m<=5;m++){
-            this.load.image('tutoLevier-'+m,'assets/tutoAnim/BG2tuto'+m+'.png')
+            this.load.image('tutoLevier-'+m,'assets/TutoAnim/BG2tuto'+m+'.png')
         }
 
         for (let m=1;m<=12;m++){
-            this.load.image('tutoPile-'+m,'assets/tutoAnim/BGtuto'+m+'.png')
+            this.load.image('tutoPile-'+m,'assets/TutoAnim/BGtuto'+m+'.png')
         }
 
         for (let m=1;m<=14;m++){
-            this.load.image('TutoGen-'+m,'assets/tutoAnim/TutoGen'+m+'.png')
+            this.load.image('TutoGen-'+m,'assets/TutoAnim/TutoGen'+m+'.png')
         }
 
         for (let m=1;m<=19;m++){
-            this.load.image('Tutograb-'+m,'assets/tutoAnim/TutoGrab'+m+'.png')
+            this.load.image('Tutograb-'+m,'assets/TutoAnim/TutoGrab'+m+'.png')
         }
     }
 
