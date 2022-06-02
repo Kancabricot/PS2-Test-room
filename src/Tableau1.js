@@ -46,6 +46,10 @@ class Tableau1 extends Phaser.Scene {
         for (let m=1;m<=19;m++){
             this.load.image('Tutograb-'+m,'assets/TutoAnim/TutoGrab'+m+'.png')
         }
+
+        for (let m=1;m<=15;m++){
+            this.load.image('acid-'+m,'assets/acid/acidanim'+m+'.png')
+        }
     }
 
     create() {
@@ -400,6 +404,17 @@ class Tableau1 extends Phaser.Scene {
 
         map.getObjectLayer('grab').objects.forEach((grab) => {
             this.grab.create(grab.x, grab.y- grab.height, 'grab').setOrigin(0);
+        });
+
+        this.acid = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+
+        map.getObjectLayer('Acid').objects.forEach((Acid) => {
+            let acid = this.acid.create(Acid.x, Acid.y- Acid.height+38, 'grab').setOrigin(0);
+            acid.play("acid")
+            this.acid.add(acid)
         });
 
         this.deadzone = this.physics.add.group({
@@ -815,6 +830,28 @@ class Tableau1 extends Phaser.Scene {
                 {key:'Tutograb-17'},
                 {key:'Tutograb-18'},
                 {key:'Tutograb-19'},
+            ],
+            frameRate: 10,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'acid',
+            frames: [
+                {key:'acid-1'},
+                {key:'acid-2'},
+                {key:'acid-3'},
+                {key:'acid-4'},
+                {key:'acid-5'},
+                {key:'acid-6'},
+                {key:'acid-7'},
+                {key:'acid-8'},
+                {key:'acid-9'},
+                {key:'acid-10'},
+                {key:'acid-11'},
+                {key:'acid-12'},
+                {key:'acid-13'},
+                {key:'acid-14'},
+                {key:'acid-15'},
             ],
             frameRate: 10,
             repeat: -1});
