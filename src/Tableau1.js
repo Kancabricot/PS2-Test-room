@@ -68,7 +68,10 @@ class Tableau1 extends Phaser.Scene {
         this.genup = false;
         this.isgrab = false;
         this.upgradeL = false;
-        //debug
+        this.move8 = false;
+        this.move9 = false;
+        this.move10 = false;
+        this.move11 = false;
 
         // chargement de la map
         const map = this.add.tilemap("map");
@@ -722,6 +725,10 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.overlap(this.player.player, this.saves, this.sauvegarde, null, this)
         this.physics.add.overlap(this.player.player, this.deadzone, this.KillBox, null, this)
         this.physics.add.overlap(this.platmove5, this.movetarget, this.stop, null, this)
+        this.physics.add.overlap(this.platmove8, this.acid, this.stop8, null, this)
+        this.physics.add.overlap(this.platmove9, this.acid, this.stop9, null, this)
+        this.physics.add.overlap(this.platmove10, this.acid, this.stop10, null, this)
+        this.physics.add.overlap(this.platmove11, this.acid, this.stop11, null, this)
 
         this.initKeyboard();
         this.Gestioncam(this.player.player);
@@ -730,7 +737,7 @@ class Tableau1 extends Phaser.Scene {
         this.cameras.main.setRoundPixels(true);
     }
 
-    stop(platforme, stoppeur){
+    stop(platforme){
         platforme.setVelocityX(0);
         this.act5.setVelocityX(0);
     }
@@ -769,8 +776,8 @@ class Tableau1 extends Phaser.Scene {
                         break;
 
                         case Phaser.Input.Keyboard.KeyCodes.F:
-                            me.player.player.x = 3072;
-                            me.player.player.y = 1216;
+                            me.player.player.x = 8576;
+                            me.player.player.y = 1632;
                             me.pile.x = me.player.player.x
                             me.pile.y = me.player.player.y
                         break;
@@ -1024,24 +1031,28 @@ class Tableau1 extends Phaser.Scene {
                 this.genup = true;
                 this.takeBat = false;
                 this.act8.setTexture('genU');
+                this.move8 = true;
             }else if (this.physics.overlap(player, this.act9)===true){
                 this.platweens9.play();
                 this.platweens9.resume();
                 this.genup = true;
                 this.takeBat = false;
                 this.act9.setTexture('genU');
+                this.move9 = true;
             }else if (this.physics.overlap(player, this.act10)===true){
                 this.platweens10.play();
                 this.platweens10.resume();
                 this.genup = true;
                 this.takeBat = false;
                 this.act10.setTexture('genU');
+                this.move10 = true;
             }else if (this.physics.overlap(player, this.act11)===true){
                 this.platweens11.play();
                 this.platweens11.resume();
                 this.genup = true;
                 this.takeBat = false;
                 this.act11.setTexture('genU');
+                this.move11 = true;
             }else if (this.physics.overlap(player, this.act12)===true){
                 this.platweens12.play();
                 this.platweens12.resume();
@@ -1098,21 +1109,25 @@ class Tableau1 extends Phaser.Scene {
             this.genup = false;
             this.takeBat = true;
             this.act8.setTexture('genD');
+            this.move8 = false;
         }else if (this.physics.overlap(player, this.act9)===true){
             this.platweens9.pause();
             this.genup = false;
             this.takeBat = true;
             this.act9.setTexture('genD');
+            this.move9 = false;
         }else if (this.physics.overlap(player, this.act10)===true){
             this.platweens10.pause();
             this.genup = false;
             this.takeBat = true;
             this.act10.setTexture('genD');
+            this.move10 = false;
         }else if (this.physics.overlap(player, this.act11)===true){
             this.platweens11.pause();
             this.genup = false;
             this.takeBat = true;
             this.act11.setTexture('genD');
+            this.move11 = false;
         }else if (this.physics.overlap(player, this.act12)===true){
             this.platweens12.pause();
             this.genmove12.pause();
@@ -1386,6 +1401,31 @@ class Tableau1 extends Phaser.Scene {
         this.up.body.setEnable(false);
     }
 
+    stop8(){
+        if( this.move8 ===false){
+            this.platmove8.y = 2080;
+            console.log("fujehgsg")
+        }
+    }
+    stop9(){
+        if( this.move9 ===false){
+            this.platmove9.y = 2080;
+            console.log("fujehgsg")
+        }
+    }
+    stop10(){
+        if( this.move10 ===false){
+            this.platmove10.y = 2080;
+            console.log("fujehgsg")
+        }
+    }
+    stop11(){
+        if( this.move11 ===false){
+            this.platmove11.y = 2080;
+            console.log("fujehgsg")
+        }
+    }
+
     update(){
 
             if(this.upgradeL === true) {
@@ -1404,10 +1444,7 @@ class Tableau1 extends Phaser.Scene {
             }
 
 
-        if(this.platweens8.isPaused()){
-            console.log("firgjhdr")
 
-        }
 
         this.target.y = game.input.mousePointer.worldY;
         this.target.x = game.input.mousePointer.worldX;
