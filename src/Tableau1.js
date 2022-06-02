@@ -28,6 +28,10 @@ class Tableau1 extends Phaser.Scene {
         this.load.tilemapTiledJSON("map", "assets/Map_TR/TestRoom.json");
 
         for (let m=1;m<=8;m++){
+            this.load.image('upgrade-'+m,'assets/upgrade/upgrade'+m+'.png')
+        }
+
+        for (let m=1;m<=8;m++){
             this.load.image('tutoMenuStart-'+m,'assets/TutoAnim/tutomenu'+m+'.png')
         }
 
@@ -432,7 +436,8 @@ class Tableau1 extends Phaser.Scene {
         });
 
         map.getObjectLayer('Save').objects.forEach((save) => {
-            this.saves.create(save.x, save.y- save.height, 'save').setOrigin(0).setPipeline('Light2D').setVisible(false);
+            this.saves.create(save.x, save.y- save.height, 'save').setOrigin(0);
+            this.saves.setVisible(false);
         });
         const objectsLayer = map.getObjectLayer('Objet')
         objectsLayer.objects.forEach(objData=> {
@@ -535,6 +540,7 @@ class Tableau1 extends Phaser.Scene {
                     this.platmove7 = this.physics.add.sprite(x,y,"platmove3").setOrigin(0,0)
                     this.platmove7.body.setAllowGravity(false);
                     this.platmove7.setImmovable(true);
+                    this.platmove7.setFlipX(true);
                     break;
                 }
                 case 'platmove8': {
@@ -641,6 +647,7 @@ class Tableau1 extends Phaser.Scene {
                     this.up.setDisplaySize(64,64);
                     this.up.body.setAllowGravity(false);
                     this.up.setImmovable(true);
+                    this.up.play('upgrade');
                     break;
                 }
                 case 'moveto1': {
@@ -717,6 +724,7 @@ class Tableau1 extends Phaser.Scene {
         })
         this.physics.add.overlap(this.player.player, this.saves, this.sauvegarde, null, this)
         this.physics.add.overlap(this.player.player, this.deadzone, this.KillBox, null, this)
+        this.physics.add.overlap(this.platmove5, this.movetarget, this.stop, null, this)
 
 
         this.initKeyboard();
@@ -724,6 +732,11 @@ class Tableau1 extends Phaser.Scene {
         this.Tweengestion()
 
         this.cameras.main.setRoundPixels(true);
+    }
+
+    stop(platforme, stoppeur){
+        platforme.setVelocityX(0);
+        this.act5.setVelocityX(0);
     }
 
     initKeyboard() {
@@ -806,6 +819,21 @@ class Tableau1 extends Phaser.Scene {
                 {key:'tutoMenuStart-8'},
             ],
             frameRate: 10,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'upgrade',
+            frames: [
+                {key:'upgrade-1'},
+                {key:'upgrade-2'},
+                {key:'upgrade-3'},
+                {key:'upgrade-4'},
+                {key:'upgrade-5'},
+                {key:'upgrade-6'},
+                {key:'upgrade-7'},
+                {key:'upgrade-8'},
+            ],
+            frameRate: 5,
             repeat: -1});
 
         this.anims.create({
