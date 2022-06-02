@@ -761,17 +761,6 @@
                  "y":1344
                 }, 
                 {
-                 "height":96,
-                 "id":634,
-                 "name":"upgrade",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":96,
-                 "x":2944,
-                 "y":1344
-                }, 
-                {
                  "gid":2,
                  "height":32,
                  "id":184,
@@ -2680,7 +2669,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -5295,7 +5284,7 @@
  "nextobjectid":635,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.1",
+ "tiledversion":"1.8.2",
  "tileheight":32,
  "tilesets":[
         {

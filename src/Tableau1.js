@@ -17,6 +17,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('platmove12','assets/Platmove-12.png');
         this.load.image('platmove3','assets/Platmove-3.png');
         this.load.image('tv','assets/TVbg.png');
+        this.load.image('UpgradeNoItem','assets/upgrade/UpgradeNoItem.png');
 
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('ListrikDieBat','assets/DieBat.png',{frameWidth: 64, frameHeight: 64});
@@ -146,10 +147,7 @@ class Tableau1 extends Phaser.Scene {
             this.collide.add(this.collideSprite)
         });
 
-        this.porte = map.createLayer(
-            "door",
-            tileset
-        );
+
 
         const cam = map.getObjectLayer('cam')
             cam.objects.forEach(objData=> {
@@ -395,7 +393,10 @@ class Tableau1 extends Phaser.Scene {
             "PLatforme",
             tileset
         );
-
+        this.porte = map.createLayer(
+            "Asset",
+            tileset
+        );
         this.Water = map.createLayer(
             "Water",
             tileset
@@ -646,8 +647,7 @@ class Tableau1 extends Phaser.Scene {
                     this.up = this.physics.add.sprite(x,y,"cube").setOrigin(0,0)
                     this.up.setDisplaySize(64,64);
                     this.up.body.setAllowGravity(false);
-                    this.up.setImmovable(true);
-                    this.up.play('upgrade');
+                    this.up.setOffset(32,5);
                     break;
                 }
                 case 'moveto1': {
@@ -718,14 +718,10 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.overlap(this.grab, this.grappin, this.actiongrab,  null, this)
         this.physics.add.overlap(this.collide, this.grappin, this.miss,  null, this)
         this.physics.add.overlap(this.grappin, this.player.player, this.gravite,  null, this)
-        this.physics.add.overlap(this.up, this.player.player,function (up) {
-            this.upgradeL = true;
-            up.setVisible(false);
-        })
+        this.physics.add.overlap(this.up, this.player.player,this.test,null,this)
         this.physics.add.overlap(this.player.player, this.saves, this.sauvegarde, null, this)
         this.physics.add.overlap(this.player.player, this.deadzone, this.KillBox, null, this)
         this.physics.add.overlap(this.platmove5, this.movetarget, this.stop, null, this)
-
 
         this.initKeyboard();
         this.Gestioncam(this.player.player);
@@ -806,6 +802,16 @@ class Tableau1 extends Phaser.Scene {
     }
 
     FuntionAnim(){
+
+        this.anims.create({
+            key: 'supp',
+            frames: [
+                {key:'delete'},
+            ],
+            frameRate: 10,
+            repeat: -1});
+
+
         this.anims.create({
             key: 'tutoMenuStart',
             frames: [
@@ -1374,21 +1380,35 @@ class Tableau1 extends Phaser.Scene {
         }
     }
 
-    update(){
-        if(game.input.activePointer.leftButtonDown() === true){
-            if(this.up.visible === false) {
+    test(){
+        this.upgradeL = true;
 
-                this.isgrab = true
-                this.grappin.setVelocity(0);
-                this.grappin.setVisible(true);
-                this.grappin.x = this.player.player.x;
-                this.grappin.y = this.player.player.y;
-                this.grappin.body.setEnable(true);
-                this.physics.moveToObject(this.grappin, this.target, 400);
+        this.up.body.setEnable(false);
+    }
+
+    update(){
+
+            if(this.upgradeL === true) {
+                this.up.setTexture("UpgradeNoItem")
+                if(game.input.activePointer.leftButtonDown() === true){
+                    this.isgrab = true
+                    this.grappin.setVelocity(0);
+                    this.grappin.setVisible(true);
+                    this.grappin.x = this.player.player.x;
+                    this.grappin.y = this.player.player.y;
+                    this.grappin.body.setEnable(true);
+                    this.physics.moveToObject(this.grappin, this.target, 400);
+                }
+            }else{
+                this.up.play('upgrade');
             }
 
 
+        if(this.platweens8.isPaused()){
+            console.log("firgjhdr")
+
         }
+
         this.target.y = game.input.mousePointer.worldY;
         this.target.x = game.input.mousePointer.worldX;
 
@@ -1397,6 +1417,8 @@ class Tableau1 extends Phaser.Scene {
         }else{
             this.pile.setVisible(false)
         }
+
+
 
         // console.log(this.player.player.x)
         // console.log(this.player.player.y)
