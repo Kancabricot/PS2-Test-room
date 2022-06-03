@@ -5,6 +5,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.load.image('pile','assets/Pile.png');
         this.load.image('ListrikP','assets/ListrikP.png');
+        this.load.image('ListrikBAtt','assets/ListrikBAtt.png');
         this.load.image('grab','assets/grab.png');
         this.load.image('hook','assets/hook.png');
         this.load.image('levieroff','assets/levieroff.png');
@@ -12,14 +13,18 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('door','assets/porte2.png');
         this.load.image('genD','assets/gendown.png');
         this.load.image('genU','assets/genup.png');
-        this.load.image('tuto2','assets/TutoAnim/tutomenu.png');
         this.load.image('platmove','assets/Platmove.png');
         this.load.image('platmove12','assets/Platmove-12.png');
         this.load.image('platmove3','assets/Platmove-3.png');
         this.load.image('UpgradeNoItem','assets/upgrade/UpgradeNoItem.png');
 
+
+        this.load.image('testpres','assets/presentation/test.png');
+
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('walkbatt','assets/WalkABatt.png',{frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('ListrikDieBat','assets/DieBat.png',{frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('ListrikDie','assets/Die.png',{frameWidth: 64, frameHeight: 64});
 
         // chargement tilemap
         this.load.image("tilemap", "assets/Map_TR/TestroomTiled.png");
@@ -34,6 +39,10 @@ class Tableau1 extends Phaser.Scene {
 
         for (let m=1;m<=8;m++){
             this.load.image('tutoMenuStart-'+m,'assets/TutoAnim/tutomenu'+m+'.png')
+        }
+
+        for (let m=1;m<=20;m++){
+            this.load.image('menuEND-'+m,'assets/TutoAnim/menuEND'+m+'.png')
         }
 
         for (let m=1;m<=5;m++){
@@ -66,7 +75,7 @@ class Tableau1 extends Phaser.Scene {
         this.taillePile = 32;
         this.coorDoorx = 0;
         this.genup = false;
-        this.isgrab = false;
+        this.cantMove = false;
         this.upgradeL = false;
         this.move8 = false;
         this.move9 = false;
@@ -103,6 +112,8 @@ class Tableau1 extends Phaser.Scene {
         this.bglevier.setImmovable(true);
         this.bglevier.play('tutoLevier');
 
+
+
         // Création du BG
         this.bgmenu = this.physics.add.sprite(-1344, 0,'cube').setOrigin(0, 0);
         this.bgmenu.body.setAllowGravity(false)
@@ -127,6 +138,12 @@ class Tableau1 extends Phaser.Scene {
         this.bggrab.body.setAllowGravity(false)
         this.bggrab.setImmovable(true);
         this.bggrab.play('Tutograb');
+
+        // Création du BG de fin
+        this.bgmenuend = this.physics.add.sprite(9664, 2336,'cube').setOrigin(0, 0);
+        this.bgmenuend.body.setAllowGravity(false)
+        this.bgmenuend.setImmovable(true);
+        this.bgmenuend.play('menuEND');
 
         // Création de la target pour la camera
         this.pile = this.physics.add.sprite(800, 800,'pile').setOrigin(0, 0);
@@ -155,7 +172,10 @@ class Tableau1 extends Phaser.Scene {
             this.collide.add(this.collideSprite)
         });
 
-
+        // Création du BG
+        this.testbg = this.physics.add.sprite(-1376, 0,'testpres').setOrigin(0, 0);
+        this.testbg.body.setAllowGravity(false)
+        this.testbg.setImmovable(true);
 
         const cam = map.getObjectLayer('cam')
             cam.objects.forEach(objData=> {
@@ -740,6 +760,7 @@ class Tableau1 extends Phaser.Scene {
         this.Tweengestion()
 
         this.cameras.main.setRoundPixels(true);
+
     }
 
     stop(platforme){
@@ -767,14 +788,14 @@ class Tableau1 extends Phaser.Scene {
 
 
                     case Phaser.Input.Keyboard.KeyCodes.Q:
-                        if(me.isgrab === false) {
+                        if(me.cantMove === false) {
                             me.turn = true;
                             me.player.moveLeft();
                         }
                         break;
 
                     case Phaser.Input.Keyboard.KeyCodes.D:
-                        if(me.isgrab === false) {
+                        if(me.cantMove === false) {
                             me.turn = false;
                             me.player.moveRight();
                         }
@@ -789,16 +810,16 @@ class Tableau1 extends Phaser.Scene {
 
                     case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
-                        if(me.isgrab === false && me.player.player.body.onFloor()){
+                        if(me.cantMove === false && me.player.player.body.onFloor()){
                             me.player.jump();
                         }else{
-                            me.isgrab = false;
+                            me.cantMove = false;
                         }
 
                         break;
 
                     case Phaser.Input.Keyboard.KeyCodes.E:
-                        if(me.isgrab === false) {
+                        if(me.cantMove === false) {
                             me.GestionEvent(me.player.player);
                         }
                         break;
@@ -814,6 +835,15 @@ class Tableau1 extends Phaser.Scene {
     }
 
     FuntionAnim(){
+
+        this.anims.create({
+            key: 'Die',
+            frames: this.anims.generateFrameNames('ListrikDie', {
+                start: 0,
+                end: 14,
+            }),
+            frameRate: 10,
+            repeat: -1});
 
         this.anims.create({
             key: 'supp',
@@ -850,6 +880,33 @@ class Tableau1 extends Phaser.Scene {
                 {key:'upgrade-6'},
                 {key:'upgrade-7'},
                 {key:'upgrade-8'},
+            ],
+            frameRate: 5,
+            repeat: -1});
+
+        this.anims.create({
+            key: 'menuEND',
+            frames: [
+                {key:'menuEND-1'},
+                {key:'menuEND-2'},
+                {key:'menuEND-3'},
+                {key:'menuEND-4'},
+                {key:'menuEND-5'},
+                {key:'menuEND-6'},
+                {key:'menuEND-7'},
+                {key:'menuEND-8'},
+                {key:'menuEND-9'},
+                {key:'menuEND-10'},
+                {key:'menuEND-11'},
+                {key:'menuEND-12'},
+                {key:'menuEND-13'},
+                {key:'menuEND-14'},
+                {key:'menuEND-15'},
+                {key:'menuEND-16'},
+                {key:'menuEND-17'},
+                {key:'menuEND-18'},
+                {key:'menuEND-19'},
+                {key:'menuEND-20'},
             ],
             frameRate: 5,
             repeat: -1});
@@ -956,18 +1013,30 @@ class Tableau1 extends Phaser.Scene {
     }
 
     KillBox(){
-        this.player.player.x = this.currentSaveX + 40;
-        this.player.player.y = this.currentSaveY;
-        this.pile.X = this.currentSaveX + 40;
-        this.pile.y = this.currentSaveY;
-        Battery = this.chargeMax;
-        this.pile.setVisible(true);
-        this.player.player.body.setAllowGravity(true);
+        this.scene.cantMove=true;
+        this.player.player.play('Die', true);
+        Battery = 0.5;
+        this.Reset = this.time.addEvent({
+            delay: 1200,
+            callback: ()=>{
+                this.cantMove=false;
+                this.player.player.play('Idle', true);
+                this.player.player.x = this.currentSaveX + 40;
+                this.player.player.y = this.currentSaveY;
+                this.pile.X = this.currentSaveX + 40;
+                this.pile.y = this.currentSaveY;
+                Battery = this.chargeMax;
+                this.pile.setVisible(true);
+                this.player.player.body.setAllowGravity(true);
 
-        this.act5.setVelocity(0);
-        this.act5.x = 5600;
-        this.platmove5.x = 5600;
-        this.platmove5.setVelocity(0);
+                this.act5.setVelocity(0);
+                this.act5.x = 5600;
+                this.platmove5.x = 5600;
+                this.platmove5.setVelocity(0);
+            },
+            loop: false,
+        })
+
     }
 
     actiongrab(grappin,grab){
@@ -981,14 +1050,14 @@ class Tableau1 extends Phaser.Scene {
     }
 
     miss(){
-        this.isgrab = false;
+        this.cantMove = false;
         this.grappin.setVelocity(0);
         this.grappin.setVisible(false);
         this.grappin.body.setEnable(false);
     }
 
     gravite(){
-        if(this.isgrab === true){
+        if(this.cantMove === true){
             this.player.player.setVelocity(0)
         }else{
             this.player.player.setVelocity(0)
@@ -1436,7 +1505,7 @@ class Tableau1 extends Phaser.Scene {
             if(this.upgradeL === true) {
                 this.up.setTexture("UpgradeNoItem")
                 if(game.input.activePointer.leftButtonDown() === true){
-                    this.isgrab = true
+                    this.cantMove = true
                     this.grappin.setVelocity(0);
                     this.grappin.setVisible(true);
                     this.grappin.x = this.player.player.x;
