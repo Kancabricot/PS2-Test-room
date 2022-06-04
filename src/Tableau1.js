@@ -841,6 +841,24 @@ class Tableau1 extends Phaser.Scene {
                                 }
                                 break;
 
+                                case Phaser.Input.Keyboard.KeyCodes.RIGHT:
+                                console.log(me.NumeroDePrestentation)
+                                if(  me.NumeroDePrestentation === 11){
+                                    me.NumeroDePrestentation = 1;
+                                }else{
+                                    me.NumeroDePrestentation += 1;
+                                }
+                                break;
+
+                                case Phaser.Input.Keyboard.KeyCodes.LEFT:
+                                console.log(me.NumeroDePrestentation)
+                                if(  me.NumeroDePrestentation === 1){
+                                    me.NumeroDePrestentation = 11;
+                                }else{
+                                    me.NumeroDePrestentation -= 1;
+                                }
+                                break;
+
                     case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
                         if(me.cantMove === false && me.player.player.body.onFloor()){
