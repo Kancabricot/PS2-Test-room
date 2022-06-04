@@ -18,9 +18,6 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('platmove3','assets/Platmove-3.png');
         this.load.image('UpgradeNoItem','assets/upgrade/UpgradeNoItem.png');
 
-
-        this.load.image('testpres','assets/presentation/test.png');
-
         this.load.spritesheet('ListrikWalk','assets/WalkA.png',{frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('walkbatt','assets/WalkABatt.png',{frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('ListrikDieBat','assets/DieBat.png',{frameWidth: 64, frameHeight: 64});
@@ -35,6 +32,10 @@ class Tableau1 extends Phaser.Scene {
 
         for (let m=1;m<=8;m++){
             this.load.image('upgrade-'+m,'assets/upgrade/upgrade'+m+'.png')
+        }
+
+        for (let m=1;m<=11;m++){
+            this.load.image('presentation-'+m,'assets/presentation/presentation'+m+'.png')
         }
 
         for (let m=1;m<=8;m++){
@@ -81,6 +82,8 @@ class Tableau1 extends Phaser.Scene {
         this.move9 = false;
         this.move10 = false;
         this.move11 = false;
+        this.NumeroDePrestentation = 1;
+
 
         // chargement de la map
         const map = this.add.tilemap("map");
@@ -119,6 +122,11 @@ class Tableau1 extends Phaser.Scene {
         this.bgmenu.body.setAllowGravity(false)
         this.bgmenu.setImmovable(true);
         this.bgmenu.play('tutoMenuStart');
+
+        // Création de la presentation
+        this.bgpresentation = this.physics.add.sprite(8288-32, 2336-32,'presentation-1').setOrigin(0, 0);
+        this.bgpresentation.body.setAllowGravity(false)
+        this.bgpresentation.setImmovable(true);
 
         // Création du BG
         this.bggen = this.physics.add.sprite(1408, 800,'cube').setOrigin(0, 0);
@@ -171,11 +179,6 @@ class Tableau1 extends Phaser.Scene {
             this.collideSprite = this.physics.add.sprite(collide.x + (collide.width * 0.5), collide.y + (collide.height * 0.5)).setSize(collide.width, collide.height).setDepth(1);
             this.collide.add(this.collideSprite)
         });
-
-        // Création du BG
-        this.testbg = this.physics.add.sprite(-1376, 0,'testpres').setOrigin(0, 0);
-        this.testbg.body.setAllowGravity(false)
-        this.testbg.setImmovable(true);
 
         const cam = map.getObjectLayer('cam')
             cam.objects.forEach(objData=> {
@@ -302,6 +305,14 @@ class Tableau1 extends Phaser.Scene {
                     this.menuend.body.setAllowGravity(false);
                     break;
                 }
+                case 'presentation': {
+                    this.presentation = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.presentation.setDisplaySize(1344, 704);
+                    this.presentation.setVisible(false)
+                    this.presentation.setImmovable(true);
+                    this.presentation.body.setAllowGravity(false);
+                    break;
+                }
                 case 'cam1-2': {
                     this.cs1 = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
                     this.cs1.setDisplaySize(1, 1);
@@ -412,6 +423,14 @@ class Tableau1 extends Phaser.Scene {
                     this.csmenuend.setVisible(false)
                     this.csmenuend.setImmovable(true);
                     this.csmenuend.body.setAllowGravity(false);
+                    break;
+                }
+                case 'campresentation': {
+                    this.cspresentation = this.physics.add.sprite(x, y, "cube").setOrigin(0, 0)
+                    this.cspresentation.setDisplaySize(1, 1);
+                    this.cspresentation.setVisible(false)
+                    this.cspresentation.setImmovable(true);
+                    this.cspresentation.body.setAllowGravity(false);
                     break;
                 }
             }
@@ -801,12 +820,26 @@ class Tableau1 extends Phaser.Scene {
                         }
                         break;
 
-                        case Phaser.Input.Keyboard.KeyCodes.F:
+                        case Phaser.Input.Keyboard.KeyCodes.C:
                             me.player.player.x = 8576;
                             me.player.player.y = 1632;
                             me.pile.x = me.player.player.x
                             me.pile.y = me.player.player.y
                         break;
+
+                            case Phaser.Input.Keyboard.KeyCodes.P:
+                            me.player.player.x = 8961;
+                            me.player.player.y = 2707;
+                        break;
+
+                            case Phaser.Input.Keyboard.KeyCodes.ENTER:
+                                console.log(me.NumeroDePrestentation)
+                                if(  me.NumeroDePrestentation === 11){
+                                    me.NumeroDePrestentation = 1;
+                                }else{
+                                    me.NumeroDePrestentation += 1;
+                                }
+                                break;
 
                     case Phaser.Input.Keyboard.KeyCodes.SPACE:
 
@@ -1297,9 +1330,14 @@ class Tableau1 extends Phaser.Scene {
             me.cameras.main.startFollow(me.csmenustart, true, 1, 1);
             Battery = me.player.chargeMax;
         })
-        // tableau menustart
+        // tableau menuend
         this.physics.add.overlap(player, this.menuend, function () {
             me.cameras.main.startFollow(me.csmenuend, true, 1, 1);
+            Battery = me.player.chargeMax;
+        })
+        // tableau presentation
+        this.physics.add.overlap(player, this.presentation, function () {
+            me.cameras.main.startFollow(me.cspresentation, true, 1, 1);
             Battery = me.player.chargeMax;
         })
     }
@@ -1501,6 +1539,7 @@ class Tableau1 extends Phaser.Scene {
     }
 
     update(){
+        this.bgpresentation.setTexture('presentation-'+this.NumeroDePrestentation)
 
             if(this.upgradeL === true) {
                 this.up.setTexture("UpgradeNoItem")
